@@ -1,0 +1,23 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.welcome-title {
+  font-family: var(--font-primary); /* استدعاء الخط الملكي */
+  font-size: 5rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+}
+
+.welcome-subtitle {
+  font-family: var(--font-secondary); /* استدعاء الخط العصري */
+  color: var(--text-dimmed);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}

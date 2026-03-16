@@ -1,0 +1,68 @@
+/* استيراد الخطوط الملكية والعصرية */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+  --bg-velvet: #F0F2F5;     
+  --text-main: #101E42;     
+  
+  /* اللون الجديد: كحلي باهت ملكي */
+  --text-dimmed: #344769;   
+  
+  --accent-gold: #AF8936;   
+
+  --font-primary: 'Cinzel', serif;            
+  --font-secondary: 'Montserrat', sans-serif; 
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-velvet);
+  color: var(--text-main);
+  /* جعل الخط الفرعي هو الخط الافتراضي للموقع لسهولة القراءة */
+  font-family: var(--font-secondary); 
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+
+}
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* قفل السكرول الأفقي تماماً */
+    overflow-y: auto;   /* السماح بالسكرول العمودي فقط */
+    scrollbar-gutter: stable; /* يمنع اهتزاز الصفحة عند ظهور/اختفاء السكرول */
+}
+
+
+/* --- تخصيص شريط التمرير (Scrollbar) --- */
+
+/* 1. تحديد عرض الشريط */
+::-webkit-scrollbar {
+    width: 8px; /* شريط نحيف لزيادة الرقي */
+}
+
+/* 2. خلفية المسار (التي يتحرك عليها السهم) */
+::-webkit-scrollbar-track {
+    background-color: var(--bg-velvet); /* اللون اللي طلبته --bg-velvet */
+}
+
+/* 3. الجزء المتحرك (المقبض) */
+::-webkit-scrollbar-thumb {
+    background-color: var(--text-main); /* اللون الملكي --text-main */
+    border-radius: 10px; /* زوايا دائرية ليكون ناعماً */
+    border: 2px solid #F0F2F5; /* إضافة مسافة (Padding) وهمية لجعل المقبض يبدو أنحف وأكثر أناقة */
+}
+
+/* 4. تغيير اللون عند الوقوف عليه (Hover) */
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-gold); /* لمسة ذهبية بسيطة عند التفاعل */
+}
+
+/* --- دعم المتصفحات الأخرى (Firefox) --- */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #101E42 #F0F2F5;
+}

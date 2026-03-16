@@ -1,0 +1,389 @@
+.header-container {
+    background-color: var(--text-main);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--bg-velvet);
+    width: 100vw;
+    padding: 0.8rem 0; /* أنحف وأكثر رقي */
+    border-bottom: 1px solid var(--accent-gold);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4rem;
+}
+
+/* توزيع اللينكات بذكاء لضمان سنترة اللوجو */
+.nav-group {
+    display: flex;
+    gap: 4rem;
+    flex: 1; /* يشغل مساحة متساوية على الطرفين */
+}
+
+.nav-right {
+    justify-content: flex-end; /* دفع روابط اليمين للطرف */
+}
+
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    flex-shrink: 0; /* يمنع انضغاط اللوجو */
+    padding: 0 2rem;
+}
+
+.main-crown {
+    width: 28px; 
+    height: 28px;
+    stroke-width: 1.2px; 
+    stroke: var(--bg-velvet);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.logo-text {
+    font-family: var(--font-primary);
+    font-size: 1.8rem; /* حجم متوازن للسنترة */
+    font-weight: 700;
+    letter-spacing: 0.5em; 
+    color: var(--bg-velvet);
+    margin: 0;
+    text-transform: uppercase;
+    line-height: 1;
+    padding-left: 0.5em; 
+    padding-top: 6px;
+}
+
+/* الأيقونة والنص يتفاعلان معاً */
+.logo-wrapper:hover .main-crown {
+    stroke: var(--accent-gold);
+    transform: translateY(-3px) scale(1.1);
+}
+
+.logo-wrapper:hover .logo-text {
+    color: var(--accent-gold);
+}
+
+.nav-item {
+    font-family: var(--font-primary);
+    color: var(--bg-velvet);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8rem; /* تصغير الخط لزيادة الفخامة */
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    position: relative;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.nav-item:hover {
+    opacity: 1;
+    color: var(--accent-gold);
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    transition: all 0.4s ease;
+    transform: translateX(-50%);
+}
+
+.nav-item:hover::after {
+    width: 100%;
+}
+/* إخفاء بار الموبايل في الشاشات الكبيرة */
+.mobile-bottom-nav {
+    display: none;
+}
+/* --- Desktop Nav Logic --- */
+.desktop-nav {
+    display: flex;
+    gap: 4rem;
+    flex: 1;
+}
+
+.nav-right { justify-content: flex-end; }
+
+
+.nav-item.active {
+    opacity: 1;
+    color: var(--accent-gold);
+}
+
+.nav-item.active::after {
+    width: 100%; /* بقاء الخط السفلي */
+}
+/* --- Responsive Adjustment for 1170px --- */
+@media (max-width: 1170px) {
+    .header-content {
+        padding: 0 2.5rem; /* تقليل المسافات الجانبية */
+    }
+
+    .nav-group {
+        gap: 2rem; /* تقريب اللينكات من بعضها */
+    }
+
+    .logo-text {
+        font-size: 1.4rem; /* تصغير اسم البراند قليلاً */
+        letter-spacing: 0.35em; /* تقليل التباعد للحفاظ على تماسك الكلمة */
+    }
+
+    .main-crown {
+        width: 22px; /* تصغير التاج ليتناسب مع الخط الجديد */
+        height: 22px;
+        stroke-width: 1.1px; /* تنحيف الخط لضمان عدم حدوث تلطيخ بكسلي (Blurring) */
+    }
+
+    .nav-item {
+        font-size: 0.7rem; /* تصغير نصوص الروابط */
+        letter-spacing: 0.15em;
+    }
+
+    .logo-wrapper {
+        padding: 0 1rem; /* تقليل المساحة حول اللوجو */
+    }
+}
+
+
+/* --- Mobile Nav Logic (850px) --- */
+@media (max-width: 850px) {
+   .desktop-nav {
+        display: none;
+    }
+
+    .header-content {
+        justify-content: flex-start;
+        padding: 0.8rem 1.5rem;
+    }
+
+   .mobile-bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 75px; /* زيادة الطول قليلاً للفخامة */
+        
+       
+        background: var(--text-main);
+       
+        
+        justify-content: space-around;
+        align-items: center;
+        z-index: 10000;
+        
+        /* إطار علوي ذهبي نحيف جداً مشع */
+        border-top: 1px solid var(--accent-gold);
+
+        padding-bottom: env(safe-area-inset-bottom); /* دعم هواتف آيفون */
+    }
+
+    .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        position: relative;
+        min-width: 60px;
+    }
+
+    /* --- تنسيق النص تحت الأيقونة (Typography) --- */
+    .mobile-nav-item span {
+        font-family: var(--font-primary); /* تأكد من استخدام خط سيريف أو خط فخم */
+        font-size: 0.55rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.15em; /* تباعد الحروف سر الفخامة */
+        color: var(--bg-velvet);
+        opacity: 0.5; /* جعل النص هادئاً بشكل افتراضي */
+        margin-top: 6px;
+        transition: all 0.3s ease;
+    }
+
+    /* --- الأيقونة (FontAwesome) --- */
+    .nav-icon-effect {
+        font-size: 22px; /* حجم أصغر قليلاً يبدو أكثر رقة */
+        color: var(--bg-velvet);
+        opacity: 0.7;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* --- حالة الهافر والتفاعل (Hover & Active) --- */
+    .mobile-nav-item:hover {
+        transform: translateY(-8px); /* رفع العنصر للأعلى بسلاسة */
+    }
+
+    .mobile-nav-item:hover .nav-icon-effect {
+        color: var(--accent-gold);
+        opacity: 1;
+        font-size: 24px;
+        /* توهج ذهبي ناعم حول الأيقونة */
+        filter: var(--accent-gold);
+    }
+
+    .mobile-nav-item:hover span {
+        color: var(--accent-gold);
+        opacity: 1;
+        letter-spacing: 0.25em; /* تباعد إضافي عند الهافر يعطي إحساساً بالانفتاح */
+        transform: scale(1.1);
+    }
+
+    /* --- الخط الذهبي المتحرك (بدل النقطة) --- */
+    .mobile-nav-item::after {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        width: 0;
+        height: 2px;
+        background: var(--accent-gold);
+        border-radius: 2px;
+        transition: width 0.4s ease;
+        box-shadow: 0 0 10px var(--accent-gold);
+    }
+
+    .mobile-nav-item:hover::after {
+        width: 15px; /* يظهر خط صغير ومركزي */
+    }
+
+
+
+
+
+
+    
+    /* تنسيق الهيدر العلوي - جعل اللوجو والتاج يساراً */
+.header-content {
+    display: flex;
+    flex-direction: row; /* رص العناصر أفقياً */
+    justify-content: flex-start; /* دفع كل شيء لليسار */
+    align-items: center;
+    gap: 2rem; /* مسافة بين مجموعة اللوجو والروابط */
+}
+
+/* عكس ترتيب التاج والنص وجعلهما كتلة واحدة */
+.logo-wrapper {
+    display: flex;
+    flex-direction: row; /* عكس الترتيب ليصبح التاج يسار الكلمة */
+    align-items: center;
+    gap: 10px; /* المسافة بين التاج وكلمة VELVET */
+    margin-right: auto; /* دفع الروابط لليمين إذا كانت موجودة */
+}
+
+.logo-text {
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: 0.2em;
+}
+
+.main-crown {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent-gold); /* جعل التاج ذهبي ليعطي تباين فخم */
+}
+.mobile-nav-item.active {
+        color: var(--accent-gold);
+        transform: translateY(-8px); /* بقاء العنصر مرفوعاً للأعلى */
+    }
+
+    .mobile-nav-item.active .nav-icon-effect {
+        color: var(--accent-gold);
+        opacity: 1;
+        filter: drop-shadow(0 0 8px rgba(197, 160, 89, 0.6)); /* التوهج الذهبي */
+    }
+
+    .mobile-nav-item.active span {
+        color: var(--accent-gold);
+        opacity: 1;
+        letter-spacing: 0.2em;
+    }
+
+    .mobile-nav-item.active::after {
+        width: 15px; /* بقاء الخط الصغير تحت الأيقونة النشطة */
+    }
+}
+
+
+
+
+/* --- Mobile Extra Small Adjustments (450px) --- */
+@media (max-width: 450px) {
+    
+    /* تصغير الهيدر العلوي */
+    .header-container {
+        padding: 0.5rem 0;
+    }
+
+    .header-content {
+        padding: 10px 5px;
+        gap: 1rem;
+    }
+
+    /* تصغير اللوجو والتاج */
+    .logo-wrapper .logo-text {
+        font-size: 1.1rem;
+        letter-spacing: 0.15em;
+    }
+
+    .logo-wrapper .main-crown {
+        width: 18px;
+        height: 18px;
+    }
+
+   /* تصغير بار الموبايل السفلي ليناسب الشاشات الصغيرة جداً */
+    .mobile-bottom-nav {
+        height: 60px; /* الارتفاع الذي فضلتَه */
+        padding: 0 5px;
+    }
+
+    /* تصغير عناصر التنقل وتقليل التباعد */
+    .mobile-bottom-nav .mobile-nav-item {
+        padding: 4px;
+        min-width: 50px; /* تقليل العرض الأدنى ليناسب المساحة الضيقة */
+    }
+
+    /* تنسيق النص تحت الأيقونة في الشاشات الصغيرة */
+    .mobile-bottom-nav .mobile-nav-item span {
+        font-size: 0.45rem; /* أصغر قليلاً للوضوح */
+        letter-spacing: 0.05em; /* تقليل التباعد ليظل النص مقروءاً */
+        margin-top: 2px;
+    }
+
+    /* تصغير أيقونات FontAwesome باستخدام font-size */
+    .mobile-bottom-nav .nav-icon-effect {
+        font-size: 18px; /* حجم أصغر متناسق مع الـ 20px SVG سابقاً */
+        margin-bottom: 2px;
+        opacity: 0.8;
+    }
+
+    /* تعديل حجم الأيقونة عند الهافر في الشاشات الصغيرة */
+    .mobile-bottom-nav .mobile-nav-item:hover .nav-icon-effect {
+        font-size: 20px; /* تكبير بسيط جداً */
+    }
+
+    /* تقليل مسافة الصعود للأعلى لتناسب الحجم المصغر */
+    .mobile-bottom-nav .mobile-nav-item:hover {
+        transform: translateY(-3px);
+    }
+
+    /* تصغير الخط الذهبي المتحرك */
+    .mobile-bottom-nav .mobile-nav-item:hover::after {
+        width: 10px;
+        bottom: -8px;
+    }
+    
+}

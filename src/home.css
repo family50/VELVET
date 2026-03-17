@@ -1,23 +1,1358 @@
+/* --- Home Container --- */
 .home-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
-  padding: 2rem;
+    background-color: var(--bg-velvet); /* اللون اللي اخترته #F0F2F5 */
+    color: var(--text-main); /* الكحلي الملكي #101E42 */
+    width: 100%;
 }
 
-.welcome-title {
-  font-family: var(--font-primary); /* استدعاء الخط الملكي */
-  font-size: 5rem;
-  font-weight: 900;
-  letter-spacing: 0.2em;
+
+
+
+
+
+/* --- Hero Section --- */
+/* --- Hero Section: Ultra-Creative Typography Layout --- */
+.hero-section.velvet-drapes {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+    background-color: #050a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.welcome-subtitle {
-  font-family: var(--font-secondary); /* استدعاء الخط العصري */
-  color: var(--text-dimmed);
-  font-size: 0.9rem;
-  text-transform: uppercase;
+/* الفيديو والطبقة العلوية */
+.hero-bg-velvet {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+}
+
+/* --- تعديل الفيديو ليكون أكثر عمقاً --- */
+.bg-velvet-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8; /* رفع الشفافية لإظهار الفيديو بوضوح */
+    filter: brightness(0.9) contrast(1.05) saturate(0.9); /* إضاءة طبيعية أكثر */
+    transition: transform 10s ease-in-out;
+    /* الزوم المطلوب: 1.15 تعني زوم بنسبة 15% */
+    /* هذا يضمن خروج العلامة المائية خارج حدود الحاوية (overflow: hidden) */
+    transform: scale(1.15); 
+    
+    /* جعل نقطة الزوم تبدأ من المركز لضمان توازن الصورة */
+    transform-origin: center center;
+    
+    /* الحفاظ على النعومة في الحركة */
+    transition: transform 1s ease-out;
+}
+
+/* --- الـ Overlay الجديد (سر التوازن) --- */
+.velvet-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 2;
+    
+    /* تدرج فاتح وناعم جداً */
+    background: linear-gradient(
+        to bottom,
+        rgba(5, 10, 26, 0.5) 0%,      /* تعتيم خفيف جداً للهيدر */
+        rgba(5, 10, 26, 0.05) 40%,    /* شفاف تماماً تقريباً في منطقة النص */
+        rgba(5, 10, 26, 0.05) 60%,    
+        rgba(5, 10, 26, 0.4) 100%     /* تعتيم بسيط في النهاية للربط مع السيكشن القادم */
+    );
+}
+
+/* حاوية التنسيق الإبداعي */
+.hero-creative-layout {
+    position: relative;
+    z-index: 3;
+    width: 100%; /* غيرتها لـ 100% عشان نتحكم بدقة من خلال البادينج */
+    max-width: 1600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* --- البادينج الاحترافي --- */
+    /* فوق وتحت: مساحة كافية عشان النص ميركبش فوق حافة الفيديو */
+    /* يمين وشمال: مساحة أمان متغيرة بتبدأ من 20px وتكبر مع الشاشة */
+
+   
+    /* موازنة المسافات الداخلية */
+    box-sizing: border-box; 
+  
+   margin-top: 80px;
+
+}
+
+
+
+/* التاج العلوي للنص */
+.text-reveal-container {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 80px 20px;
+    position: relative; /* لازم تكون relative عشان الـ absolute اللي جواها */
+   
+}
+
+.hero-tagline {
+    position: absolute;
+    top: 40px; /* تحكم في مكانه من فوق بدقة بالبكسل */
+    left: 50%;
+    transform: translateX(-50%); /* لضمان السنترة الكاملة */
+    
+    font-family: var(--font-primary);
+    color: var(--bg-velvet);
+    letter-spacing: 1.2em;
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    white-space: nowrap; /* عشان الحروف متبوظش مع المسافات الكبيرة */
+}
+
+/* العنوان العملاق */
+.hero-giant-title {
+    font-family: var(--font-primary);
+    line-height: 0.8;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-giant-title .line-one {
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 900;
+    color: var(--bg-velvet);
+    letter-spacing: -0.02em;
+    
+}
+
+.hero-giant-title .line-two {
+    font-size: clamp(5rem, 15vw, 13rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--accent-gold); /* الكلمة الأساسية مفرغة بالذهب */
+    margin: 10px 0;
+    
+}
+
+.hero-giant-title .line-three {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 400;
+   
+    color: var(--bg-velvet);
+    opacity: 0.6;
+    
+}
+
+/* البيان الختامي */
+.hero-statement {
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    color: var(--bg-velvet);
+    letter-spacing: 0.5em;
+    margin-top: 60px;
+    font-weight: 300;
+    opacity: 0.5;
+    border-top: 1px solid rgba(175, 137, 54, 0.3);
+    padding-top: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Philosophy Section: Refined & Compact --- */
+.philosophy-section {
+    /* تقليل الطول من 180px لـ 120px لجعل السيكشن أكثر رشاقة */
+    padding: 120px 20px;
+    background-color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    width: 100vw;
+}
+
+/* الملمس القماشي الفاخر */
+.philosophy-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("https://www.transparenttextures.com/patterns/black-linen.png");
+    opacity: 0.07; /* تقليل الكثافة لنقاء بصري أعلى */
+    pointer-events: none;
+}
+
+.philosophy-container {
+    max-width: 900px;
+    text-align: center;
+    z-index: 2;
+
+}
+
+/* تحسين الزخرفة (Ornament) */
+.philosophy-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px; /* زيادة المسافة قليلاً للتنفس */
+    margin-bottom: 40px;
+}
+
+.ornament-line {
+    width: 80px; /* تطويل الخطوط لزيادة الهيبة */
+    height: 1px;
+    /* تدرج ذهبي أنعم */
+    background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.5), transparent);
+}
+
+.ornament-icon {
+    color: var(--accent-gold);
+    font-size: 1.4rem; /* تكبير بسيط للأيقونة */
+    filter: drop-shadow(0 0 12px rgba(197, 160, 89, 0.3));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+/* تأثير حركي أكثر رقياً عند التمرير */
+.philosophy-section:hover .ornament-icon {
+    transform: rotate(360deg) scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.6));
+}
+
+/* النص الفلسفي المطور */
+.philosophy-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4.5vw, 3.5rem); /* تصغير طفيف لتناسب الطول الجديد */
+    line-height: 1.4;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--bg-velvet);
+    margin: 0;
+    letter-spacing: -0.01em;
+    /* إضافة ظلال نصية ناعمة جداً للعمق */
+    text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* تأثير الشيمر الذهبي المستمر */
+.gold-shimmer {
+    color: var(--accent-gold);
+    background: linear-gradient(
+        90deg, 
+        #c5a059 0%, 
+        #f9e8c1 50%, 
+        #c5a059 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 5s linear infinite;
+    font-weight: 500;
+}
+
+@keyframes shimmer {
+    to { background-position: 200% center; }
+}
+
+/* اسم الفلسفة */
+.philosophy-author {
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    letter-spacing: 1em; /* زيادة التباعد لإحساس "البراندات العالمية" */
+    color: var(--accent-gold);
+    margin-top: 50px;
+    opacity: 0.5;
+    text-transform: uppercase;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- 1. الحاوية الكبرى (The Minimalist Boutique Stage) --- */
+.featured-section {
+    padding: 100px 0;
+    background-color: var(--bg-velvet);
+    position: relative;
+    overflow: hidden;
+}
+
+/* التأثير السينمائي الجانبي (Vignette) - حماية الأطراف ببلور خفيف */
+.featured-section::before,
+.featured-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 220px;
+    height: 100%;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.featured-section::before {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-velvet) 20%, rgba(240, 242, 245, 0) 100%);
+    backdrop-filter: blur(6px);
+}
+
+.featured-section::after {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-velvet) 20%, rgba(240, 242, 245, 0) 100%);
+    backdrop-filter: blur(6px);
+}
+
+/* --- 2. الهيدر (Refined Header) --- */
+/* --- 2. الهيدر (Refined Header) --- */
+.section-header {
+    max-width: 90%; /* تكبير مساحة الهيدر قليلاً */
+    margin: 0 auto 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    z-index: 25;
+}
+
+.title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.section-tag {
+    color: var(--accent-gold);
+    font-family: var(--font-secondary);
+    letter-spacing: 0.6em; /* زيادة المسافة لإعطاء فخامة أكثر */
+    font-weight: 800;
+    font-size: 0.85rem; /* تكبير بسيط */
+    text-transform: uppercase;
+}
+
+.section-main-title {
+    font-family: var(--font-primary);
+    font-size: 3rem; /* تكبير العنوان ليكون أكثر سيطرة */
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+/* --- زر Explore All الفخم --- */
+.view-all-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    padding: 10px 0;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.view-all-btn span {
+    font-family: var(--font-secondary);
+    font-size: 1.1rem; /* تكبير الخط */
+    font-weight: 600;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.view-all-btn i {
+    font-size: 1.2rem;
+    color: var(--accent-gold);
+    transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+    transform: translateX(0);
+}
+
+/* --- انميشن الهافر الفخم (The Cinematic Hover) --- */
+
+.view-all-btn:hover span {
+    color: var(--accent-gold);
+    transform: translateX(-10px); /* سحب النص لليسار قليلاً لإفساح مجال للسهم */
+}
+
+.view-all-btn:hover i {
+    transform: translateX(15px) scaleX(1.5); /* تطويل السهم وتحريكه لليمين بقوة */
+    color: var(--text-main);
+}
+
+/* إضافة خط سفلي ينبثق من المنتصف (Luxury Underline) */
+.view-all-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent-gold);
+    transition: width 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.view-all-btn:hover::after {
+    width: 100%;
+    left: 0; /* يبدأ الخط في التوسع ليملأ المساحة */
+}
+
+
+
+/* --- 3. الجريد المتحرك (The Marquee Wrapper) --- */
+.products-grid {
+    display: flex;
+    gap: 40px;
+    padding: 20px 100px;
+    width: max-content;
+    will-change: transform;
+   
+}
+/* --- 4. الكارت النخبي (The Luxury Horizontal Card) --- */
+.product-card {
+    width: 390px;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 24px;
+    padding: 24px; /* زيادة الطيف الداخلي قليلاً */
+    position: relative;
+    
+    /* خلفية بيضاء بلمسة زجاجية رقيقة جداً */
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* حدود مزدوجة: واحدة فاتحة جداً والأخرى بلون الهوية باهت */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    outline: 1px solid rgba(16, 30, 66, 0.03);
+    outline-offset: -1px;
+
+    /* شادو احترافي متعدد الطبقات ليعطي عمقاً حقيقياً (Soft Ambient Occlusion) */
+    box-shadow: 
+        0 4px 6px rgba(16, 30, 66, 0.01),
+        0 15px 35px rgba(16, 30, 66, 0.03),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    
+    transition: all 0.7s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.product-card:hover {
+    transform: translateY(-15px);
+    background: rgba(255, 255, 255, 1);
+    /* شادو الـ Hover يصبح أكثر دفئاً وعمقاً */
+    box-shadow: 
+        0 30px 60px rgba(16, 30, 66, 0.08),
+        0 0 0 1px rgba(175, 137, 54, 0.1); /* لمسة ذهبية خفيفة جداً في الحدود عند الهوفر */
+}
+
+/* --- 5. منطقة الصورة (The Jewel Box) --- */
+.card-img-holder {
+    width: 100%;
+    height: 390px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+    /* تدرج لوني يحاكي إضاءة الاستوديو */
+    background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f4f6f8 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    
+    /* إضافة لمسة عمق للصندوق نفسه */
+    box-shadow: inset 0 10px 20px rgba(0,0,0,0.02);
+}
+
+/* --- الشادو الأرضي (The Floating Ground Shadow) --- */
+.product-platform {
+    position: absolute;
+    bottom: 50px; /* مكان الظل على الأرضية */
+    left: 50%;
+    transform: translateX(-50%); /* سنترة الظل تحت الصورة بالضبط */
+    width: 50%; /* عرض الظل مقارنة بعرض المنتج */
+    height: 15px;
+    
+    /* زيادة حدة اللون ليكون الظل مرئياً وقوياً */
+    background: radial-gradient(ellipse at center, 
+        rgba(16, 30, 66, 0.844) 0%,   /* جعل المركز داكن أكثر */
+        rgba(16, 30, 66, 0.853) 40%,    /* تدرج أنعم */
+        transparent 80%
+    );
+    
+    filter: blur(10px); /* تقليل البلور قليلاً ليكون الظل "محدد" أكثر */
+    z-index: 1;
+    transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+    pointer-events: none;
+}
+
+/* --- تأثير الحركة التفاعلية (The Physics Interaction) --- */
+.product-card:hover .product-platform {
+    /* عندما تطفو الصورة للأعلى: */
+    transform: translateX(-50%) scale(0.7); /* الظل يصغر لأنه يبتعد عن الجسم */
+    opacity: 0.4; /* الظل يصبح أخف نتيجة ابتعاد مصدر الضوء */
+    filter: blur(10px); /* الظل يصبح أكثر تشتتاً (Softer) */
+}
+
+/* --- تعديل بسيط على الصورة لضمان التزامن --- */
+.product-image {
+    width: 70%;
+    height: auto;
+    object-fit: contain;
+    z-index: 5;
+    /* ظل خفيف ملاصق للمنتج نفسه ليعطيه أبعاد */
+    filter: drop-shadow(0 10px 15px rgba(16, 30, 66, 0.15));
+    transition: transform 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.product-card:hover .product-image {
+    transform: translateY(-35px) scale(1.05); /* طيران المنتج للأعلى */
+}
+.product-image {
+    width: 70%; /* تقليل الحجم قليلاً لزيادة الفخامة (Breathing Room) */
+    height: auto;
+    object-fit: contain;
+    z-index: 5;
+    /* ظل الصورة يتبع زاوية الإضاءة */
+    filter: drop-shadow(0 25px 40px rgba(16, 30, 66, 0.1));
+    transition: transform 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.product-card:hover .product-image {
+    transform: translateY(-25px) scale(1.08); /* حركة صعود أكثر جرأة */
+}
+
+/* --- 6. التفاصيل (Typography & Layout) --- */
+.card-info {
+    padding: 24px 4px 4px;
+    text-align: left;
+}
+
+.info-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.card-info h4 {
+    font-family: var(--font-primary);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: 0.01em;
+}
+
+.product-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-gold);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(175, 137, 54, 0.4); /* توهج صغير للنقطة الذهبية */
+}
+
+.product-description {
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    color: var(--text-dimmed);
+    line-height: 1.6;
+    margin-bottom: 25px;
+    opacity: 0.5;
+    font-weight: 400;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.info-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(16, 30, 66, 0.04);
+    padding-top: 20px;
+}
+
+.price {
+    font-family: var(--font-primary);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    position: relative;
+}
+
+.add-to-cart-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: var(--text-main);
+    border: 1px solid rgba(16, 30, 66, 0.08);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.15, 0.83, 0.66, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(16, 30, 66, 0.03);
+}
+
+.add-to-cart-btn:hover {
+    background: var(--text-main);
+    color: #ffffff;
+    border-color: var(--text-main);
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 10px 20px rgba(16, 30, 66, 0.15);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Lifestyle Video Section --- */
+/* --- Lifestyle Section --- */
+/* --- Lifestyle Section: Surreal Floating --- */
+.lifestyle-section {
+    width: 100%;
+    height: 100vh; /* ملء الشاشة لإبراز الطفو */
+    background-color: var(--bg-velvet);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden; /* لمنع خروج النص العملاق عن الشاشة */
+}
+
+/* النص العملاق الذي يمر وراء القميص */
+.lifestyle-giant-text {
+    position: absolute;
+    font-family: var(--font-primary);
+    font-size: clamp(10rem, 25vw, 30rem); /* حجم ضخم جداً */
+    font-weight: 900;
+    color: var(--text-main);
+    opacity: 0.03; /* شفافية خفيفة جداً ليكون خلفية راقية */
+    letter-spacing: 0.1em;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* حاوية القميص والظل */
+.lifestyle-floating-container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lifestyle-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* التحكم في حجم القميص */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+.floating-shirt {
+    width: 100%;
+    height: auto;
+    z-index: 5;
+    /* حركة طفو مستمرة (Self-Floating Animation) */
+    animation: constantFloat 6s ease-in-out infinite;
+    filter: drop-shadow(0 20px 50px rgba(16, 30, 66, 0.1));
+    transition: transform 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+}
+
+/* الظل الأرضي الذي يتفاعل مع القميص */
+.shirt-ground-shadow {
+    position: absolute;
+    /* نضعه في المنتصف تماماً */
+    left: 25%;
+    bottom: -60px; 
+    transform: translateX(-50%);
+    
+    /* أبعاد الظل: نجعله أعرض قليلاً ليعطي ثباتاً بصرياً */
+    width: 280px; 
+    height: 40px;
+    
+    /* استخدام لون كحلي صريح في المركز مع شفافية محسوبة */
+    background: radial-gradient(ellipse at center, 
+        rgb(16, 30, 66) 0%,   /* قلب الظل داكن ومرئي */
+        rgb(16, 30, 66) 45%,  /* تلاشي تدريجي */
+        transparent 70%              /* حواف ناعمة جداً */
+    );
+    
+    /* بلور ناعم - لا ترفعه كثيراً حتى لا يختفي اللون */
+    filter: blur(5px); 
+    
+    /* التأكد من أنه فوق النص العملاق وتحت القميص */
+    z-index: 2; 
+    
+    /* الأنيميشن المتزامن */
+    animation: shadowPulse 6s ease-in-out infinite;
+    transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+    pointer-events: none;
+}
+
+/* --- أنيميشن الظل التفاعلي --- */
+@keyframes shadowPulse {
+    0%, 100% { 
+        transform: translateX(-50%) scale(1); 
+        opacity: 1; 
+        filter: blur(8px);
+    }
+    50% { 
+        /* عندما يرتفع القميص، يصغر الظل ويصبح أكثر ضبابية (تأثير فيزيائي) */
+        transform: translateX(-50%) scale(0.65); 
+        opacity: 0.4; 
+        filter: blur(12px);
+    }
+}
+
+
+
+.lifestyle-section:hover .shirt-ground-shadow {
+    transform: scale(0.6); /* الظل يصغر عند ارتفاع القميص */
+    opacity: 0.3;
+}
+
+/* --- النصوص السفلية المكملة --- */
+.lifestyle-info-overlay {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.lifestyle-subtitle {
+    font-family: var(--font-primary);
+    font-size: 1.7rem;
+    color: var(--text-main);
+    letter-spacing: 0.3em;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
+/* --- Animations: حركات فيزيائية حقيقية --- */
+
+@keyframes constantFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); } /* القميص يرتفع وينخفض ببطء */
+}
+
+@keyframes shadowPulse {
+    0%, 100% { transform: scale(1); opacity: 0.2; }
+    50% { transform: scale(0.8); opacity: 0.1; } /* الظل يضعف عند ارتفاع القميص */
+}
+
+
+
+
+/* --- Fine-Tuning for Laptops & Small Screens (1170px) --- */
+@media screen and (max-width: 1170px) {
+    
+    /* 1. تقليل أحجام الـ Hero Section */
+.hero-giant-title .line-one {
+        /* استبدال الـ clamp بقيمة ثابتة تمنع التغير */
+        font-size: 7.5rem; 
+        line-height: 0.9;
+    }
+
+    .hero-giant-title .line-two {
+        /* قيمة ثابتة للعنوان الذهبي */
+        font-size: 9.5rem; 
+        line-height: 0.8;
+    }
+
+    .hero-giant-title .line-three {
+        font-size: 2.2rem;
+        /* نثبته هنا لمنع أي تداخل مع الخطوط الكبيرة */
+    }
+
+    .hero-tagline {
+        font-size: 0.6rem;
+        letter-spacing: 0.8em;
+        /* تثبيت مكان التاج */
+        top: 30px; 
+    }
+
+    /* تثبيت أحجام كروت المنتجات لضمان عدم صغرها أكثر من اللازم */
+    .product-card {
+        width: 340px; 
+        flex-shrink: 0; /* منع الكارت من الانكماش */
+    }
+
+    .card-img-holder {
+        height: 340px;
+    }
+
+    /* تثبيت حجم النص العملاق خلف القميص */
+    .lifestyle-giant-text {
+        font-size: 15rem; 
+    }
+
+    /* 2. تقليل أحجام Philosophy Section */
+    .philosophy-section {
+        padding: 80px 20px; /* تقليل الـ Padding الرأسي */
+    }
+    .philosophy-quote {
+        font-size: 2.2rem; /* تصغير حجم المقولة */
+        max-width: 80%;
+        margin: 0 auto;
+    }
+    .ornament-line {
+        width: 50px; /* تقصير الخطوط الزخرفية */
+    }
+
+    /* 3. تقليل أحجام Featured Products */
+    .section-main-title {
+        font-size: 2.2rem; /* تصغير عنوان السيكشن */
+    }
+    .product-card {
+        width: 320px; /* تصغير عرض الكارت ليتناسب مع الشاشة */
+        padding: 18px;
+    }
+    .card-img-holder {
+        height: 320px; /* تقليل ارتفاع صندوق الصورة */
+    }
+    .product-image {
+        width: 65%; /* تصغير المنتج داخل الصندوق */
+    }
+    .card-info h4 {
+        font-size: 1.1rem; /* تصغير اسم المنتج */
+    }
+
+    /* 4. تقليل أحجام Lifestyle Section (القميص الطائر) */
+    .lifestyle-giant-text {
+        font-size: 21rem; /* تصغير النص الخلفي الضخم */
+    }
+    .lifestyle-image-wrapper {
+        max-width: 540px; /* تصغير حجم القميص */
+    }
+    .lifestyle-subtitle {
+        font-size: 1.55rem; /* تصغير النص السفلي */
+        letter-spacing: 0.25em;
+    }
+    .shirt-ground-shadow {
+        width: 240px; /* تصغير الظل ليتناسب مع حجم القميص الجديد */
+        bottom: -40px;
+    }
+
+    /* 5. ضبط المسافات العامة */
+    .section-header {
+        margin-bottom: 50px; /* تقليل المسافة بين الهيدر والمحتوى */
+    }
+}
+
+
+
+
+
+
+
+
+/* --- Adjustments for Tablets & Medium Screens (850px) --- */
+@media screen and (max-width: 850px) {
+
+    /* 1. Hero Section - تقليص الهيبة لتناسب العرض الضيق */
+    .hero-giant-title .line-one {
+        font-size: 5.5rem; /* تصغير ملحوظ */
+    }
+    .hero-giant-title .line-two {
+        font-size: 7rem; /* الحفاظ على النسبة والتناسب */
+    }
+    .hero-giant-title .line-three {
+        font-size: 1.8rem;
+        opacity: 0.8;
+    }
+    .hero-tagline {
+        letter-spacing: 0.5em; /* تقريب الحروف لمنع الخروج عن الحواف */
+        top: 25px;
+    }
+    .hero-statement {
+        font-size: 0.75rem;
+        letter-spacing: 0.3em;
+        margin-top: 40px;
+    }
+
+    /* 2. Philosophy Section */
+    .philosophy-quote {
+        font-size: 1.8rem;
+        line-height: 1.3;
+    }
+    .philosophy-author {
+        letter-spacing: 0.6em;
+        margin-top: 30px;
+    }
+
+    /* 3. Featured Products - تحسين عرض الكروت */
+    .section-main-title {
+        font-size: 1.8rem;
+    }
+    .product-card {
+        width: 280px; /* حجم مدمج وسلس */
+        padding: 15px;
+        border-radius: 18px;
+    }
+    .card-img-holder {
+        height: 280px;
+    }
+    .product-image {
+        width: 75%; /* تكبير الصورة قليلاً بالنسبة للكارت الصغير */
+    }
+    .card-info h4 {
+        font-size: 1rem;
+    }
+    .price {
+        font-size: 1.1rem;
+    }
+/* تقليل عرض وقوة الشادو الأرضي تحت المنتج */
+    .product-platform {
+        width: 40%; /* تقليل العرض من 50% */
+        height: 8px; /* تنحيف الظل */
+        bottom: 40px; /* رفعه قليلاً للأعلى */
+        filter: blur(6px); /* تقليل البلور ليصبح الظل أوضح وأقل تشتتاً */
+        opacity: 0.6; /* تقليل الشفافية ليكون أهدأ */
+    }
+
+    /* تقليل الشادو الخارجي للكارت نفسه ليناسب الحجم الأصغر */
+    .product-card {
+        box-shadow: 
+            0 4px 10px rgba(16, 30, 66, 0.02),
+            0 10px 20px rgba(16, 30, 66, 0.04); /* شادو أنعم بكتير */
+    }
+
+    /* تقليل شادو الصورة (Drop Shadow) لتبدو أكثر واقعية في المساحة الصغيرة */
+    .product-image {
+        filter: drop-shadow(0 15px 20px rgba(16, 30, 66, 0.1));
+    }
+
+    /* تعديل حركة الشادو عند الهوفر لتكون أقل حدة */
+    .product-card:hover .product-platform {
+        transform: translateX(-50%) scale(0.8);
+        filter: blur(8px);
+        opacity: 0.3;
+    }
+
+    /* تقليل عرض البلور الجانبي (Vignette) في السيكشن */
+    .featured-section::before,
+    .featured-section::after {
+        width: 120px; /* تقليل العرض من 220px لمنح مساحة أكبر للكروت */
+        backdrop-filter: blur(3px); /* بلور أخف */
+    }
+
+  /* --- Lifestyle Section: Increased by 20% --- */
+    
+    .lifestyle-giant-text {
+        /* تم الرفع من 14rem إلى 16.8rem */
+        font-size: 16.8rem; 
+    }
+
+    .lifestyle-image-wrapper {
+        /* تم الرفع من 400px إلى 480px */
+        max-width: 480px; 
+    }
+
+    .lifestyle-subtitle {
+        /* تم الرفع من 1.2rem إلى 1.45rem تقريباً */
+        font-size: 1.45rem;
+        letter-spacing: 0.25em;
+    }
+
+    .shirt-ground-shadow {
+        /* تم الرفع من 180px إلى 216px ليتناسب مع حجم القميص الجديد */
+        width: 216px;
+        bottom: -35px; /* نزول بسيط للأسفل ليواكب كبر الحجم */
+    }
+
+}
+
+
+
+/* --- Ultra-Compact Mode for Mobile (530px) --- */
+@media screen and (max-width: 530px) {
+
+   .hero-giant-title .line-one {
+        /* تم الرفع من 4rem إلى 4.6rem */
+        font-size: 4.6rem; 
+        letter-spacing: -0.01em;
+        line-height: 1;
+    }
+
+    .hero-giant-title .line-two {
+        /* تم الرفع من 5.2rem إلى 6rem */
+        font-size: 6rem;
+        -webkit-text-stroke: 1.2px var(--accent-gold); /* زيادة طفيفة في السمك لتناسب الحجم الجديد */
+        line-height: 0.9;
+    }
+
+    .hero-giant-title .line-three {
+        /* تم الرفع من 1.4rem إلى 1.6rem */
+        font-size: 1.6rem;
+        letter-spacing: 0.12em;
+    }
+
+    .hero-tagline {
+        /* تم الرفع من 0.55rem إلى 0.65rem */
+        font-size: 0.65rem;
+        letter-spacing: 0.45em;
+        top: 25px; /* موازنة المسافة العلوية */
+    }
+
+    .hero-statement {
+        /* تم الرفع من 0.65rem إلى 0.75rem */
+        font-size: 0.75rem;
+        letter-spacing: 0.25em;
+        max-width: 85%; /* زيادة العرض لاستيعاب الحجم الجديد */
+        margin: 35px auto 0;
+        line-height: 1.6;
+    }
+    
+    /* ضبط حاوية التنسيق لضمان استيعاب الزيادة */
+    .hero-creative-layout {
+        margin-top: 60px;
+        padding: 0 10px;
+    }
+
+    /* 2. Philosophy Section - جعل النص أكثر رقة */
+    .philosophy-section {
+        padding: 60px 15px;
+    }
+    .philosophy-quote {
+        font-size: 1.4rem;
+        line-height: 1.5;
+        max-width: 95%;
+    }
+    .ornament-line {
+        width: 30px; /* تقصير الخطوط الجانبية جداً */
+    }
+    .philosophy-author {
+        font-size: 0.6rem;
+        letter-spacing: 0.4em;
+    }
+
+    /* 3. Featured Products - تحجيم الكروت للموبايل */
+    .featured-section {
+        padding: 60px 0;
+    }
+    .section-main-title {
+        font-size: 1.5rem;
+    }
+    .section-tag {
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+    }
+    .product-card {
+        width: 250px; /* حجم مثالي للسحب في الموبايل */
+        padding: 12px;
+        border-radius: 15px;
+    }
+    .card-img-holder {
+        height: 250px;
+    }
+    .product-image {
+        width: 80%; /* تكبير المنتج قليلاً داخل الكارت الصغير */
+    }
+    .card-info h4 {
+        font-size: 0.95rem;
+    }
+    .product-description {
+        font-size: 0.75rem;
+        margin-bottom: 15px;
+    }
+    .price {
+        font-size: 1rem;
+    }
+    .add-to-cart-btn {
+        width: 38px;
+        height: 38px;
+    }
+
+   .lifestyle-section {
+        height: 75vh; /* زيادة الارتفاع قليلاً لاستيعاب العناصر الأكبر */
+    }
+
+    .lifestyle-giant-text {
+        /* تم الرفع من 10rem إلى 11rem */
+        font-size: 11rem;
+        opacity: 0.04; /* زيادة بسيطة في الوضوح لمواكبة الحجم */
+    }
+
+    .lifestyle-image-wrapper {
+        /* تم الرفع من 320px إلى 352px */
+        max-width: 352px; 
+    }
+
+    .lifestyle-subtitle {
+        /* تم الرفع من 1.1rem إلى 1.2rem */
+        font-size: 1.2rem;
+        letter-spacing: 0.22em;
+    }
+
+    .shirt-ground-shadow {
+        /* تم الرفع من 150px إلى 165px ليتناسب مع حجم القميص الجديد */
+        width: 165px;
+        bottom: -35px;
+    }
+
+    /* --- Featured Section Vignette --- */
+    .featured-section::before,
+    .featured-section::after {
+        /* تم الرفع من 60px إلى 66px لتغطية مساحة أكبر قليلاً عند السكرول */
+        width: 66px;
+        backdrop-filter: blur(4px);
+    }
+}
+
+
+
+/* --- Hero Section: Optimized for Small Devices (450px) --- */
+@media screen and (max-width: 450px) {
+
+    .hero-giant-title .line-one {
+        /* تم التصغير من 4.6rem إلى 4.05rem تقريباً */
+        font-size: 4.05rem; 
+        letter-spacing: -0.01em;
+    }
+
+    .hero-giant-title .line-two {
+        /* تم التصغير من 6rem إلى 5.28rem */
+        font-size: 5.28rem;
+        -webkit-text-stroke: 1px var(--accent-gold); /* تنحيف الخط الذهبي ليتناسب مع المساحة الأصغر */
+    }
+
+    .hero-giant-title .line-three {
+        /* تم التصغير من 1.6rem إلى 1.4rem */
+        font-size: 1.4rem;
+        letter-spacing: 0.1em;
+    }
+
+    .hero-tagline {
+        /* تم التصغير من 0.65rem إلى 0.57rem */
+        font-size: 0.57rem;
+        letter-spacing: 0.4em;
+        top: 20px;
+    }
+
+    .hero-statement {
+        /* تم التصغير من 0.75rem إلى 0.66rem */
+        font-size: 0.66rem;
+        letter-spacing: 0.22em;
+        max-width: 90%; /* زيادة طفيفة في العرض المتاح لمنع كسر الكلمات بشكل حاد */
+        margin: 30px auto 0;
+    }
+    
+    .hero-creative-layout {
+        margin-top: 50px; /* تقليل الهامش العلوي قليلاً لرفع المحتوى */
+        padding: 0 8px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Hero Section: Micro-Device Optimization (390px) --- */
+@media screen and (max-width: 390px) {
+
+    .hero-giant-title .line-one {
+        /* تم التصغير من 4.05rem إلى 3.65rem */
+        font-size: 3.65rem; 
+        letter-spacing: -0.01em;
+    }
+
+    .hero-giant-title .line-two {
+        /* تم التصغير من 5.28rem إلى 4.75rem */
+        font-size: 4.75rem;
+        -webkit-text-stroke: 0.8px var(--accent-gold); /* تنحيف إضافي للحدود ليظل النص حاداً ونظيفاً */
+    }
+
+    .hero-giant-title .line-three {
+        /* تم التصغير من 1.4rem إلى 1.25rem */
+        font-size: 1.25rem;
+        letter-spacing: 0.08em;
+    }
+
+    .hero-tagline {
+        /* تم التصغير من 0.57rem إلى 0.51rem */
+        font-size: 0.51rem;
+        letter-spacing: 0.35em; /* تضييق المسافات قليلاً لتجنب الـ Overflow */
+        top: 15px;
+    }
+
+    .hero-statement {
+        /* تم التصغير من 0.66rem إلى 0.6rem */
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        max-width: 95%; /* استغلال عرض الشاشة بالكامل تقريباً */
+        margin: 25px auto 0;
+        line-height: 1.5;
+    }
+    
+    .hero-creative-layout {
+        margin-top: 40px; /* رفع المحتوى للأعلى لاستغلال المساحة الرأسية */
+        padding: 0 5px;
+    }
+}
+
+@media screen and (max-width: 390px) {
+
+    /* 2. Philosophy Section - رشاقة إضافية */
+    .philosophy-section {
+        padding: 50px 10px; /* تقليل البادينج لتوفير مساحة */
+    }
+    .philosophy-quote {
+        font-size: 1.25rem; /* تصغير المقولة لتناسب العرض الصغير */
+        line-height: 1.4;
+    }
+    .ornament-line {
+        width: 25px; /* تقصير الخطوط الزخرفية */
+    }
+    .philosophy-author {
+        font-size: 0.55rem;
+        letter-spacing: 0.35em;
+        margin-top: 25px;
+    }
+
+    /* 3. Featured Products - تحجيم الكروت الذكي */
+    .featured-section {
+        padding: 50px 0;
+    }
+    .section-main-title {
+        font-size: 1.35rem; /* تصغير عنوان القسم */
+    }
+    .section-tag {
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+    }
+    .product-card {
+        width: 225px; /* تصغير عرض الكارت لسهولة التصفح */
+        padding: 10px;
+        border-radius: 12px;
+    }
+    .card-img-holder {
+        height: 225px; /* الحفاظ على النسبة المربعة */
+    }
+    .product-image {
+        width: 75%; /* تقليل الحجم لترك مساحة تنفس (Breathing room) */
+    }
+    .card-info h4 {
+        font-size: 0.85rem;
+    }
+    .product-description {
+        font-size: 0.7rem;
+        line-height: 1.4;
+    }
+    .price {
+        font-size: 0.9rem;
+    }
+    .add-to-cart-btn {
+        width: 34px;
+        height: 34px;
+    }
+
+    /* 4. Lifestyle Section - القميص الطائر */
+    .lifestyle-section {
+        height: 65vh; /* تقليل الارتفاع الرأسي */
+    }
+    .lifestyle-giant-text {
+        font-size: 9rem; /* تصغير النص الخلفي */
+    }
+    .lifestyle-image-wrapper {
+        max-width: 300px; /* حجم متناسق مع عرض الشاشة */
+    }
+    .lifestyle-subtitle {
+        font-size: 1.1rem;
+        letter-spacing: 0.18em;
+    }
+    .shirt-ground-shadow {
+        width: 140px; /* تصغير الظل ليتناسب مع القميص */
+        bottom: -25px;
+    }
+
+    /* تعديل الـ Vignette (البلور الجانبي) */
+    .featured-section::before,
+    .featured-section::after {
+        width: 50px; /* تضييق المساحة المظللة لفتح رؤية أكبر للكروت */
+        backdrop-filter: blur(3px);
+    }
 }

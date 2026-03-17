@@ -2,12 +2,28 @@ import { createPortal } from 'react-dom';
 import { Crown } from 'lucide-react';
 import './header.css';
 import { NavLink } from 'react-router-dom'; // استيراد NavLink بدلاً من Link
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef  } from 'react';
 import { gsap } from 'gsap';
+import { useEffect, useState } from 'react';
 function Header() {
     
     const headerRef = useRef(null);
     const mobileNavRef = useRef(null);
+    // داخل المكون الخاص بك:
+const [isScrolled, setIsScrolled] = useState(false);
+
+useEffect(() => {
+    const handleScroll = () => {
+        if (window.scrollY > 50) {
+            setIsScrolled(true);
+        } else {
+            setIsScrolled(false);
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+}, []);
 useLayoutEffect(() => {
     const ctx = gsap.context(() => {
         const tl = gsap.timeline({
@@ -100,7 +116,7 @@ useLayoutEffect(() => {
     );
 
     return (
-        <header  ref={headerRef} className="header-container">
+        <header ref={headerRef} className={`header-container ${isScrolled ? 'scrolled' : ''}`}>
             <div className="header-content">
                 {/* روابط الديسكتوب يسار */}
                 <nav className="desktop-nav nav-left">
@@ -123,7 +139,7 @@ useLayoutEffect(() => {
                 </nav>
             </div>
 
-            {typeof document !== 'undefined' && createPortal(mobileNavContent, document.body)}
+           {typeof document !== 'undefined' && createPortal(mobileNavContent, document.body)}
         </header>
     );
 }

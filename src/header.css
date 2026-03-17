@@ -1,30 +1,74 @@
 .header-container {
-    background-color: var(--text-main);
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    
+    /* الحالة الابتدائية: زجاجي شفاف وطويل */
+    background-color: rgba(255, 255, 255, 0.05); /* شفافية شبه كاملة */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: var(--bg-velvet);
-    width: 100vw;
-    padding: 0.8rem 0; /* أنحف وأكثر رقي */
-    border-bottom: 1px solid var(--accent-gold);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    
+    /* الطول الابتدائي (طويل لإعطاء فخامة) */
+    padding: 1.9rem 0; 
+    
+    border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+    
+    /* انتقال ناعم جداً لكل الخصائص */
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* الحالة عند السكرول: العودة للأصل */
+.header-container.scrolled {
+    /* العودة للون الكحلي الملكي والشفافية الأقل */
+    background-color: var(--text-main); 
+    backdrop-filter: blur(20px);
+    
+    /* العودة للطول الأنحف والراقي */
+    padding: 1rem 0; 
+    
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 .header-content {
-    max-width: 1600px;
+    max-width: 97vw; /* مساحة واسعة تليق ببراند فخم */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 4rem;
+    padding: 0 5%; /* مساحة مرنة من الأطراف */
 }
 
 /* توزيع اللينكات بذكاء لضمان سنترة اللوجو */
 .nav-group {
     display: flex;
-    gap: 4rem;
-    flex: 1; /* يشغل مساحة متساوية على الطرفين */
+    gap: 3.5rem;
+    flex: 1;
+    align-items: center;
+}
+
+/* لو اللينكات على اليمين واليسار */
+.nav-group.left { justify-content: flex-start; }
+.nav-group.right { justify-content: flex-end; }
+
+/* تنسيق اللينكات نفسها لتبدو أكثر فخامة */
+.nav-link {
+    font-family: var(--font-primary);
+    color: var(--bg-velvet);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    opacity: 0.8;
+}
+
+.nav-link:hover {
+    color: var(--accent-gold);
+    opacity: 1;
 }
 
 .nav-right {

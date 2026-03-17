@@ -1,0 +1,377 @@
+/* --- Desktop Luxury Version --- */
+.footer {
+    background-color: var(--text-main); /* Royal Navy */
+    /* زيادة البادينج العلوي ليعطي إحساساً بالاتساع */
+    padding: 120px 8% 60px;
+    color: #F0F2F5;
+    font-family: var(--font-secondary);
+    position: relative;
+    border-top: 1px solid rgba(197, 160, 89, 0.1); /* خط علوي ذهبي خافت جداً */
+    width: 100%;
+    overflow: hidden;
+    width: 100vw;
+}
+
+/* إضافة لمسة ضوئية (Ambient Light) خلف اللوجو */
+.footer::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(197, 160, 89, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 120px; /* زيادة الفجوة لتجنب الازدحام */
+    margin-bottom: 100px;
+}
+
+.footer-brand-area {
+    max-width: 500px; /* توسيع المساحة للوصف */
+}
+
+.footer-logo-img {
+    width: 180px; /* حجم أكبر للفخامة */
+    height: auto;
+    margin-bottom: 35px;
+    /* إزالة الفلتر لإظهار الذهب الأصلي وإضافة توهج ناعم */
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.3));
+    transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.footer-logo-img:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+.brand-name {
+    font-family: var(--font-primary);
+    font-size: 2rem; /* تكبير الخط */
+    font-weight: 800;
+    letter-spacing: 0.6em; /* تباعد حروف الترا (Ultra-wide) */
+    margin-bottom: 25px;
+    color: #F0F2F5;
+    text-transform: uppercase;
+}
+
+.brand-bio {
+    line-height: 2; /* تباعد أسطر مريح جداً */
+    font-size: 1rem;
+    opacity: 0.5;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    max-width: 450px;
+}
+
+/* --- Social Icons - Premium Interaction --- */
+.footer-social-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 35px;
+}
+
+.social-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.8em; /* تباعد حروف واسع جداً للتاج */
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.social-icons {
+    display: flex;
+    gap: 25px;
+}
+
+.social-icon {
+    position: relative;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(240, 242, 245, 0.02);
+    border: 1px solid rgba(240, 242, 245, 0.08);
+    border-radius: 50%; /* أيقونات دائرية محددة */
+    color: #F0F2F5;
+    font-size: 1.2rem;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0.7;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    opacity: 1;
+    color: var(--accent-gold);
+    border-color: var(--accent-gold);
+    background: rgba(197, 160, 89, 0.05);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+/* --- The Divider --- */
+.footer-divider {
+    width: 100%;
+    height: 1px;
+    /* تدرج ذهبي رقيق للخط الفاصل */
+    background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.2), transparent);
+    margin-bottom: 50px;
+}
+
+/* --- Bottom Bar --- */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    opacity: 0.3;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+@media screen and (max-width: 1170px) {
+    
+    /* --- تثبيت وتصغير أحجام الفوتر --- */
+    .footer {
+        padding: 70px 5% 30px; /* تقليل المسافات العلوية والسفلية */
+    }
+
+    .footer-top {
+        gap: 40px; /* تقليل الفجوة بين البراند والسوشيال ميديا */
+        margin-bottom: 50px;
+    }
+
+    .footer-logo-img {
+        width: 110px; /* تصغير اللوجو قليلاً ليتناسب مع المساحة الجديدة */
+        margin-bottom: 15px;
+    }
+
+    .brand-name {
+        font-size: 1.3rem; /* تصغير اسم الشركة */
+        letter-spacing: 0.3em;
+    }
+
+    .brand-bio {
+        font-size: 0.8rem; /* تصغير النص التعريفي ليكون أكثر رقة */
+        max-width: 320px; /* تحديد العرض لضمان عدم التشتت */
+    }
+
+    /* --- السوشيال ميديا --- */
+    .footer-social-links {
+        gap: 15px;
+    }
+
+    .social-label {
+        font-size: 0.6rem; /* تصغير التسمية العلوية */
+        letter-spacing: 0.4em;
+    }
+
+    .social-icons {
+        gap: 20px; /* تقريب الأيقونات من بعضها */
+    }
+
+    .social-icon {
+        font-size: 1.1rem; /* تصغير حجم الأيقونات (i tags) */
+    }
+
+    /* --- الجزء السفلي --- */
+    .footer-bottom {
+        font-size: 0.55rem; /* تصغير حقوق النشر */
+        letter-spacing: 0.2em;
+    }
+
+    .footer-divider {
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+
+    .footer {
+        padding: 80px 20px 40px;
+        /* توزيع إضاءة مركزي خلف اللوجو */
+        margin-bottom: 70px;
+        overflow: hidden;
+        text-align: center; /* سنترة المحتوى الأساسي */
+ margin-bottom: 50px;
+    }
+
+    .footer-top {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* سنترة العناصر عمودياً */
+        gap: 50px;
+       
+    }
+
+    .footer-brand-area {
+        position: relative;
+        padding-left: 0;
+        border-left: none; /* إلغاء الخط الجانبي */
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* إضافة خط ذهبي علوي رقيق جداً للتمييز */
+    .footer-brand-area::before {
+        content: '';
+        width: 40px;
+        height: 1px;
+        background: var(--accent-gold);
+        margin-bottom: 30px;
+        opacity: 0.4;
+    }
+
+    .footer-logo-img {
+        width: 130px; /* تكبير بسيط للوجو في المنتصف */
+        margin-bottom: 25px;
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+    }
+
+    .brand-name {
+        font-size: 1.5rem;
+        letter-spacing: 0.6em; /* زيادة التباعد للفخامة */
+        margin-bottom: 20px;
+        
+    }
+
+    .brand-bio {
+        font-size: 0.9rem;
+        width: 85%; /* جعل الوصف يأخذ عرضاً أكبر كما طلبت */
+        line-height: 1.9;
+        opacity: 0.6;
+        margin: 0 auto; /* لضمان السنترة */
+        font-weight: 300;
+       
+    }
+
+    /* --- السوشيال ميديا بتنسيق مركزي --- */
+    .footer-social-links {
+        align-items: center; /* سنترة التاج والأيقونات */
+        padding-top: 30px;
+        width: 100%;
+        border-top: 1px solid rgba(240, 242, 245, 0.05);
+    }
+
+    .social-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.4em;
+        margin-bottom: 25px;
+    }
+
+    .social-icons {
+        justify-content: center; /* سنترة الأيقونات */
+        gap: 30px;
+    }
+
+    .social-icon {
+        width: 50px; /* تكبير الدائرة قليلاً */
+        height: 50px;
+        background: rgba(240, 242, 245, 0.02);
+        border: 1px solid rgba(240, 242, 245, 0.08);
+    }
+
+    /* --- شريط النهاية السفلي --- */
+    .footer-bottom {
+        flex-direction: column; /* تحويله لعمودي في الموبايل لعدم التداخل */
+        gap: 20px;
+        font-size: 0.55rem;
+        opacity: 0.3;
+        padding-top: 30px;
+    }
+
+    /* توهج مركزي خلفي */
+    .footer::after {
+        width: 300px;
+        height: 300px;
+        bottom: -150px;
+        right: 50%;
+        transform: translateX(50%); /* سنترة الإضاءة الخلفية */
+        background: var(--accent-gold);
+        filter: blur(150px);
+        opacity: 0.07;
+    }
+}
+
+
+
+/* --- Footer Optimization for 450px --- */
+@media screen and (max-width: 450px) {
+
+    .footer {
+        padding: 60px 15px 30px; /* تقليل البادينج العلوي */
+       
+    }
+
+    .footer-top {
+        gap: 40px; /* تقليل الفجوة بين الأقسام */
+    }
+
+    .footer-brand-area::before {
+        margin-bottom: 20px;
+        width: 30px; /* تقصير الخط الذهبي الزخرفي */
+    }
+
+    .footer-logo-img {
+        width: 110px; /* تصغير اللوجو بنسبة متناسبة */
+        margin-bottom: 20px;
+    }
+
+    .brand-name {
+        font-size: 1.25rem; /* تصغير اسم البراند */
+        letter-spacing: 0.5em; /* تقليل طفيف في تباعد الحروف */
+        margin-bottom: 15px;
+    }
+
+    .brand-bio {
+        font-size: 0.8rem; /* تصغير الوصف ليكون أكثر رقة */
+        width: 90%; /* استغلال مساحة أكبر قليلاً للعرض */
+        line-height: 1.7;
+    }
+
+    /* --- تنسيق السوشيال ميديا --- */
+    .footer-social-links {
+        padding-top: 25px;
+        gap: 20px;
+    }
+
+    .social-label {
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 20px;
+    }
+
+    .social-icons {
+        gap: 20px; /* تقريب الأيقونات من بعضها */
+    }
+
+    .social-icon {
+        width: 44px; /* تصغير قطر الدائرة */
+        height: 44px;
+        font-size: 1rem; /* تصغير حجم الأيقونة داخل الدائرة */
+    }
+
+    /* --- شريط النهاية السفلي --- */
+    .footer-bottom {
+        gap: 12px;
+        font-size: 0.5rem;
+        padding-top: 25px;
+        letter-spacing: 0.2em;
+    }
+
+    /* ضبط التوهج الخلفي ليناسب المساحة الأصغر */
+    .footer::after {
+        width: 200px;
+        height: 200px;
+        filter: blur(100px);
+    }
+}

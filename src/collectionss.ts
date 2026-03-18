@@ -6,6 +6,7 @@ export interface Product {
     image: string; // اترك الرابط فارغاً كما طلبت
     category: string;
     description: string;
+    color: string; // خاصية اختيارية للون المنتج إذا لزم الأمر
 }
 
 
@@ -78,9 +79,10 @@ export const MEN_COLLECTION: Product[] = [
         id: 102,
         name: "EMPIRE WOOL OVERCOAT",
         price: "$1,150.00",
-        image: "",
+        image: "./collectionss/EMPIRE-WOOL-OVERCOAT.png",
         category: "Monsieur",
-        description: "Hand-stitched double-breasted coat in virgin wool, designed for a powerful architectural silhouette."
+        description: "Hand-stitched double-breasted coat in virgin wool, designed for a powerful architectural silhouette.",
+        color: "#181c2f",
     },
     {
         id: 103,

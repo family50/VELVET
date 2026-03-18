@@ -431,3 +431,52 @@
     }
     
 }
+
+
+/* --- ألوان صفحة الـ Collections --- */
+
+/* استهداف النصوص (الروابط) واللوجو */
+.header-container.collections-theme .nav-item,
+.header-container.collections-theme .logo-text {
+    color: #AF8936 !important;
+}
+
+/* استهداف أيقونة التاج (Lucide React) */
+.header-container.collections-theme .main-crown {
+    color: #AF8936 !important;
+    stroke: #AF8936 !important; /* لأنها SVG */
+}
+
+/* في حالة السكرول: يفضل بقاء اللون ذهبي مع خلفية فاتحة */
+.header-container.collections-theme.scrolled {
+    background: var(--bg-velvet); /* خلفية بيضاء خفيفة */
+    border-bottom: 1px solid rgba(175, 137, 54, 0.2);
+}
+
+/* بار الموبايل (عن طريق الـ Portal) */
+/* ملاحظة: إذا كان البورتال خارج الـ container، سنستهدفه مباشرة */
+.mobile-bottom-nav.collections-theme, 
+.collections-theme .mobile-nav-item i,
+.collections-theme .mobile-nav-item span {
+    color: var(--accent-gold) !important;
+}
+
+
+
+
+
+
+/* تنسيق بار الموبايل في صفحة الكولكشن */
+.mobile-bottom-nav.collections-theme {
+    /* الخلفية الفاتحة (نفس خلفية صفحة الكولكشن) */
+    background: var(--bg-velvet) !important; 
+    /* خط ذهبي خفيف من الأعلى ليفصل البار عن المحتوى */
+    border-top: 1px solid rgba(175, 137, 54, 0.2) !important;
+}
+
+/* تحويل الأيقونات والنصوص للون الذهبي */
+.mobile-bottom-nav.collections-theme .mobile-nav-item i,
+.mobile-bottom-nav.collections-theme .mobile-nav-item span {
+    color: #AF8936 !important;
+}
+

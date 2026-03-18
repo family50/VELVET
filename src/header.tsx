@@ -1,12 +1,15 @@
 import { createPortal } from 'react-dom'; 
 import { Crown } from 'lucide-react';
 import './header.css';
-import { NavLink } from 'react-router-dom'; // استيراد NavLink بدلاً من Link
+import { NavLink, useLocation } from 'react-router-dom';
 import { useLayoutEffect, useRef  } from 'react';
 import { gsap } from 'gsap';
 import { useEffect, useState } from 'react';
+// أضف useLocation هنا بجانب NavLink
+
 function Header() {
-    
+    const location = useLocation(); // 2. الحصول على المسار الحالي
+    const isCollectionsPage = location.pathname === '/collections'; // 3. التحقق من الصفحة
     const headerRef = useRef(null);
     const mobileNavRef = useRef(null);
     // داخل المكون الخاص بك:
@@ -92,7 +95,9 @@ useLayoutEffect(() => {
 }, []);
     // محتوى بار الموبايل
     const mobileNavContent  = (
-        <nav ref={mobileNavRef} className="mobile-bottom-nav">
+        <nav ref={mobileNavRef}
+        className={`mobile-bottom-nav ${isCollectionsPage ? 'collections-theme' : ''}`}
+        >
             <NavLink to="/" className="mobile-nav-item">
                 <i className="fa-solid fa-house nav-icon-effect"></i>
                 <span>Home</span>
@@ -116,7 +121,8 @@ useLayoutEffect(() => {
     );
 
     return (
-        <header ref={headerRef} className={`header-container ${isScrolled ? 'scrolled' : ''}`}>
+        <header ref={headerRef} 
+        className={`header-container ${isScrolled ? 'scrolled' : ''} ${isCollectionsPage ? 'collections-theme' : ''}`}>
             <div className="header-content">
                 {/* روابط الديسكتوب يسار */}
                 <nav className="desktop-nav nav-left">

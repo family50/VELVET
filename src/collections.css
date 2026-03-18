@@ -1,0 +1,487 @@
+
+/* --- Global Settings --- */
+.collections-page {
+    background-color: var(--bg-velvet);
+    padding: 150px 0 100px;
+    min-height: 100vh;
+    color: var(--text-main);
+}
+
+/* --- Header Styling --- */
+.collections-header {
+    text-align: center;
+    margin-bottom: 80px;
+    padding: 0 20px;
+}
+
+.collections-header .subtitle {
+    font-family: var(--font-secondary);
+    letter-spacing: 0.6em;
+    font-size: 0.8rem;
+    color: var(--accent-gold);
+    font-weight: 700;
+    display: block;
+    text-transform: uppercase;
+}
+
+.collections-header .main-title {
+    font-family: var(--font-primary);
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--text-main);
+    margin: 20px 0;
+    text-transform: uppercase;
+    font-weight: 900;
+    line-height: 1;
+}
+
+/* --- Filter Buttons --- */
+.category-filter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.filter-btn {
+    background: none;
+    border: none;
+    font-family: var(--font-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    color: var(--text-dimmed);
+    cursor: pointer;
+    padding-bottom: 8px;
+    position: relative;
+    transition: var(--transition-smooth);
+    opacity: 0.6;
+}
+
+.filter-btn.active, 
+.filter-btn:hover {
+    color: var(--text-main);
+    font-weight: 700;
+    opacity: 1;
+}
+
+.filter-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; 
+    left: 50%;
+    width: 0; 
+    height: 1px;
+    background: var(--accent-gold);
+    transition: width 0.4s ease, transform 0.4s ease;
+    transform: translateX(-50%);
+}
+
+.filter-btn.active::after {
+    width: 100%;
+}
+
+/* --- Grid System --- */
+.collections-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 30px;
+}
+
+.collection-card {
+    position: relative;
+    overflow: hidden;
+    background: #e5e7eb; /* لون مؤقت يظهر قبل تحميل الصورة */
+    border-radius: 4px; /* انحناء طفيف جداً للفخامة */
+}
+
+/* تنسيق الكارت العرضي (الرجال) */
+.collection-card.landscape {
+    grid-column: span 8;
+    height: 600px;
+    display: flex;
+}
+
+/* تنسيق الكارت الطولي (النساء) */
+.collection-card.portrait {
+    grid-column: span 4;
+    height: 600px;
+}
+
+.collection-card.small {
+    grid-column: span 4;
+    height: 500px;
+    margin-top: -100px; /* حركة تداخل فني (Offset) */
+}
+
+/* --- Image & Content Styling --- */
+.card-image-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.col-img {
+    width: 115%; /* لتوفير مساحة لحركة الـ Parallax */
+    height: 115%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.collection-card:hover .col-img {
+    transform: scale(1.05); /* زوم بسيط عند الهوفر */
+}
+
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    /* تعتيم متدرج ليظهر النص الأبيض بوضوح */
+    background: linear-gradient(to top, rgba(16, 30, 66, 0.9) 0%, rgba(16, 30, 66, 0.2) 50%, transparent 100%);
+    opacity: 0.7;
+    transition: opacity 0.5s ease;
+}
+
+.collection-card:hover .card-overlay {
+    opacity: 0.85;
+}
+
+.card-content {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    color: #FFFFFF;
+    z-index: 5;
+    pointer-events: none; /* عشان الضغطة تروح للكارت نفسه */
+}
+
+.collection-card.landscape .card-content {
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 60px;
+}
+
+.card-content small {
+    font-family: var(--font-secondary);
+    letter-spacing: 0.4em;
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.card-content h2 {
+    font-family: var(--font-primary);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.1;
+    margin: 15px 0;
+    text-transform: uppercase;
+}
+
+.card-content h2 span {
+    color: var(--accent-gold);
+    display: block;
+}
+
+.explore-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: var(--font-secondary);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    pointer-events: auto; /* إعادة تفعيل التفاعل للرابط */
+    transition: var(--transition-smooth);
+}
+
+.explore-link i {
+    font-size: 1rem;
+    transition: transform 0.4s ease;
+}
+
+.explore-link:hover {
+    color: var(--accent-gold);
+}
+
+.explore-link:hover i {
+    transform: translateX(8px);
+}
+
+
+
+
+
+
+/* --- التعديلات الخاصة بشاشات 1280px (Laptops) --- */
+@media screen and (max-width: 1280px) {
+    
+ 
+    /* 2. ضبط عرض الجريد والمسافات الجانبية */
+    .collections-grid {
+        max-width: 1100px; /* تضييق العرض الكلي قليلاً ليناسب الشاشة */
+        padding: 0 30px;
+        gap: 20px; /* تقليل الفجوات بين الكروت */
+    }
+
+    /* 3. تعديل ارتفاع الكروت لضمان عدم خروجها من الشاشة (Viewport) */
+    .collection-card.landscape, 
+    .collection-card.portrait {
+        height: 500px; /* تقليل الارتفاع من 600 إلى 500 */
+    }
+
+    .collection-card.small {
+        height: 420px; /* تقليل الارتفاع من 500 إلى 420 */
+        margin-top: -60px; /* تقليل التداخل ليناسب الارتفاع الجديد */
+    }
+
+    /* 4. ضبط أحجام النصوص داخل الكروت */
+    .card-content {
+        left: 40px; /* تقريب النص من الحافة */
+        bottom: 40px;
+    }
+
+    .collection-card.landscape .card-content {
+        left: 45px;
+    }
+
+    .card-content h2 {
+        font-size: 2.2rem; /* تصغير العنوان قليلاً */
+        margin: 10px 0;
+    }
+
+    .card-content p {
+        font-size: 0.85rem;
+        max-width: 300px; /* تحديد عرض الوصف */
+        line-height: 1.5;
+    }
+
+    /* 5. تعديل الفلاتر (Filter Buttons) */
+    .category-filter {
+        gap: 20px;
+        margin-bottom: 60px;
+    }
+
+    .filter-btn {
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+    }
+}
+
+
+/* --- التعديلات الخاصة بشاشات 1025px (Large Tablets / Small Laptops) --- */
+@media screen and (max-width: 1025px) {
+    
+    /* 1. تقليل المسافات العلوية */
+
+    .collections-header {
+        margin-bottom: 50px;
+    }
+
+    /* 2. إعادة هيكلة الجريد: سنعتمد على نظام أبسط */
+    .collections-grid {
+        max-width: 900px;
+        padding: 0 25px;
+        gap: 20px;
+        /* نجعل الجريد 2 عمود فقط في الأماكن الضيقة */
+    }
+
+    /* 3. تعديل سلوك الكروت لتفادي الضيق */
+    .collection-card.landscape {
+        grid-column: span 12; /* الكارت العريض يأخذ السطر كاملاً */
+        height: 450px;
+    }
+
+    .collection-card.portrait {
+        grid-column: span 6; /* الكروت الطولية تصبح جنباً إلى جنب (نصف العرض) */
+        height: 550px;
+    }
+
+    .collection-card.small {
+        grid-column: span 6; /* الكروت الصغيرة تأخذ نصف العرض */
+        height: 400px;
+        margin-top: 0; /* نلغي الـ Offset لأنه يسبب تداخل غير مريح في هذا الحجم */
+    }
+
+    /* 4. تحسين ظهور النصوص */
+    .card-content {
+        left: 30px;
+        bottom: 30px;
+    }
+
+    .collection-card.landscape .card-content {
+        left: 40px;
+        top: auto;
+        bottom: 40px;
+        transform: none; /* نعيد النص للأسفل ليعطي مساحة للصورة */
+    }
+
+    .card-content h2 {
+        font-size: 1.8rem;
+    }
+
+    /* 5. الفلاتر: جعلها قابلة للتمرير العرضي إذا زادت */
+    .category-filter {
+        gap: 15px;
+        overflow-x: auto;
+        padding: 10px 20px;
+        justify-content: flex-start; /* تبدأ من اليسار لسهولة التمرير */
+        scrollbar-width: none; /* إخفاء السكرول بار في فايرفوكس */
+    }
+    
+    .category-filter::-webkit-scrollbar {
+        display: none; /* إخفاء السكرول بار في كروم */
+    }
+
+    .filter-btn {
+        white-space: nowrap; /* منع انقسام النص لسطرين */
+    }
+}
+
+
+/* --- التعديلات الخاصة بشاشات الهواتف (560px فأقل) --- */
+@media screen and (max-width: 560px) {
+    
+  
+
+    .collections-header {
+        margin-bottom: 30px;
+    }
+
+    .collections-header .main-title {
+        font-size: 2.8rem; /* حجم خط مناسب لعرض الموبايل */
+        letter-spacing: -0.02em;
+    }
+
+    /* 2. تحويل الجريد لعمود واحد كامل */
+    .collections-grid {
+        padding: 0 15px; /* تقليل الحواف الجانبية */
+        display: flex;
+        flex-direction: column; /* ترتيب رأسي */
+        gap: 15px; /* مسافة بسيطة بين الكروت */
+    }
+
+    /* 3. توحيد شكل الكروت */
+    .collection-card.landscape, 
+    .collection-card.portrait, 
+    .collection-card.small {
+        grid-column: span 12; /* تأخذ العرض كاملاً */
+        width: 100%;
+        height: 450px; /* ارتفاع موحد يعطي شكل "المنشورات" الفاخرة */
+        margin-top: 0 !important; /* إلغاء أي تداخل */
+    }
+
+    /* 4. تحسين محتوى الكارت (UI) */
+    .card-content {
+        left: 20px;
+        bottom: 25px;
+        width: calc(100% - 40px); /* ضمان عدم خروج النص عن الكارت */
+    }
+
+    .card-content h2 {
+        font-size: 1.6rem;
+        margin: 8px 0;
+    }
+
+    .card-content small {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+    }
+
+    .explore-link {
+        margin-top: 10px;
+        font-size: 0.7rem;
+    }
+
+    /* 5. الفلاتر: جعلها تبدو كقائمة أفقية نظيفة */
+    .category-filter {
+        gap: 20px;
+        margin-top: 20px;
+        padding-bottom: 15px;
+        justify-content: flex-start;
+        padding-left: 15px;
+    }
+
+    .filter-btn {
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+    }
+
+    /* 6. تحسين التغطية (Overlay) لتسهيل القراءة على الشاشات الصغيرة */
+    .card-overlay {
+        background: linear-gradient(to top, 
+            rgba(16, 30, 66, 0.95) 0%, 
+            rgba(16, 30, 66, 0.4) 40%, 
+            transparent 100%);
+    }
+}
+
+/* --- التعديلات لشاشات 450px (تقليص بنسبة 15% تقريباً) --- */
+@media screen and (max-width: 450px) {
+
+.collections-header{
+    margin-top: -70px;
+}
+
+
+
+    /* 1. تقليل أحجام نصوص الهيدر */
+    .collections-header .main-title {
+        font-size: 2.4rem; /* تقليل من 2.8rem */
+        margin: 15px 0;
+       
+    }
+
+    .collections-header .subtitle {
+        font-size: 0.68rem; /* تقليل بنسبة 15% تقريباً من 0.8rem */
+        letter-spacing: 0.4em;
+    }
+
+    /* 2. تقليص ارتفاع الكروت */
+    .collection-card.landscape, 
+    .collection-card.portrait, 
+    .collection-card.small {
+        height: 380px; /* تقليل من 450px (حوالي 15%) */
+    }
+
+    /* 3. تصغير محتوى الكارت */
+    .card-content {
+        left: 15px;
+        bottom: 20px;
+        width: calc(100% - 30px);
+    }
+
+    .card-content h2 {
+        font-size: 1.35rem; /* تقليل من 1.6rem */
+    }
+
+    .card-content small {
+        font-size: 0.55rem;
+    }
+
+    .explore-link {
+        font-size: 0.6rem;
+        gap: 8px;
+    }
+
+    /* 4. ضبط الفلاتر لتناسب الشاشة الصغيرة */
+    .category-filter {
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .filter-btn {
+        font-size: 0.58rem; /* تقليل من 0.65rem */
+    }
+
+    /* 5. تقليل البادنج العام للجريد */
+    .collections-grid {
+        padding: 0 10px;
+        gap: 12px;
+    }
+}

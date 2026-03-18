@@ -5,6 +5,7 @@ import Header from './header';
 import Thats from './thats'; 
 import Collections from './collections';  
 import Cart from './cart';
+import Pieces from './Clothings-pieces';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/That's us" element={<Thats />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/Clothings-pieces" element={<Pieces />} />
       </Routes>
     </Router>
   );

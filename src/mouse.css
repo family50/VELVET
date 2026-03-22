@@ -1,0 +1,147 @@
+/* إخفاء الماوس الأصلي تماماً */
+/* لا يتم إخفاء الماوس إلا في أجهزة الكمبيوتر فقط */
+@media (pointer: fine) {
+  html, body, a, button, input {
+    cursor: none !important;
+  }
+}
+
+/* إخفاء مكونات الماوس تماماً على الموبايل والتابلت */
+@media (pointer: coarse) {
+  .velvet-trail, 
+  .velvet-core, 
+  .velvet-outer-container {
+    display: none !important;
+  }
+}
+/* ذيل المسار الذهبي */
+.velvet-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 999998;
+  opacity: 0.5;
+  filter: blur(0.4px); /* تنعيم بسيط جداً للخط */
+}
+
+/* النقطة المركزية (النجم الذهبي) */
+.velvet-core {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000001;
+  pointer-events: none;
+  background-color: #C5A059;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+  will-change: transform;
+  box-shadow: 0 0 12px rgba(197, 160, 89, 0.7);
+}
+
+/* الحلقة الخارجية الزجاجية */
+.velvet-outer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  pointer-events: none;
+  /* خط نحيف جداً للفخامة */
+  border: 0.5px solid rgba(197, 160, 89, 0.3);
+  border-radius: 50%;
+  background-color: rgba(197, 160, 89, 0.02);
+  backdrop-filter: blur(4px);
+  will-change: width, height, transform;
+}
+
+/* أنميشن النبض الفاخر عند الـ Hover */
+.velvet-outer.is-hovering {
+  border: 1px solid rgba(197, 160, 89, 0.8);
+  background-color: rgba(197, 160, 89, 0.06);
+  animation: luxuryPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes luxuryPulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 20px rgba(197, 160, 89, 0.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+/* إخفاء الماوس */
+html, body, a, button {
+  cursor: none !important;
+}
+
+.velvet-core {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000001;
+  pointer-events: none;
+  background-color: #C5A059;
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  will-change: transform;
+  box-shadow: 0 0 10px rgba(197, 160, 89, 0.8);
+}
+
+.velvet-outer {
+  position: fixed; /* ضروري جداً */
+  top: 0; /* تصفير الموقع الابتدائي */
+  left: 0; /* تصفير الموقع الابتدائي */
+  z-index: 999999;
+  pointer-events: none;
+  border: 0.5px solid rgba(197, 160, 89, 0.3);
+  border-radius: 50%;
+  background-color: rgba(197, 160, 89, 0.02);
+  backdrop-filter: blur(4px);
+  will-change: transform, width, height;
+}
+
+.velvet-outer.is-hovering {
+  border: 1px solid rgba(197, 160, 89, 1);
+  background-color: rgba(197, 160, 89, 0.08);
+}
+/* إخفاء الماوس */
+html, body, a, button {
+  cursor: none !important;
+}
+
+.velvet-core {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000001;
+  pointer-events: none;
+  background-color: #C5A059;
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  will-change: transform;
+  box-shadow: 0 0 10px rgba(197, 160, 89, 0.8);
+}
+
+.velvet-outer-container {
+  will-change: transform;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.velvet-outer {
+  box-sizing: border-box;
+}
+
+.velvet-outer.is-hovering {
+  border: 1px solid rgba(197, 160, 89, 1) !important;
+  background-color: rgba(197, 160, 89, 0.1) !important;
+  /* أنميشن النبض */
+  animation: luxuryPulse 2s infinite ease-in-out;
+}
+
+@keyframes luxuryPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}

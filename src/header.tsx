@@ -2,101 +2,115 @@ import { createPortal } from 'react-dom';
 import { Crown } from 'lucide-react';
 import './header.css';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useLayoutEffect, useRef  } from 'react';
+import { useLayoutEffect, useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
-import { useEffect, useState } from 'react';
-// أضف useLocation هنا بجانب NavLink
 
 function Header() {
-    const location = useLocation(); // 2. الحصول على المسار الحالي
-    const isCollectionsPage = location.pathname === '/collections'; // 3. التحقق من الصفحة
-    const headerRef = useRef(null);
+    const location = useLocation();
+        const headerRef = useRef(null);
     const mobileNavRef = useRef(null);
-    // داخل المكون الخاص بك:
-const [isScrolled, setIsScrolled] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    
+    // 1. التحقق إذا كنا في صفحة Collections أو Cart لتطبيق الثيم الخاص بهما
+  // التعديل: إضافة '/' (Home) للقائمة ليكون لها التنسيق المميز افتراضياً
+const isSpecialPage = 
+    (location.pathname === '/' && !isScrolled) || 
+    location.pathname === '/collections' || 
+    location.pathname === '/cart';
+    
 
-useEffect(() => {
-    const handleScroll = () => {
-        if (window.scrollY > 50) {
-            setIsScrolled(true);
-        } else {
-            setIsScrolled(false);
-        }
-    };
+    
+    // 2. حالة لجلب عدد المنتجات في السلة
+    const [cartCount, setCartCount] = useState(0);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-}, []);
-useLayoutEffect(() => {
+    useEffect(() => {
+        // تحديث عدد السلة عند التحميل
+        const updateCartCount = () => {
+            const savedCart = JSON.parse(localStorage.getItem('regalia_cart') || '[]');
+            setCartCount(savedCart.length);
+        };
+
+        updateCartCount();
+        // الاستماع لتغييرات الـ storage في حال تم المسح من صفحة أخرى
+        window.addEventListener('storage', updateCartCount);
+        return () => window.removeEventListener('storage', updateCartCount);
+    }, [location]); // التحديث عند تغيير المسار أيضاً
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+  useLayoutEffect(() => {
+    // 1. تحقق إذا كان الأنميشن تم تنفيذه مسبقاً في هذه الجلسة
+    const hasHeaderAnimated = sessionStorage.getItem('header_animated');
+
+    // إذا تم تنفيذه، لا تشغل GSAP واخرج فوراً
+    if (hasHeaderAnimated) {
+        // نضمن أن العناصر ظاهرة مباشرة بدون أنميشن
+        gsap.set([headerRef.current, mobileNavRef.current, ".logo-wrapper", ".nav-item", ".mobile-nav-item i", ".mobile-nav-item span"], {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            letterSpacing: "0.15em"
+        });
+        return;
+    }
+
     const ctx = gsap.context(() => {
         const tl = gsap.timeline({
             defaults: { ease: "power3.out", duration: 1.5 },
+            onComplete: () => {
+                // 2. عند انتهاء الأنميشن لأول مرة، سجل ذلك في الـ sessionStorage
+                sessionStorage.setItem('header_animated', 'true');
+            }
         });
 
-        // 1. أنميشن بار الموبايل (يبدأ أولاً الآن)
+        // أنميشن الـ Mobile Navigation
         if (mobileNavRef.current) {
             tl.fromTo(mobileNavRef.current,
-                { 
-                    y: 100,      // مخفي تحت تماماً
-                    opacity: 0 
-                },
-                { 
-                    y: 0, 
-                    opacity: 1, 
-                    duration: 1.2, 
-                    ease: "expo.out" 
-                },
-                0.3 // نقطة البداية الزمنية المطلقة (سيبدأ قبل الهيدر بـ 0.2ث)
+                { y: 100, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1.2, ease: "expo.out" },
+                0.3
             );
 
-            // 2. أنميشن الأيقونات والنصوص (متزامنين مع بعضهم)
             tl.fromTo(".mobile-nav-item i",
                 { y: -20, opacity: 0, scale: 0.5 },
-                { 
-                    y: 0, 
-                    opacity: 1, 
-                    scale: 1, 
-                    stagger: { amount: 0.4, from: "center" },
-                    ease: "power4.out" 
-                },
-                "-=0.8" // تداخل مع صعود البار
+                { y: 0, opacity: 1, scale: 1, stagger: { amount: 0.4, from: "center" }, ease: "power4.out" },
+                "-=0.8"
             );
 
             tl.fromTo(".mobile-nav-item span",
                 { y: 20, opacity: 0, letterSpacing: "0.5em" },
-                { 
-                    y: 0, 
-                    opacity: 1, 
-                    letterSpacing: "0.15em",
-                    stagger: { amount: 0.4, from: "center" },
-                    ease: "expo.out"
-                },
-                "<" // يبدأ مع الأيقونات بالظبط
+                { y: 0, opacity: 1, letterSpacing: "0.15em", stagger: { amount: 0.4, from: "center" }, ease: "expo.out" },
+                "<"
             );
         }
 
-        // 3. أنميشن الهيدر العلوي (يتأخر قليلاً عن البار السفلي)
+        // أنميشن الـ Header الرئيسي
         tl.fromTo(headerRef.current, 
             { y: -20, opacity: 0 }, 
             { y: 0, opacity: 1, duration: 1.2 },
-            0.6 // يبدأ عند 0.5 ثانية (أي بعد البار السفلي بـ 0.2 ثانية)
+            0.6
         );
 
-        // 4. عناصر الديسكتوب واللوجو (تظهر مع استقرار الهيدر)
         tl.fromTo(".logo-wrapper, .nav-item", 
             { y: 15, opacity: 0, scale: 0.95 }, 
             { y: 0, opacity: 1, scale: 1, stagger: 0.1 }, 
             "<"
         );
-
-    }, document.body);
+        
+    }, headerRef);
 
     return () => ctx.revert();
-}, []);
-    // محتوى بار الموبايل
-    const mobileNavContent  = (
+}, []); // مصفوفة فارغة ليعمل عند أول Load فقط
+
+    const mobileNavContent = (
         <nav ref={mobileNavRef}
-        className={`mobile-bottom-nav ${isCollectionsPage ? 'collections-theme' : ''}`}
+        className={`mobile-bottom-nav ${isSpecialPage ? 'collections-theme' : ''}`}
         >
             <NavLink to="/" className="mobile-nav-item">
                 <i className="fa-solid fa-house nav-icon-effect"></i>
@@ -122,15 +136,13 @@ useLayoutEffect(() => {
 
     return (
         <header ref={headerRef} 
-        className={`header-container ${isScrolled ? 'scrolled' : ''} ${isCollectionsPage ? 'collections-theme' : ''}`}>
+        className={`header-container ${isScrolled ? 'scrolled' : ''} ${isSpecialPage ? 'collections-theme' : ''}`}>
             <div className="header-content">
-                {/* روابط الديسكتوب يسار */}
                 <nav className="desktop-nav nav-left">
                     <NavLink to="/" className="nav-item">Home</NavLink>
                     <NavLink to="/That's us" className="nav-item">That's us</NavLink>
                 </nav>
 
-                {/* اللوجو */}
                 <div className="logo-wrapper">
                     <div className="crown-icon">
                         <Crown className="main-crown" /> 
@@ -138,14 +150,13 @@ useLayoutEffect(() => {
                     <h1 className="logo-text">VELVET</h1>
                 </div>
 
-                {/* روابط الديسكتوب يمين */}
                 <nav className="desktop-nav nav-right">
                     <NavLink to="/collections" className="nav-item">Collections</NavLink>
-                    <NavLink to="/cart" className="nav-item">Cart (0)</NavLink>
+                    <NavLink to="/cart" className="nav-item">Cart ({cartCount})</NavLink>
                 </nav>
             </div>
 
-           {typeof document !== 'undefined' && createPortal(mobileNavContent, document.body)}
+            {typeof document !== 'undefined' && createPortal(mobileNavContent, document.body)}
         </header>
     );
 }

@@ -1,0 +1,1078 @@
+/* --- Root & Layout --- */
+
+
+.pieces-page {
+  background-color: var(--bg-velvet);
+  color: var(--text-main);
+}
+
+/* --- SECTION 1: HERO --- */
+/* Hero-Section.css */
+
+.regalia-hero {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #0B0B0B; /* اللون الأسود الخاص بك */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg-velvet);
+  width: 100vw;
+}
+
+/* تنصيب الخلفية */
+.hero-bg-image {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6) contrast(1.1); /* زيادة الفخامة بتقليل الإضاءة */
+  transform: scale(1.05);
+  transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* تأثير الـ Vignette الأسود من الأطراف */
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%),
+              linear-gradient(to bottom, transparent 70%, #0B0B0B 100%);
+  z-index: 1;
+}
+
+.hero-container {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 1400px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* الـ Tagline بالأعلى */
+.hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeInUp 1s forwards 0.5s;
+}
+
+.hero-badge .line {
+  width: 40px;
+  height: 1px;
+  background: var(--accent-gold); /* اللون الذهبي الخاص بك */
+}
+
+.badge-text {
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+/* العنوان الرئيسي */
+.hero-main-title {
+  font-family: var(--font-primary); /* خط ملكي */
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  margin: 0;
+}
+
+.title-word {
+  display: block;
+  opacity: 0;
+  transform: translateY(50px);
+  animation: titleSlideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.title-word:nth-child(2) {
+  padding-left: 10%; /* إزاحة معمارية للكلمة الثانية */
+  animation-delay: 0.2s;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.3); /* تأثير مفرغ فخم */
+}
+
+/* الجزء السفلي من الهيرو */
+.hero-footer-info {
+  margin-top: 50px;
+  max-width: 500px;
+  opacity: 0;
+  animation: fadeIn 1.5s forwards 1s;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+.hero-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, #C6A75C, transparent);
+  margin-bottom: 15px;
+}
+
+.hero-location {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  opacity: 0.5;
+}
+
+/* زر السكرول الجانبي */
+.hero-scroll-control {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.scroll-text {
+  writing-mode: vertical-rl;
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  opacity: 0.6;
+}
+
+.scroll-line-container {
+  height: 80px;
+  width: 1px;
+  background: rgba(255,255,255,0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-line {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--accent-gold);
+  animation: scrollAnim 2s infinite ease-in-out;
+}
+
+/* Animations */
+@keyframes titleSlideUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes scrollAnim {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- REGALIA ROYAL IDENTITY (الألوان والخطوط الأساسية) --- */
+
+
+/* --- القواعد العامة --- */
+.product-card-link11 {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  outline: none;
+}
+
+.section-products11 {
+  padding: 100px 0; 
+  background-color: var(--bg-velvet);
+  width: 100%; /* العرض الكامل المتوافق */
+  display: flex;
+  flex-direction: column; /* الترتيب الرأسي: الهيدر فوق والجريد تحت */
+  align-items: center;    /* توسيط كل المحتوى في نص الصفحة */
+  overflow: hidden;
+
+}
+
+
+/* الهيدر (العنوان وأدوات التحكم) */
+.section-header-minimal11 {
+  width: 90%;          /* نفس عرض منطقة المنتجات */
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 80px; /* مسافة كافية قبل أول كارت */
+  border-bottom: 1px solid var(--text-main);
+  padding-bottom: 30px;
+  box-sizing: border-box;
+  
+}
+
+.section-header-minimal11 h2 {
+  font-family: var(--font-primary);
+  letter-spacing: 6px;
+  font-size: 1.7rem;
+  color: var(--text-main);
+  margin: 0;
+  text-transform: uppercase;
+}
+/* --- شبكة المنتجات الذكية (Grid) --- */
+.products-grid11 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 100px 40px; 
+  width: 90vw;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* --- كارت المنتج الفاخر --- */
+.product-card11 {
+  position: relative;
+  /* التميز هنا: خلفية بيضاء بـ Alpha قليل جداً لتعطي إحساس "الخامة" */
+  background: rgba(255, 255, 255, 0.02); 
+  padding: 40px 25px; 
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+  
+  /* حدود ناعمة جداً بلون ذهبي مطفي لتمييز الكارت عن الخلفية */
+  border: 1px solid rgba(175, 137, 54, 0.05);
+  border-radius: 4px; /* زوايا حادة لكن ناعمة للفخامة المعمارية */
+  
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* تأثير الـ Hover - الكارت "بينفصل" عن الصفحة بفخامة */
+.product-card-link11:hover .product-card11 {
+  transform: translateY(-20px);
+  /* الكارت بياخد قوام (Body) أوضح عند الهوفر */
+  background: rgba(255, 255, 255, 0.08); 
+  border: 1px solid rgba(175, 137, 54, 0.15);
+  
+  
+  /* ظل "Ambient" عميق جداً لتمييز الارتفاع */
+  box-shadow: 0 40px 80px rgba(16, 30, 66, 0.06); 
+}
+
+/* --- حاوية الـ 3D (الصورة والضل) - كما هي بدون تغيير --- */
+.image-wrapper-3d11 {
+  position: relative;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2000px;
+  overflow: visible;
+}
+
+/* صورة الملابس العائمة - كما هي --- */
+.floating-clothing11 {
+  width: 80%;
+  height: auto;
+  max-height: 80%;
+  object-fit: contain;
+  z-index: 2;
+  filter: drop-shadow(0 15px 30px rgba(0,0,0,0.1));
+  animation: floatingAction 5s ease-in-out infinite;
+}
+
+/* الضل الديناميكي - كما هو --- */
+.product-shadow-3d11 {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 65%;
+  height: 25px;
+  background: radial-gradient(ellipse at center, rgb(0, 0, 0) 0%, transparent 75%);
+  border-radius: 50%;
+  filter: blur(3px);
+  z-index: 1;
+  animation: shadowAction 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* --- أنيميشن الضل والصورة (بدون تغيير) --- */
+@keyframes shadowAction {
+  0%, 100% { transform: translateX(-50%) scale(1); filter: blur(6px); }
+  50% { transform: translateX(-50%) scale(0.7); filter: blur(18px); }
+}
+
+@keyframes floatingAction {
+  0%, 100% { transform: translateY(0) }
+  50% { transform: translateY(-30px)}
+}
+
+/* --- تفاصيل المنتج (Info) --- */
+.product-info-minimal11 {
+  margin-top: 35px;
+  padding: 0 10px;
+  /* إضافة خط ذهبي علوي نحيف جداً لتمييز منطقة المعلومات */
+  border-top: 1px solid rgba(175, 137, 54, 0.1);
+  padding-top: 25px;
+}
+
+.info-top11 {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--accent-gold);
+}
+
+.p-name11 {
+  font-family: var(--font-primary);
+  font-size: 1.3rem;
+  color: var(--text-main);
+  margin: 0 0 15px 0;
+  letter-spacing: 1px;
+}
+
+.p-desc11 {
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  color: var(--text-dimmed);
+  line-height: 1.6;
+  font-weight: 300;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* --- الأزرار السريعة (Quick Actions) --- */
+.quick-action-overlay11 {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+ 
+
+  transition: all 0.6s ease;
+  z-index: 10;
+  /* حذفنا الـ opacity 0 والـ transform */
+  opacity: 1 !important; 
+  transform: none !important;
+}
+
+
+
+.action-btn11 {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 30, 66, 0.05);
+  background: #FFFFFF;
+  color: var(--text-main);
+  box-shadow: 0 10px 20px rgba(16, 30, 66, 0.05);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s ease;
+}
+
+.action-btn11:hover {
+  background: var(--text-main);
+  color: #FFFFFF;
+  transform: scale(1.1);
+}
+/* الأيقونة الافتراضية */
+.action-btn11 i {
+  transition: color 0.4s ease, transform 0.3s ease;
+  color: #ffffff; /* أبيض في البداية ليتناسب مع تصميمك الفخم */
+  font-size: 1.2rem;
+}
+
+/* اللون الأحمر الرومانسي عند التفعيل */
+.active-heart {
+  color: #D4145A !important; /* أحمر ياقوتي رومانسي */
+  text-shadow: 0 0 15px rgba(212, 20, 90, 0.5); /* توهج خفيف فخم */
+}
+
+/* تأثير عند التمرير بالماوس قبل الضغط */
+.action-btn11:hover i {
+  transform: scale(1.1);
+  color: #D4145A;
+}
+/* تعديل لجعل الحاوية تظهر إذا كان القلب مفعل */
+.products-grid11:has(.active-heart) .quick-action-overlay11, /* إذا كان المتصفح حديثاً */
+.product-card11:hover .quick-action-overlay11 {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* حل بديل يضمن العمل على كل المتصفحات */
+.quick-action-overlay11:has(.active-heart) {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+/* تأمين ظهور الزر نفسه إذا كان القلب بداخله مفعل */
+.action-btn11:has(.active-heart) {
+    opacity: 1 !important;
+    transform: scale(1);
+    background: rgba(255, 255, 255, 0.9); /* خلفية فاتحة ليبرز الأحمر */
+    border: 1px solid rgba(212, 20, 90, 0.2); /* حدود حمراء خفيفة جداً */
+}
+
+/* الأيقونة الافتراضية - تعديل بسيط: جعل اللون رمادي فاتح بدلاً من الأبيض تماماً */
+/* لكي تظهر فوق الزر الأبيض */
+.action-btn11 i {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: #333; /* لون داكن قليلاً ليظهر فوق الزر الأبيض */
+  font-size: 1.2rem;
+}
+
+/* اللون الأحمر الرومانسي الفخم */
+.active-heart {
+  color: #D4145A !important; 
+  text-shadow: 0 0 10px rgba(212, 20, 90, 0.3);
+  /* إضافة أنميشن نبض مستمر خفيف جداً لجذب الانتباه للفخامة */
+  animation: heartPulse 2s infinite;
+}
+
+@keyframes heartPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- SECTION 3: ARTISAN --- */
+/* --- SECTION 3: MATERIAL & ARTISANRY (REGALIA STYLE) --- */
+
+.section-artisan {
+  padding: 150px 0;
+  background-color: var(--bg-velvet);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.artisan-layout {
+  width: 90%;
+  max-width: 1400px;
+  display: grid;
+  /* تقسيم المساحة: النص يأخذ 45% والفيديو 55% */
+  grid-template-columns: 0.9fr 1.1fr; 
+  gap: 80px;
+  align-items: center;
+}
+
+/* --- الجزء الخاص بالنصوص --- */
+.artisan-text {
+  padding-right: 40px;
+}
+
+.artisan-text .label {
+  display: block;
+  font-family: var(--font-secondary);
+  font-size: 0.85rem;
+  letter-spacing: 5px;
+  color: var(--accent-gold);
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.artisan-text h2 {
+  font-family: var(--font-primary);
+  font-size: clamp(2.5rem, 4vw, 3.5rem); /* خط مرن يكبر ويصغر حسب الشاشة */
+  line-height: 1.1;
+  color: var(--text-main);
+  margin-bottom: 35px;
+  font-weight: 400;
+}
+
+.artisan-text p {
+  font-family: var(--font-secondary);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-dimmed);
+  margin-bottom: 50px;
+  max-width: 500px;
+}
+
+/* شبكة الإحصائيات (Stats) */
+.stats-grid {
+  display: flex;
+  gap: 60px;
+  border-top: 1px solid rgba(16, 30, 66, 0.1);
+  padding-top: 40px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stat-item span {
+  font-family: var(--font-primary);
+  font-size: 2.2rem;
+  color: var(--text-main);
+}
+
+.stat-item small {
+  font-family: var(--font-secondary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+/* --- الجزء الخاص بالفيديو (The Visual) --- */
+.artisan-visual {
+  width: 100%;
+  perspective: 2000px; /* لإعطاء عمق بسيط */
+}
+
+.macro-shot-container {
+  position: relative;
+  width: 100%;
+  height: 650px;
+  background-color: #000;
+  border-radius: 2px; /* زاوية حادة توحي بالهندسة المعمارية */
+  overflow: hidden;
+  box-shadow: 40px 40px 80px rgba(16, 30, 66, 0.1); /* ظل جانبي فخم */
+}
+
+.artisan-video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05); /* خدعة إخفاء الأطراف */
+  filter: contrast(1.1) brightness(0.9); /* لمسة سينمائية للألوان */
+}
+
+/* طبقة السينما وإخفاء العلامة المائية */
+.video-overlay-cinematic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* الضل السفلي القوي لإخفاء الوتر مارك + Vignette */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 35%),
+              radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.3) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* --- Responsive (الموبايل والتابلت) --- */
+
+@media (max-width: 1100px) {
+  .artisan-layout {
+    grid-template-columns: 1fr; /* جعل النصوص فوق الفيديو */
+    gap: 60px;
+    text-align: center;
+  }
+  
+  .artisan-text {
+    padding-right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .artisan-text p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stats-grid {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-artisan {
+    padding: 80px 0;
+  }
+
+  .macro-shot-container {
+    height: 450px;
+  }
+
+  .artisan-text h2 {
+    font-size: 2.2rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- SECTION 4: VALUES --- */
+.section-values { padding: 100px 5%; display: flex; justify-content: center; }
+.values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1200px; text-align: center; }
+.value-box i { font-size: 2rem; color: var(--accent-gold); margin-bottom: 25px; }
+.value-box h3 { font-family: var(--font-primary); margin-bottom: 15px; letter-spacing: 3px; }
+.value-box p { font-size: 0.85rem; opacity: 0.6; line-height: 1.8; }
+
+/* --- Footer --- */
+.pieces-footer { padding: 80px 5%; border-top: 1px solid rgba(0,0,0,0.05); text-align: center; }
+.footer-logo { font-family: var(--font-primary); font-size: 2rem; letter-spacing: 10px; margin-bottom: 20px; }
+.social-links i { margin: 0 15px; cursor: pointer; transition: 0.3s; }
+.social-links i:hover { color: var(--accent-gold); }
+
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+
+/* --- ضبط الأحجام عند 850 بكسل --- */
+@media (max-width: 850px) {
+  
+  /* --- SECTION 1: HERO (تثبيت حجم النص) --- */
+  .hero-main-title {
+    /* إلغاء الـ clamp وتثبيت قيمة ثابتة لا تتغير بتصغير الصفحة */
+    font-size: 4.5rem !important; 
+    line-height: 1;
+    min-width: 100%; /* ضمان عدم التفاف النص بشكل سيء */
+  }
+
+  .title-word:nth-child(2) {
+    padding-left: 0; /* إلغاء الإزاحة لضمان بقاء النص داخل حدود الشاشة */
+    margin-top: 10px;
+  }
+
+  .hero-description {
+    font-size: 1.1rem !important; /* تثبيت حجم الوصف */
+    max-width: 100%;
+  }
+
+  /* --- SECTION 2: PRODUCTS (تصغير الجريد) --- */
+  .products-grid11 {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* تصغير عرض الكروت قليلاً */
+    gap: 60px 20px; /* تقليل المسافات */
+  }
+
+  .p-name11 {
+    font-size: 1.1rem;
+  }
+
+  .image-wrapper-3d11 {
+    height: 350px; /* تقليل ارتفاع منطقة الصورة */
+  }
+
+  /* --- SECTION 3: ARTISAN --- */
+  .artisan-layout {
+    grid-template-columns: 1fr; /* تحويل التخطيط لعمود واحد */
+    gap: 40px;
+  }
+
+  .artisan-text h2 {
+    font-size: 2.5rem !important; /* حجم ثابت للعنوان */
+  }
+
+  .macro-shot-container {
+    height: 400px; /* تقليل ارتفاع الفيديو */
+  }
+
+  .stats-grid {
+    gap: 30px;
+  }
+
+  /* --- SECTION 4: VALUES --- */
+ 
+
+  /* --- HEADER MINIMAL --- */
+  .section-header-minimal11 {
+
+    margin-bottom: 50px;
+  }
+
+  .section-header-minimal11 h2 {
+    font-size: 1.4rem;
+  }
+}
+
+
+
+/* --- تعديلات السيكشن الثاني (المنتجات) عند 690 بكسل --- */
+@media (max-width: 690px) {
+  
+  .section-products11 {
+    padding: 60px 0; /* تقليل مساحة السيكشن الكلية */
+  }
+
+  /* تصغير الهيدر ليتناسب مع الشاشة الصغيرة */
+  .section-header-minimal11 {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+  }
+
+  .section-header-minimal11 h2 {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+  }
+
+  /* ضبط الشبكة لتكون كارت واحد في السطر وبحجم أصغر */
+  .products-grid11 {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px 15px; /* تقليل المسافة الرأسية بين الكروت */
+    width: 95vw; /* زيادة العرض قليلاً لاستغلال المساحة */
+  }
+
+  /* تصغير الكارت وتفاصيله */
+  .product-card11 {
+    padding: 25px 15px; /* تقليل الحواف الداخلية */
+  }
+
+  .image-wrapper-3d11 {
+    height: 300px; /* تقليل ارتفاع منطقة الصورة */
+  }
+
+  .floating-clothing11 {
+    width: 75%; /* تصغير حجم قطعة الملابس */
+  }
+
+  .product-info-minimal11 {
+    margin-top: 20px;
+    padding-top: 15px;
+  }
+
+  .p-name11 {
+    font-size: 1.1rem; /* تصغير اسم المنتج */
+    margin-bottom: 8px;
+  }
+
+  .p-desc11 {
+    font-size: 0.8rem; /* تصغير الوصف */
+    line-height: 1.4;
+  }
+
+  .info-top11 {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+
+  /* تصغير أزرار الأكشن قليلاً لتناسب اللمس (Touch) */
+  .action-btn11 {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .quick-action-overlay11 {
+    top: 15px;
+    right: 15px;
+  }
+}
+
+
+/* --- تعديلات السيكشن الثالث والرابع عند 630 بكسل --- */
+@media (max-width: 630px) {
+
+  /* --- SECTION 3: ARTISAN (تصغير الأحجام) --- */
+  .section-artisan {
+    padding: 60px 0;
+  }
+
+  .artisan-text h2 {
+    font-size: 1.8rem !important; /* تصغير العنوان ليتناسب مع الموبايل */
+    margin-bottom: 20px;
+  }
+
+  .artisan-text p {
+    font-size: 0.9rem; /* تصغير حجم النص */
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  .macro-shot-container {
+    height: 320px; /* تقليل ارتفاع الفيديو */
+  }
+
+  .stats-grid {
+    gap: 20px; /* تقليل المسافة بين الإحصائيات */
+    padding-top: 25px;
+  }
+
+  .stat-item span {
+    font-size: 1.6rem; /* تصغير الأرقام */
+  }
+
+  .stat-item small {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+  }
+
+  /* --- SECTION 4: VALUES (الحفاظ على الوضع الأفقي) --- */
+  .section-values {
+    padding: 60px 2%; /* تقليل الحواف الجانبية جداً */
+  }
+
+  .values-grid {
+    grid-template-columns: repeat(3, 1fr) !important; /* إجبار الثلاثة على البقاء جنب بعض */
+    gap: 10px; /* أقل مسافة ممكنة بين الصناديق */
+    max-width: 100%;
+  }
+
+  .value-box {
+    padding: 10px 5px;
+  }
+
+  .value-box i {
+    font-size: 1.3rem; /* تصغير الأيقونات جداً */
+    margin-bottom: 10px;
+  }
+
+  .value-box h3 {
+    font-size: 0.75rem; /* تصغير العناوين لتناسب السطر */
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .value-box p {
+    font-size: 0.65rem; /* تصغير الوصف لضمان عدم زيادة الارتفاع */
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* حد أقصى 3 سطور للوصف عشان الشكل يفضل متساوي */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+
+
+/* --- تعديلات السيكشن الأول (Hero) عند 450 بكسل --- */
+@media (max-width: 450px) {
+
+  .regalia-hero {
+    height: 100vh; /* التأكد من ملء الشاشة */
+  }
+
+  /* تصغير العنوان الرئيسي ليناسب عرض الموبايل الصغير */
+  .hero-main-title {
+    font-size: 3.2rem !important; 
+    line-height: 1.1;
+    letter-spacing: -1px;
+  }
+
+  .title-word:nth-child(2) {
+    margin-top: 5px;
+    -webkit-text-stroke: 0.5px rgba(255,255,255,0.4); /* تنحيف الخط المفرغ */
+  }
+
+  /* تصغير التاج (Badge) العلوي */
+  .hero-badge {
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+
+  .hero-badge .line {
+    width: 25px;
+  }
+
+  .badge-text {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+  }
+
+  /* ضبط منطقة الوصف والمعلومات */
+  .hero-footer-info {
+    margin-top: 30px;
+  }
+
+  .hero-description {
+    font-size: 0.95rem !important; /* حجم مقروء ومناسب */
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+
+  .hero-location {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+  }
+
+  /* تصغير أداة السكرول الجانبية عشان متبقاش زاحمة الشاشة */
+  .hero-scroll-control {
+    gap: 10px;
+    right: 10px; /* تقريبها من الحافة */
+  }
+
+  .scroll-text {
+    font-size: 0.55rem;
+    letter-spacing: 2px;
+  }
+
+  .scroll-line-container {
+    height: 50px; /* تقصير طول الخط */
+  }
+
+  /* تحسين الإضاءة في الخلفية للموبايل */
+  .hero-bg-image {
+    filter: brightness(0.5) contrast(1.1);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Pagination Regalia --- */
+.pagination-regalia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-top: 80px;
+  padding-bottom: 20px;
+}
+
+.page-item {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+
+.page-number {
+  font-family: var(--font-primary); /* الخط الملكي */
+  font-size: 1rem;
+  letter-spacing: 2px;
+  color: var(--text-dimmed);
+  transition: color 0.4s ease;
+}
+
+/* الخط الذهبي المميز */
+.page-indicator {
+  width: 0;
+  height: 1px;
+  background: var(--accent-gold);
+  margin-top: 8px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* الحالة النشطة (Active State) */
+.page-item.active .page-number {
+  color: var(--accent-gold);
+  font-weight: 700;
+  transform: translateY(-5px); /* رفعة بسيطة للرقم */
+}
+
+.page-item.active .page-indicator {
+  width: 40px; /* طول الخط عند التفعيل */
+}
+
+/* تأثير الـ Hover */
+.page-item:hover .page-number {
+  color: var(--text-main);
+}
+
+.page-item:not(.active):hover .page-indicator {
+  width: 15px;
+  opacity: 0.5;
+}
+

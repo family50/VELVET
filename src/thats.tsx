@@ -1,279 +1,237 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react'; // التغيير هنا
 import './thats.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from './fotter'; 
+
 function Thats() {
+    const component = useRef<HTMLDivElement>(null); // Ref شامل للكونتينر
     const horizontalSectionRef = useRef<HTMLDivElement>(null);
     const triggerRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const manifestoTextRef = useRef<HTMLDivElement>(null);
+    const heritageSectionRef = useRef<HTMLElement>(null);
+    const pillarsSectionRef = useRef<HTMLElement>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
 
-        // أنميشن السيكشن الثالث (Horizontal Scroll)
-        const pin = gsap.fromTo(
-            horizontalSectionRef.current,
-            { x: 0 },
-            {
-                x: "-200vw", // تحريك بناءً على عدد الصور (3 صور = 200vw إزاحة)
+    const ctx = gsap.context(() => {
+        
+// --- أنميشن السيكشن الأول (Manifesto) ---
+
+// 1. Flicker Prevention 
+            gsap.set([".heritage-image-wrapper", ".heritage-text-box", ".model-item"], { 
+                autoAlpha: 0 
+            });
+
+            // --- أنميشن السيكشن الأول (Manifesto) ---
+            
+            // التأكد من وجود الـ Refs أولاً
+            if (manifestoTextRef.current && component.current) {
+                
+                const manifestoLines = manifestoTextRef.current.querySelectorAll(
+                    '.manifesto-pre-title, .manifesto-title, .horizontal-divider, .manifesto-philosophy, .content-footer'
+                );
+
+                const manifestoBackground = component.current.querySelectorAll(
+                    '.manifesto-bg-video, .light-wash-overlay, .bottom-white-shroud, .fine-grain'
+                );
+
+                // التحقق من أن القوائم ليست فارغة لتجنب تمرير undefined لـ GSAP
+                if (manifestoLines.length > 0 && manifestoBackground.length > 0) {
+                    const tl = gsap.timeline();
+
+                    // أنميشن الخلفية
+                    tl.fromTo(manifestoBackground, 
+                        { autoAlpha: 0 }, 
+                        { autoAlpha: 1, duration: 2.5, ease: "power2.inOut" }
+                    );
+
+                    // أنميشن النصوص
+                    tl.fromTo(manifestoLines, 
+                        { 
+                            autoAlpha: 0, 
+                            y: 40, 
+                            filter: "blur(15px)",
+                            scale: 0.95
+                        }, 
+                        {
+                            autoAlpha: 1,
+                            y: 0,
+                            filter: "blur(0px)",
+                            scale: 1,
+                            duration: 1.8,
+                            ease: "expo.out",
+                            stagger: 0.2,
+                            clearProps: "all"
+                        }, 
+                        "-=1.5"
+                    );
+                }
+            }
+        // --- أنميشن السيكشن الثاني (Heritage) ---
+            const heritageTL = gsap.timeline({
+                scrollTrigger: {
+                    trigger: heritageSectionRef.current,
+                    start: "top 50%",
+                    end: "20% top",
+                    toggleActions: "play reverse play reverse",
+                }
+            });
+
+            heritageTL.to(".heritage-image-wrapper", { 
+                x: 0, autoAlpha: 1, filter: "blur(0px)", duration: 1.8, ease: "expo.out" 
+            }).to(".heritage-text-box", { 
+                x: 0, autoAlpha: 1, filter: "blur(0px)", duration: 1.8, ease: "expo.out" 
+            }, "<");
+
+            // --- أنميشن السيكشن الثالث (Horizontal Scroll) ---
+       gsap.to(horizontalSectionRef.current, {
+                x: "-200vw",
                 ease: "none",
                 scrollTrigger: {
                     trigger: triggerRef.current,
                     pin: true,
                     scrub: 1,
                     start: "top top",
-                    end: "2000 top", // طول مسافة السكرول
+                    end: "2000 top",
                 }
-            }
-        );
+            });
 
-        return () => {
-            pin.kill();
-        };
+            // --- أنميشن السيكشن الرابع (Pillars) ---
+            gsap.to(".model-item", {
+                autoAlpha: 1,
+                y: 0,
+                scale: 1,
+                duration: 1.5,
+                stagger: 0.6,
+                ease: "back.out(1.7)",
+                scrollTrigger: {
+                    trigger: pillarsSectionRef.current,
+                    start: "top 60%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+
+            // --- أنميشن السيكشن الخامس (Royal Gate) ---
+            const gateTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".royal-gate",
+                    start: "top top",
+                    end: "+=600%",
+                    pin: true,
+                    scrub: 1,
+                    onEnter: () => videoRef.current?.play(),
+                    onLeaveBack: () => videoRef.current?.pause(),
+                }
+            });
+
+            gateTl.fromTo(".floating-video-container", 
+                { y: 200, autoAlpha: 0, scale: 0.8 }, 
+                { y: 0, autoAlpha: 1, scale: 1.1, ease: "power2.out" }
+            ).fromTo(".gate-container", 
+                { y: 60, autoAlpha: 0 }, 
+                { y: 0, autoAlpha: 1, ease: "power2.out" },
+                "<0.2"
+            );
+
+        }, component); // حصر السياق داخل الكونتينر الرئيسي
+
+        return () => ctx.revert(); // تنظيف شامل لكل الـ ScrollTriggers والأنميشنز
     }, []);
- 
-// 1. تأكد من تعريف الـ Ref في البداية
-const videoRef = useRef<HTMLVideoElement>(null);
 
-// 2. useEffect خاصة وحصرية للسيكشن الخامس
-useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
 
-    // إنشاء التايم لاين الخاص بالسيكشن الخامس
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".royal-gate",
-            start: "top top",     // يبدأ الأنميشن والتثبيت أول ما السيكشن يلمس قمة الشاشة
-            end: "+=600%",        // مسافة السكرول (كل ما زادت كل ما كان الأنميشن أبطأ وأفخم)
-            pin: true,            // تثبيت السيكشن في الشاشة
-            scrub: 1,             // الربط المباشر مع حركة "إيدك" على الماوس
-            onEnter: () => videoRef.current?.play(), // تشغيل الفيديو عند الدخول
-            onLeaveBack: () => videoRef.current?.pause(), // إيقاف الفيديو لو رجعت لفوق
-        }
-    });
 
-    // إعداد حركة الفيديو (من أسفل إلى مكانه الطبيعي مع تكبير)
-    tl.fromTo(".floating-video-container", 
-        { 
-            y: 200,      // يبدأ من تحت (نازل)
-            opacity: 0,  // ويكون مخفي
-            scale: 0.8   // وأصغر شوية
-        }, 
-        { 
-            y: 0,        // يوصل لمكانه الطبيعي
-            opacity: 1, 
-            scale: 1.1,  // يكبر للفخامة
-            ease: "power2.out" 
-        }
-    );
 
-    // إعداد حركة الكلام (يظهر مع تحرك الفيديو)
-    tl.fromTo(".gate-container", 
-        { 
-            y: 60, 
-            opacity: 0 
-        }, 
-        { 
-            y: 0, 
-            opacity: 1, 
-            ease: "power2.out" 
-        },
-        "<0.2" // يبدأ بعد بداية حركة الفيديو بـ 0.2 ثانية (تداخل فني)
-    );
 
-    return () => {
-        // تنظيف عند مسح السيكشن
-        ScrollTrigger.getAll().filter(st => st.vars.trigger === ".royal-gate").forEach(st => st.kill());
-    };
-}, []);
-const manifestoTextRef = useRef<HTMLDivElement>(null); // السيكشن الأول (النصوص فقط)
-const heritageSectionRef = useRef<HTMLElement>(null);  // السيكشن الثاني
-const pillarsSectionRef = useRef<HTMLElement>(null);   // السيكشن الرابع
-useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
 
-   // --- أنميشن السيكشن الأول (Manifesto - ظهور الأسطر بالتتابع) ---
-// نستهدف العناصر الفرعية داخل الـ Ref (العناوين والوصف والفاصل)
-const lines = manifestoTextRef.current?.querySelectorAll('.manifesto-pre-title, .manifesto-title, .horizontal-divider, .manifesto-philosophy, .content-footer');
 
-if (lines) {
-    gsap.fromTo(lines, 
-        { 
-            y: 40,             // مسافة أقل للحركة لتبدو أنعم
-            opacity: 0,
-            filter: "blur(15px)", // زيادة البلور في البداية يعطي نعومة سينمائية
-            scale: 0.98        // لمسة بسيطة من التكبير أثناء الظهور
-        },
-        {
-            y: 0,
-            opacity: 1,
-            filter: "blur(0px)",
-            scale: 1,
-            duration: 2,      // مدة أطول قليلاً لزيادة الانسيابية
-            ease: "expo.out",   // Expo يعطي حركة ناعمة جداً في النهاية
-            stagger: 0.2,       // الفارق الزمني بين ظهور كل سطر والآخر
-            scrollTrigger: {
-                trigger: ".manifesto-section",
-                start: "top 60%",
-                toggleActions: "play none none reverse"
-            }
-        }
-    );
-}
 
-    // --- أنميشن السيكشن الثاني (Heritage - دخول جانبي فخم) ---
-    // تحريك الصورة من اليسار والنصوص من اليمين
-// --- أنميشن السيكشن الثاني (Heritage - تزامن كامل وتكرار) ---
-const heritageTL = gsap.timeline({
-    scrollTrigger: {
-        trigger: heritageSectionRef.current,
-        start: "top 50%",       // يبدأ الأنميشن عندما يقترب السيكشن من الظهور
-        
-        /* التعديل المطلوب:
-           "top": تعني قمة الشاشة (Scroller Start/End)
-           "50%": تعني منتصف الـ Div المستهدف (Trigger)
-        */
-        end: "20% top",         
-        
-        toggleActions: "play reverse play reverse",
-        // scrub: 1, // تفعيل السكراب سيجعل الحركة مرتبطة بيدك تماماً في هذه المسافة
-    }
-});
 
-heritageTL.fromTo(".heritage-image-wrapper", 
-    { 
-        x: -150, 
-        opacity: 0,
-        filter: "blur(10px)" 
-    }, 
-    { 
-        x: 0, 
-        opacity: 1, 
-        filter: "blur(0px)",
-        duration: 1.8, 
-        ease: "expo.out" 
-    }
-).fromTo(".heritage-text-box", 
-    { 
-        x: 150, 
-        opacity: 0,
-        filter: "blur(10px)" 
-    }, 
-    { 
-        x: 0, 
-        opacity: 1, 
-        filter: "blur(0px)",
-        duration: 1.8, 
-        ease: "expo.out" 
-    }, 
-    "<" // علامة السحر: تعني "ابدأ مع بداية العنصر السابق تماماً"
-);
-    // --- أنميشن السيكشن الرابع (Pillars - ظهور تتابعي للمودلز) ---
-    gsap.fromTo(".model-item", 
-        { 
-            y: 150, 
-            opacity: 0,
-            scale: 0.9
-        },
-        {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 1.5,
-            stagger: 0.6, // يظهروا واحد وراء الآخر
-            ease: "back.out(1.7)",
-            scrollTrigger: {
-                trigger: pillarsSectionRef.current,
-                start: "top 60%",
-                toggleActions: "play none none reverse"
-            }
-        }
-    );
-
-}, []);
     return (
-        <div className="thats-page-wrapper">
+      <div className="thats-page-wrapper" ref={component} style={{ overflowX: 'hidden' }}>
             
             {/* 1. The Manifesto Section */}
-      <section className="manifesto-section">
-    {/* طبقة الفيديو والخلفية */}
-    <div className="manifesto-video-overlay">
-        <video autoPlay muted loop playsInline className="manifesto-bg-video">
-            <source src="./02177378036414400000000000000000000ffffc0a8981c4abb5d.mp4" type="video/mp4" />
-        </video>
-        
-        <div className="light-wash-overlay"></div>
-        <div className="bottom-white-shroud"></div>
-        <div className="fine-grain"></div>
-    </div>
-    
-    {/* محتوى النصوص الفخم */}
-    <div className="manifesto-content" ref={manifestoTextRef}>
-
-        <div className="main-text-wrapper">
-            <h2 className="manifesto-pre-title">The Art of Precision</h2>
-            <h1 className="manifesto-title">
-                A Legacy Woven in <br/> 
-                <span className="italic-text">Silk & Shadow</span>
-            </h1>
-            <div className="horizontal-divider"></div>
-            <p className="manifesto-philosophy">
-                Where the whispers of heritage meet the cutting edge <br/>
-                of mechanical soul. Crafted for the eternal few.
-            </p>
-        </div>
-
-        <footer className="content-footer">
-            <p className="manifesto-subtitle">THE VELVET ARCHIVE — EST. 1047</p>
-        </footer>
-    </div>
-</section>
+     {/* 1. The Manifesto Section */}
+            <section className="manifesto-section">
+                <div className="manifesto-video-overlay">
+                    <video autoPlay muted loop playsInline className="manifesto-bg-video">
+                        <source src="./02177378036414400000000000000000000ffffc0a8981c4abb5d.mp4" type="video/mp4" />
+                    </video>
+                    <div className="light-wash-overlay"></div>
+                    <div className="bottom-white-shroud"></div>
+                    <div className="fine-grain"></div>
+                </div>
+                
+                <div className="manifesto-content" ref={manifestoTextRef}>
+                    <div className="main-text-wrapper">
+                        <h2 className="manifesto-pre-title">The Art of Precision</h2>
+                        <h1 className="manifesto-title">
+                            A Legacy Woven in <br/> 
+                            <span className="italic-text">Silk & Shadow</span>
+                        </h1>
+                        <div className="horizontal-divider"></div>
+                        <p className="manifesto-philosophy">
+                            Where the whispers of heritage meet the cutting edge <br/>
+                            of mechanical soul. Crafted for the eternal few.
+                        </p>
+                    </div>
+                    <footer className="content-footer">
+                        <p className="manifesto-subtitle">THE VELVET ARCHIVE — EST. 1047</p>
+                    </footer>
+                </div>
+            </section>
 
 
 
 
             {/* 2. Our Heritage Section */}
 <section className="heritage-section" ref={heritageSectionRef}>
-    <div className="heritage-container">
-        <div className="heritage-grid">
-            {/* الجزء الأيسر: الصورة مع إطار فخم */}
-            <div className="heritage-image-wrapper">
-                <div className="image-border-gold"></div>
-                <div className="heritage-image-box">
-                    <img src="./Heritage-Portrait.png" alt="Heritage Portrait" className="heritage-img" />
-                    <div className="image-overlay-glow"></div>
+                <div className="heritage-container">
+                    <div className="heritage-grid">
+                        <div className="heritage-image-wrapper" style={{ transform: 'translateX(-150px)' }}>
+                            <div className="image-border-gold"></div>
+                            <div className="heritage-image-box">
+                                <img src="./Heritage-Portrait.png" alt="Heritage Portrait" className="heritage-img" />
+                                <div className="image-overlay-glow"></div>
+                            </div>
+                            <span className="image-caption">© VELVET ARCHIVE 1047</span>
+                        </div>
+
+                        <div className="heritage-text-box" style={{ transform: 'translateX(150px)' }}>
+                            <div className="heritage-header">
+                                <span className="section-label">OUR STORY</span>
+                                <div className="label-line-gold"></div>
+                            </div>
+                            <h2 className="heritage-title">
+                                Born from the <br/> 
+                                <span className="gold-italic">Royal Archives</span>
+                            </h2>
+                            <div className="heritage-divider-long"></div>
+                            <p className="heritage-desc">
+                                Founded in the heart of London, our house has spent centuries perfecting 
+                                the art of textile manipulation.
+                            </p>
+                            <div className="heritage-footer">
+                                <div className="heritage-signature">The Velvet Protocol</div>
+                                <div className="heritage-year">EST. 1047</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <span className="image-caption">© VELVET ARCHIVE 1047</span>
-            </div>
+            </section>
 
-            {/* الجزء الأيمن: النصوص */}
-            <div className="heritage-text-box">
-                <div className="heritage-header">
-                    <span className="section-label">OUR STORY</span>
-                    <div className="label-line-gold"></div>
-                </div>
-                
-                <h2 className="heritage-title">
-                    Born from the <br/> 
-                    <span className="gold-italic">Royal Archives</span>
-                </h2>
 
-                <div className="heritage-divider-long"></div>
 
-                <p className="heritage-desc">
-                    Founded in the heart of London, our house has spent centuries perfecting 
-                    the art of textile manipulation. What began as a secret atelier for the 
-                    crown has evolved into a global sanctuary for the avant-garde.
-                </p>
 
-                <div className="heritage-footer">
-                    <div className="heritage-signature">The Velvet Protocol</div>
-                    <div className="heritage-year">EST. 1047</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
+
+
+
+
+
+
             {/* 3. The Craftsmanship (Horizontal Scroll) */}
            {/* 3. The Craftsmanship (Horizontal Scroll) */}
 <section ref={triggerRef} className="horizontal-overflow-wrapper">
@@ -327,6 +285,20 @@ heritageTL.fromTo(".heritage-image-wrapper",
 
     </div>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             {/* 4. Core Pillars Section */}
        {/* 4. The Pillars of Philosophy */}
@@ -393,25 +365,13 @@ heritageTL.fromTo(".heritage-image-wrapper",
 
             {/* 5. The Curators Section */}
 <section className="archive-cta-section royal-gate">
-    {/* 1. فيديو العنصر الطائر (المادة الخام للفخامة) */}
-    <div className="floating-video-container">
-        <video 
-            ref={videoRef}
-            className="floating-element-video"
-            muted 
-            loop 
-            playsInline
-            preload="auto"
-        >
-            {/* تأكد من وضع المسار الصحيح للفيديو هنا */}
-            <source src="./02177383855846600000000000000000000ffffc0a8981c55fafa.mp4" type="video/mp4" />
-        </video>
-        {/* الظل الديناميكي الذي يعزز وهم الطفو */}
-        <div className="video-ground-shadow"></div>
-    </div>
-
-    {/* 2. الحاوية الرئيسية للمحتوى (The Gate) */}
-    <div className="gate-container">
+                <div className="floating-video-container">
+                    <video ref={videoRef} className="floating-element-video" muted loop playsInline preload="auto">
+                        <source src="./02177383855846600000000000000000000ffffc0a8981c55fafa.mp4" type="video/mp4" />
+                    </video>
+                    <div className="video-ground-shadow"></div>
+                </div>
+                <div className="gate-container">
         
         {/* الجانب الأيسر: العنوان الأيقوني */}
         <div className="gate-left">

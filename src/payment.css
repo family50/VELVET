@@ -1,0 +1,1014 @@
+/* بوابة دفع ريجاليا الملكية - الإصدار النهائي الفاخر 
+   الهوية: الضوء الملكي (Luxury Minimalist)
+   المصمم: يوسف (UI Architect)
+*/
+
+:root {
+    --white-pure: #FFFFFF;       /* الأبيض الصافي للخلفيات */
+  
+    --error-red: #d93025;        /* أحمر التنبيهات */
+
+}
+
+/* 1. إعدادات الصفحة والتمركز العام */
+.payment-gateway-wrapper {
+    min-height: 100vh;
+    background-color: var(--bg-velvet);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 0;
+    font-family: var(--font-secondary);
+    color: var(--text-main);
+   
+}
+
+/* 2. الحاوية الرئيسية للهيكل (Grid System) */
+.payment-main-container {
+    width: 90%; 
+   
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 100px;
+    background: var(--white-pure);
+    padding: 80px;
+    border-radius: 4px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.04);
+    border: 1px solid rgba(197, 160, 89, 0.15);
+  
+}
+
+/* 3. تنسيق العناوين والخطوط الذهبية */
+.section-title {
+    font-family: var(--font-secondary);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--accent-gold);
+    padding-bottom: 15px;
+    display: block;
+    opacity: 0.9;
+}
+
+/* 4. هيكل النموذج وحقول الإدخال الخطية */
+.billing-form {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.billing-form input, 
+.billing-form textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px 5px;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    outline: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.billing-form input:focus, 
+.billing-form textarea:focus {
+    border-bottom-color: var(--accent-gold);
+    padding-left: 12px;
+}
+
+.billing-form textarea {
+    height: 80px;
+    resize: none;
+}
+
+.error-border {
+    border-bottom-color: var(--error-red) !important;
+}
+
+/* 5. الجانب الأيمن: عرض الكارت الذهبي (3D Visual) */
+.payment-card-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 40px;
+}
+
+.card-visual-container {
+    width: 100%;
+    margin-bottom: 60px;
+    perspective: 1500px;
+    display: flex;
+    justify-content: center;
+}
+
+.gold-card-img {
+    width: 90%;
+   
+    height: auto;
+    filter: drop-shadow(0 25px 35px rgba(0,0,0,0.15));
+    transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* تأثير الطفو الفاخر عند التمرير */
+.card-visual-container:hover .gold-card-img {
+    transform: translateY(-20px) ;
+    filter: drop-shadow(0 45px 55px rgba(197, 160, 89, 0.25));
+}
+
+/* 6. زر إتمام العملية (The Royal Action) */
+.pay-now-btn {
+    width: 100%;
+    height: 75px;
+    background: var(--text-main);
+    color: var(--white-pure);
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    transition: all 0.5s ease;
+    margin-top: 20px;
+}
+
+.pay-now-btn:hover {
+    background: var(--accent-gold);
+    box-shadow: 0 20px 40px rgba(197, 160, 89, 0.3);
+}
+
+
+
+/* 10. تحسينات العرض لشاشات الـ Laptop (1280px) */
+@media (max-width: 1280px) {
+    
+    /* تقليل الهوامش الخارجية للحاوية الكبرى */
+    .payment-gateway-wrapper {
+        padding: 40px 0;
+    }
+
+    /* تقليل المساحات الداخلية لنموذج الدفع */
+    .payment-main-container {
+        width: 95%;
+        padding: 50px; /* تقليل من 80px ليتناسب مع المساحة */
+        gap: 60px;     /* تقليل الفجوة بين الجانبين */
+    }
+
+    /* ضبط عناوين الأقسام */
+    .section-title {
+        font-size: 0.8rem;
+        margin-bottom: 30px;
+    }
+
+    /* تكثيف المسافات بين حقول الإدخال */
+    .billing-form {
+        gap: 25px; /* تقليل من 35px */
+    }
+
+    .input-group {
+        gap: 20px;
+    }
+
+    .billing-form input, 
+    .billing-form textarea {
+        padding: 12px 5px;
+        font-size: 0.85rem;
+    }
+
+    /* تحجيم الكارت الذهبي ليتناسب مع العمود الجانبي */
+    .gold-card-img {
+        max-width: 380px; /* تقليل الحجم قليلاً */
+    }
+
+    .card-visual-container {
+        margin-bottom: 40px;
+    }
+
+    /* ضبط زر الدفع ليكون أقل ضخامة */
+    .pay-now-btn {
+        height: 65px;
+        font-size: 0.9rem;
+        letter-spacing: 4px;
+    }
+
+    /* تحسين شكل شاشة النجاح عند هذا الحجم */
+    .archive-main-title {
+        font-size: 1.8rem;
+        letter-spacing: 5px;
+    }
+}
+
+/* 11. التنسيق النهائي الفاخر (iPad Pro 1025px) - Modern Luxury */
+@media (max-width: 1025px) {
+
+    .payment-gateway-wrapper {
+        padding: 60px 0; /* مساحة واسعة خارج البوكس من الأعلى والأسفل */
+    }
+
+    .payment-main-container {
+        width: 90%;
+        max-width: 900px; /* تحديد عرض أقصى لضمان عدم تمدد البيانات بشكل مبالغ فيه */
+        display: flex;
+        flex-direction: column;
+        
+        /* إضافة المساحات الداخلية المطلوبة */
+        padding: 80px 60px; /* 80px من الأعلى والأسفل، و 60px من الجوانب */
+        
+        box-shadow: 0 50px 100px rgba(0,0,0,0.03); /* ظل خفيف جداً ليحدد الحاوية بنعومة */
+        border: 1px solid rgba(0,0,0,0.02); /* إطار لا يكاد يُرى */
+        background-color: var(--white-pure);
+        gap: 100px; 
+    }
+
+    /* 1. قسم الكارت: محاذاة يسار كلاسيكية */
+    .payment-card-side {
+        order: -1;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gold-card-img {
+        min-width: 450px; /* ضمان أن الصورة لا تصبح صغيرة جداً */
+        
+        filter: drop-shadow(0 30px 60px rgba(0,0,0,0.08));
+        margin-left: 0; /* العودة للمحاذاة المنتظمة مع النص */
+    }
+
+    /* 2. العناوين: تتماشى مع محاذاة البيانات */
+    .section-title {
+        text-align: left;
+        margin-bottom: 50px;
+        font-size: 0.75rem;
+        letter-spacing: 5px;
+    }
+
+    /* 3. مدخلات البيانات: هندسة نظيفة */
+    .billing-form {
+        gap: 45px;
+    }
+
+    .input-group {
+        gap: 40px; /* تقليل الفجوة قليلاً لتتناسب مع الـ Padding الداخلي */
+    }
+
+    .billing-form input, 
+    .billing-form textarea {
+        padding: 18px 0;
+        font-size: 0.9rem;
+    }
+
+    /* 4. زر الدفع: يغلق الحاوية بوزن بصري قوي */
+    .pay-now-btn {
+        width: 100%;
+        height: 85px;
+        font-size: 0.95rem;
+        letter-spacing: 7px;
+        margin-top: 60px;
+    }
+}
+/* 12. تحجيم ريجاليا للأجهزة المتوسطة (800px) - المحافظة على الهيكل */
+@media (max-width: 800px) {
+
+    .payment-gateway-wrapper {
+        padding: 40px 0; /* تقليل الهامش الخارجي للحفاظ على المساحة */
+    }
+
+    .payment-main-container {
+        width: 95%; /* استغلال مساحة أكبر من العرض */
+        padding: 50px 30px; /* تصغير المساحات الداخلية (Padding) */
+        gap: 60px; /* تقليل الفجوات بين العناصر الكبرى */
+    }
+
+    /* 1. قسم الكارت: تصغير الصورة فقط */
+    .gold-card-img {
+        min-width: 350px; /* تصغير الحد الأدنى ليتناسب مع الشاشة */
+        max-width: 400px;
+        filter: drop-shadow(0 20px 40px rgba(0,0,0,0.06));
+    }
+
+    /* 2. العناوين: تصغير الخط والمسافات */
+    .section-title {
+        font-size: 0.7rem;
+        letter-spacing: 4px;
+        margin-bottom: 35px;
+    }
+
+    /* 3. مدخلات البيانات: تكثيف المساحات */
+    .billing-form {
+        gap: 30px; /* تقليل المسافة بين الحقول */
+    }
+
+    .input-group {
+        gap: 25px; /* تقليل الفجوة الجانبية بين الحقول المزدوجة */
+    }
+
+    .billing-form input, 
+    .billing-form textarea {
+        padding: 12px 0; /* تقليل الارتفاع الداخلي للحقول */
+        font-size: 0.85rem;
+    }
+
+    /* 4. زر الدفع: تصغير الحجم ليتناسب بصرياً */
+    .pay-now-btn {
+        height: 70px;
+        font-size: 0.85rem;
+        letter-spacing: 5px;
+        margin-top: 40px;
+    }
+}
+/* 13. تحجيم ريجاليا للأجهزة الصغيرة (640px) - المحافظة الصارمة على الهيكل */
+@media (max-width: 640px) {
+
+    .payment-gateway-wrapper {
+        padding: 20px 0; /* تقليل الهوامش الخارجية لتنفس التصميم */
+    }
+
+    .payment-main-container {
+        width: 98%; /* استغلال عرض الشاشة بالكامل تقريباً */
+        padding: 40px 20px; /* مساحات داخلية ضيقة لكنها متوازنة */
+        gap: 50px; /* تقليل الفجوات بين الكارت والفورم */
+    }
+
+    /* 1. قسم الكارت: تحجيم مرن يتناسب مع عرض الشاشة */
+    .gold-card-img {
+        min-width: 280px; /* تصغير الحد الأدنى لضمان عدم خروج الكارت عن الحاوية */
+        max-width: 320px;
+        filter: drop-shadow(0 15px 30px rgba(0,0,0,0.05));
+    }
+
+    /* 2. العناوين: تقليل الحجم والمسافات البينية للحروف */
+    .section-title {
+        font-size: 0.65rem;
+        letter-spacing: 3px;
+        margin-bottom: 30px;
+    }
+
+    /* 3. مدخلات البيانات: تكثيف عالي للمساحات */
+    .billing-form {
+        gap: 25px; /* تقليل المسافة الرأسية بين الصفوف */
+    }
+
+    .input-group {
+        gap: 15px; /* تقليل الفجوة الجانبية للحفاظ على الحقول المتجاورة */
+    }
+
+    .billing-form input, 
+    .billing-form textarea {
+        padding: 10px 0; /* أقل ارتفاع ممكن دون فقدان الفخامة */
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+    }
+
+    /* 4. زر الدفع: رشاقة تتناسب مع العرض المحدود */
+    .pay-now-btn {
+        height: 65px;
+        font-size: 0.8rem;
+        letter-spacing: 4px;
+        margin-top: 30px;
+    }
+}
+/* 14. التنسيق الدقيق للهواتف الذكية (450px) - الهيكل الصامد */
+@media (max-width: 450px) {
+
+    .payment-gateway-wrapper {
+        padding: 15px 0; /* تقليل المساحة الخارجية لأقصى حد */
+    }
+
+    .payment-main-container {
+        width: 100%; /* استغلال عرض الهاتف بالكامل */
+        padding: 35px 15px; /* مساحات داخلية ذكية لمنع تلامس النصوص مع الحواف */
+        gap: 40px; 
+        border-radius: 0; /* إلغاء الحواف المستديرة ليعطي شعوراً بالشاشة الكاملة */
+    }
+
+    /* 1. الكارت الذهبي: تحجيم دقيق للموبايل */
+    .gold-card-img {
+        min-width: 220px; /* تصغير الحد الأدنى ليناسب شاشات iPhone Mini وغيرها */
+        max-width: 280px;
+        filter: drop-shadow(0 10px 20px rgba(0,0,0,0.04));
+    }
+
+    /* 2. العناوين: تقليل الحجم لضمان عدم انكسار السطر */
+    .section-title {
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+        margin-bottom: 25px;
+        padding-bottom: 8px;
+    }
+
+    /* 3. مدخلات البيانات: تكثيف المربعات والخطوط */
+    .billing-form {
+        gap: 20px;
+    }
+
+    .input-group {
+        gap: 12px; /* فجوة ضيقة جداً للحفاظ على الحقلين المتجاورين */
+    }
+
+    .billing-form input, 
+    .billing-form textarea {
+        padding: 8px 0; /* أقل بادينج ممكن للحفاظ على رشاقة الـ UI */
+        font-size: 0.75rem; /* خط صغير لكنه مقروء وواضح */
+        letter-spacing: 0;
+    }
+
+    /* 4. زر الدفع: زر مرن وقوي */
+    .pay-now-btn {
+        height: 60px;
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+        margin-top: 25px;
+    }
+
+    /* تحسين إضافي: جعل التيكست أريا بارتفاع أصغر */
+    .billing-form textarea {
+        height: 50px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 7. حالة السلة الفارغة (The Empty Protocol) */
+/* --- Regalia Empty State Luxury Layout --- */
+
+/* --- Regalia Elite Empty State --- */
+
+.regalia-empty-state-wrapper {
+    min-height: 90vh; /* زيادة الارتفاع ليعطي شعوراً بالفخامة المطلقة */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-velvet);
+    padding: 60px 20px;
+       min-width: 100vw;
+}
+
+.void-content-orchestrator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    
+}
+
+/* الكارت: القطعة المركزية الفاخرة */
+.ethereal-card-silhouette {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+    perspective: 1000px; /* إضافة بعد ثالث للصورة */
+}
+
+.silhouette-img {
+  
+    width: 500px;
+    filter: drop-shadow(0 50px 100px rgba(0,0,0,0.12)); /* ظل عميق جداً يعطي إيحاء بالطفو */
+  
+    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    user-select: none;
+}
+
+/* تأثير عند مرور الماوس على الكارت */
+.ethereal-card-silhouette:hover .silhouette-img {
+    transform: scale(1.02);
+}
+
+/* هندسة النصوص الكبيرة */
+.void-text-architecture {
+    margin-bottom: 50px;
+}
+
+.void-status-label {
+    font-size: 0.75rem;
+    letter-spacing: 8px; /* تباعد حروف واسع جداً */
+    color: var(--accent-gold);
+    margin-bottom: 25px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.void-main-title {
+    font-size: 2.2rem; /* خط كبير وواثق */
+    font-weight: 200;
+    letter-spacing: 12px;
+    color: var(--text-main);
+    margin-bottom: 25px;
+    line-height: 1.2;
+    margin-top: 20px;
+}
+
+.void-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-dimmed);
+    letter-spacing: 2px;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 2;
+    font-weight: 300;
+}
+
+/* زر العودة الفاخر (The Signature Button) */
+.void-action-container {
+    margin-top: 20px;
+}
+
+.regalia-return-action {
+    background: var(--text-main);
+    border: none;
+    padding: 30px 60px 25px 60px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+}
+
+.action-text {
+    font-size: 1rem;
+    letter-spacing: 6px;
+    color: var(--bg-velvet);
+    z-index: 2;
+}
+
+.action-line {
+    width: 0%; /* الخط يبدأ من الصفر ليمتد عند الهوفر */
+    height: 1px;
+    background: var(--accent-gold);
+    margin-top: 8px;
+    transition: width 0.5s ease;
+}
+
+.regalia-return-action:hover {
+  
+    padding: 25px 80px; /* تمدد الزر عند الهوفر */
+}
+
+.regalia-return-action:hover .action-line {
+    width: 100%;
+}
+
+/* التجاوب */
+@media (max-width: 768px) {
+    .void-main-title {
+        font-size: 1.5rem;
+        letter-spacing: 6px;
+    }
+    .silhouette-img {
+        max-width: 380px;
+    }
+}
+
+/* 12. تحجيم البروتوكول الفارغ للأجهزة المتوسطة (850px) */
+@media (max-width: 850px) {
+
+    .regalia-empty-state-wrapper {
+        padding: 40px 15px;
+       
+    }
+
+    .void-content-orchestrator {
+        min-width: 100vw;
+       
+    }
+
+    /* الكارت: الحفاظ على الفخامة مع تقليل العرض */
+    .silhouette-img {
+        width: 420px; /* تصغير حجم الكارت ليتنفس في العرض المحدود */
+        filter: drop-shadow(0 30px 60px rgba(0,0,0,0.1));
+    }
+
+    /* هندسة النصوص: تكثيف الأبعاد */
+    .void-text-architecture {
+        margin-bottom: 40px;
+    }
+
+    .void-status-label {
+        font-size: 0.65rem;
+        letter-spacing: 6px;
+        margin-bottom: 20px;
+    }
+
+    .void-main-title {
+        font-size: 1.8rem; /* خط أصغر لضمان عدم انكسار العنوان في سطرين بشكل سيء */
+        letter-spacing: 8px;
+        margin-bottom: 20px;
+    }
+
+    .void-subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 1.5px;
+        max-width: 450px; /* تضييق المساحة لزيادة التوازن البصري */
+        line-height: 1.8;
+    }
+
+    /* الزر: رشاقة إضافية عند اللمس */
+    .regalia-return-action {
+        padding: 25px 45px 20px 45px; /* تقليل البادينج ليناسب حجم اليد على التابلت */
+    }
+
+    .action-text {
+        font-size: 0.9rem;
+        letter-spacing: 5px;
+    }
+
+    .regalia-return-action:hover {
+        padding: 25px 55px 20px 55px; /* تمدد أقل حدة يتناسب مع عرض الشاشة */
+    }
+}
+
+/* 13. التنسيق الذكي للهواتف (449px - 450px) - توازن الحجم والهيبة */
+@media (max-width: 450px) {
+
+    .regalia-empty-state-wrapper {
+        padding: 30px 15px; /* تقليل الهوامش الخارجية لتوسيع المساحة */
+        
+    }
+
+    /* الكارت: الحفاظ على الحجم مع التحكم في العرض */
+    .silhouette-img {
+        
+        width: 85%; /* حجم ذكي: ليس صغيراً جداً ولا يلمس الحواف */
+        filter: drop-shadow(0 20px 40px rgba(0,0,0,0.08));
+        transform: scale(1.05); /* إعطاء إحساس بالضخامة دون استهلاك مساحة فعلية */
+    }
+
+    .ethereal-card-silhouette {
+        margin-bottom: 40px; /* مسافة معقولة لا تشتت العين */
+    }
+
+    /* هندسة النصوص: وضوح مع تباعد حروف مدروس */
+    .void-text-architecture {
+        margin-bottom: 30px;
+    }
+
+    .void-status-label {
+        font-size: 0.6rem;
+        letter-spacing: 5px;
+        margin-bottom: 12px;
+    }
+
+    .void-main-title {
+        font-size: 1.35rem; /* مقاس "الملك": واضح وقوي ويناسب سطرين */
+        letter-spacing: 5px;
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+
+    .void-subtitle {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        max-width: 290px; /* حصر النص ليكون في المنتصف تماماً */
+        line-height: 1.6;
+        opacity: 0.7;
+    }
+
+
+    .action-line {
+        margin-top: 6px;
+        width: 25% !important; /* خط ذهبي مركز وأنيق */
+    }
+}
+
+/* 14. التمركز الأفقي الحسابي المطلق (450px) */
+@media (max-width: 450px) {
+
+    .void-action-container {
+        width: 100vw;
+        position: relative; /* ليكون مرجعاً للزر */
+        display: block; /* تغيير من flex لضمان عمل الـ margin auto */
+        margin-top: 35px;
+        padding: 0; /* إلغاء أي بادينج قد يسبب الإزاحة */
+       
+    }
+
+    .regalia-return-action {
+        /* طريقة التوسيط الرياضي المطلق */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        width: 90%;
+        max-width: 380px; 
+        min-width: 310px;
+        
+        /* السحر هنا للتوسيط */
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%); /* سحب الزر لنصف عرضه لليسار ليقع في المنتصف تماماً */
+        
+        margin: 0; /* إلغاء المارجن لتجنب التضارب مع الـ transform */
+        padding: 24px 0 20px 0;
+        
+        background: var(--text-main);
+        border: none;
+        cursor: pointer;
+        transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+
+    .action-text {
+        font-size: 0.9rem;
+        letter-spacing: 5px;
+        color: var(--bg-velvet);
+        text-align: center;
+        width: 100%;
+        display: block;
+        /* التأكد من عدم وجود padding داخلي يدفع النص لليسار */
+        padding: 0;
+        margin: 0;
+    }
+
+    .regalia-return-action:hover {
+        /* الحفاظ على التوسيط مع إضافة تأثير الارتفاع */
+        transform: translateX(-50%) translateY(-4px); 
+        background: #000;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+    }
+
+    .action-line {
+        width: 35% !important;
+        height: 1px;
+        background: var(--accent-gold);
+        margin: 8px auto 0 auto; /* توسيط الخط الذهبي داخل الزر */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 8. شاشة النجاح (Success Overlay) */
+.payment-success-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--white-pure);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1s forwards;
+}
+
+.success-card {
+    text-align: center;
+    max-width: 600px;
+}
+
+.success-icon {
+    font-size: 5rem;
+    color: var(--accent-gold);
+    margin-bottom: 30px;
+}
+
+.archive-main-title {
+    letter-spacing: 6px;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+}
+
+.archive-description {
+    color: var(--text-dimmed);
+    letter-spacing: 1px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+.success-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.home-btn, .refresh-btn {
+    padding: 15px 30px;
+    border: 1px solid var(--text-main);
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.home-btn { background: var(--text-main); color: #fff; }
+.refresh-btn { background: transparent; color: var(--text-main); }
+
+/* 9. تأثيرات الظهور والتجاوب */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* 15. تحجيم شاشة النجاح للأجهزة المتوسطة (720px) */
+@media (max-width: 720px) {
+
+    .success-card {
+        width: 90%; /* استغلال عرض الشاشة بشكل متزن */
+        padding: 0 20px;
+    }
+
+    /* تصغير الأيقونة لتجنب الاستحواذ على الشاشة */
+    .success-icon {
+        font-size: 3.5rem;
+        margin-bottom: 25px;
+    }
+
+    /* العنوان الرئيسي: تقليل الحجم والتباعد */
+    .archive-main-title {
+        font-size: 1.6rem;
+        letter-spacing: 4px;
+        margin-bottom: 15px;
+    }
+
+    /* الوصف: تكثيف السطور قليلاً */
+    .archive-description {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 35px;
+        max-width: 85%; /* منع النص من التمدد العرضي الممل */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* الأزرار: تحويلها لتصميم انسيابي */
+    .success-actions {
+        flex-direction: column; /* ترتيب الأزرار تحت بعضها لسهولة الضغط */
+        gap: 15px;
+        align-items: center;
+    }
+
+    .home-btn, .refresh-btn {
+        width: 100%; /* الأزرار تأخذ العرض الكامل المتاح لسهولة اللمس */
+        max-width: 300px;
+        padding: 18px 0;
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+        text-align: center;
+    }
+
+    .home-btn {
+        border: none;
+        background: var(--text-main);
+    }
+
+    .refresh-btn {
+        border: 1px solid rgba(0,0,0,0.1); /* إضعاف حدود زر التحديث لزيادة الهدوء البصري */
+    }
+}
+/* 16. تحجيم شاشة النجاح للهواتف الذكية (420px) */
+@media (max-width: 500px) {
+
+    .success-card {
+        width: 100%; /* استغلال كامل العرض المتاح */
+        padding: 0 15px;
+    }
+
+    /* أيقونة النجاح - تصغير رشيق */
+    .success-icon {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+    }
+
+    /* العنوان الرئيسي - تصغير ليناسب السطر الواحد */
+    .archive-main-title {
+        font-size: 1.3rem;
+        letter-spacing: 3px;
+        margin-bottom: 12px;
+        line-height: 1.3;
+    }
+
+    /* الوصف - تحسين القراءة على الشاشات الصغيرة */
+    .archive-description {
+        font-size: 0.8rem;
+        line-height: 1.5;
+        margin-bottom: 30px;
+        max-width: 100%; /* السماح للنص بالتمدد لتقليل عدد السطور */
+        padding: 0 5px;
+    }
+
+    /* الأزرار - لمسة الـ Touch الصريحة */
+    .success-actions {
+        gap: 12px;
+        width: 100%;
+    }
+
+    .home-btn, .refresh-btn {
+        max-width: 100%; /* تمدد الأزرار لتشمل عرض الحاوية */
+        padding: 16px 0;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        border-radius: 4px; /* زاوية بسيطة جداً لإعطاء شعور بالـ App */
+    }
+
+    /* تحسين زر التحديث ليكون أقل حدة */
+    .refresh-btn {
+        border-color: rgba(0,0,0,0.06);
+        color: var(--text-dimmed);
+    }
+}

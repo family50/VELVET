@@ -1,0 +1,1186 @@
+.cart-page-wrapper {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 80px 20px;
+  min-height: 80vh;
+  background-color: var(--bg-velvet);
+  font-family: var(--font-secondary);
+  color: var(--text-main);
+  margin-top: 80px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cart-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.cart-title {
+  font-family: var(--font-primary);
+  font-size: 2.5rem;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+ 
+}
+
+.cart-count {
+  font-size: 0.9rem;
+  color: var(--text-dimmed);
+  letter-spacing: 2px;
+
+}
+
+.cart-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* بطاقة المنتج الواحد */
+.cart-item-card {
+  display: flex;
+  gap: 30px;
+  background: #ffffff;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.item-image-box {
+  width: 160px;
+  height: 310px;
+  background: transparent; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  /* تقليل البادينج الجانبي قليلاً لإعطاء الصورة مساحة أكبر للتمدد */
+  padding: 10px 15px 30px 15px; /* (Top Right Bottom Left) */
+}
+
+.item-image-box img {
+  /* --- التعديل الجوهري لزيادة الحجم --- */
+  
+  /* زيادة الارتفاع الأقصى لـ 220px ليعطي الصورة هيبة بصرية */
+  max-height: 220px; /* من أصل 310px، يتبقى 90px للطفو والظل */
+  
+  /* العرض الأقصى 100% كما طلبت */
+  max-width: 100%; 
+  
+  /* الحفاظ على تناسق الأبعاد */
+  object-fit: contain; 
+  
+  /* --------------------------------- */
+  
+  height: auto;
+  z-index: 2;
+  /* الأنميشن كما هو */
+  animation: luxuryFloat 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.item-image-box::after {
+  content: '';
+  position: absolute;
+  bottom: 35px; /* رفعناه قليلاً ليكون التفاعل أوضح */
+  left: 50%;
+  width: 50%; 
+  height: 10px;
+
+  border-radius: 50%;
+
+  z-index: 1;
+  mix-blend-mode: multiply;
+  filter: blur(6px);
+  /* نفس اسم الأنميشن ونفس التوقيت بالظبط */
+  animation: luxuryShadow 4s ease-in-out infinite;
+  will-change: transform, opacity;
+  /* سحب اللون من المتغير الذي أرسلناه من الـ TSX */
+  background: var(--item-accent, #000); 
+  box-shadow: 0 0 15px 5px var(--item-accent, rgba(0,0,0,0.5));
+}
+
+/* --- الأنميشن الموحد للصورة --- */
+@keyframes luxuryFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px); /* حركة عميقة وواضحة */
+  }
+}
+
+/* --- الأنميشن الموحد للظل --- */
+@keyframes luxuryShadow {
+  0%, 100% {
+    /* لازم الـ transform يبدأ بـ translateX عشان ميروحش يمين أو شمال */
+    transform: translateX(-50%) scale(1.1);
+    opacity: 0.7;
+  }
+  50% {
+    /* التزامن هنا: عند وصول الصورة لـ -30px، الظل يصغر لـ 0.4 */
+    transform: translateX(-50%) scale(1);
+    opacity: 0.5;
+  }
+}
+
+
+
+
+
+.item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0; /* مساحة داخلية للتنفس */
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 25px; /* زيادة المسافة تحت العنوان */
+}
+
+.item-name {
+  font-family: var(--font-primary);
+  font-size: 1.8rem; /* تكبير ملحوظ للعنوان */
+  letter-spacing: 3px; /* زيادة التباعد لإعطاء طابع ملكي */
+  color: var(--text-main);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.remove-btn {
+  background: rgba(0, 0, 0, 0.03); /* خلفية خفيفة جداً */
+  border: 1px solid transparent;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #999;
+  font-size: 1.1rem;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.remove-btn:hover {
+  color: var(--accent-gold);
+  background: #fff;
+  border-color: var(--accent-gold);
+  transform: rotate(90deg); /* حركة احترافية عند الحذف */
+}
+
+.item-spec {
+  font-size: 1rem; /* تكبير الخط */
+  color: var(--text-dimmed);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.item-spec span {
+  color: var(--text-main);
+  font-weight: 700; /* وزن أثقل للقيم */
+  margin-left: 8px;
+}
+
+.item-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05); /* خط فاصل ناعم */
+  display: flex;
+  justify-content: flex-end; /* وضع السعر في اليمين للفخامة */
+}
+
+.item-price {
+  font-family: var(--font-secondary);
+  font-size: 1.6rem; /* تكبير السعر ليكون واضحاً جداً */
+  font-weight: 700;
+  color: var(--accent-gold); /* السعر باللون الذهبي */
+  letter-spacing: 1px;
+}
+
+
+
+
+
+
+
+
+
+
+.cart-content-grid {
+  display: grid;
+  /* العمود الأول مرن (1fr) والعمود الثاني (الملخص) أصبح أعرض بـ 480px */
+  grid-template-columns: 1fr 480px; 
+  gap: 80px; /* زيادة الفجوة بينهما لمزيد من الفخامة */
+  align-items: flex-start;
+}
+
+.summary-card {
+  background: #ffffff;
+  padding: 60px 45px;
+  position: sticky;
+  top: 120px;
+  
+  /* التعديل هنا لزيادة العرض */
+  width: 100%; 
+  max-width: 500px; /* سقف العرض لضمان عدم التمدد المبالغ فيه على الشاشات الضخمة */
+  
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.06);
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.summary-title {
+  font-family: var(--font-primary);
+  font-size: 2.2rem; /* تكبير العنوان بشكل ملكي */
+  margin-bottom: 50px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--accent-gold); /* خط ذهبي رفيع تحت العنوان */
+  padding-bottom: 20px;
+  display: inline-block;
+  width: 100%;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px; /* زيادة المسافات بين الصفوف */
+  font-size: 1.1rem; /* تكبير الخط */
+  letter-spacing: 2px;
+  color: var(--text-dimmed);
+  text-transform: uppercase;
+}
+
+.summary-row span:last-child {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.free-shipping {
+  color: #AF8936 !important; /* استخدام اللون الذهبي للشحن بدلاً من الأخضر للفخامة */
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+}
+
+.summary-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.06);
+  margin: 40px 0;
+}
+
+/* صف المجموع الكلي */
+.total-row {
+  font-weight: 800;
+  font-size: 1.8rem; /* تكبير المجموع ليكون واضحاً جداً */
+  color: var(--text-main);
+  margin-bottom: 50px;
+  display: flex;
+  align-items: baseline;
+}
+
+.total-row span:last-child {
+  color: var(--accent-gold); /* السعر النهائي بالذهب */
+  font-size: 2.2rem;
+  margin-left: auto;
+}
+
+/* زر إتمام الشراء */
+.checkout-cta-btn {
+  width: 100%;
+  padding: 28px; /* زيادة حجم الزر */
+  background: var(--text-main);
+  color: white;
+  border: 1px solid var(--text-main);
+  font-family: var(--font-secondary);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.checkout-cta-btn:hover {
+  background: transparent;
+  color: var(--text-main);
+  border-color: var(--accent-gold);
+ 
+}
+
+.summary-note {
+  font-size: 0.85rem;
+  color: var(--text-dimmed);
+  text-align: center;
+  margin-top: 30px;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Media Query for Large Desktops (1450px and below) */
+@media (max-width: 1450px) {
+  
+  /* تقليل الهوامش العلوية والسفلية للصفحة */
+  .cart-page-wrapper {
+    padding: 60px 40px;
+    margin-top: 90px;
+  }
+
+  /* تصغير مساحة الـ Grid والفجوة بين الأعمدة */
+  .cart-content-grid {
+    grid-template-columns: 1fr 400px; /* تقليل عرض الملخص من 480px */
+    gap: 40px; /* تقليل الفجوة من 80px */
+  }
+
+  /* تصغير عناوين الصفحة */
+  .cart-title {
+    font-size: 2rem;
+    letter-spacing: 3px;
+  }
+
+  /* --- تعديلات كارت المنتج --- */
+  .cart-item-card {
+    padding: 20px;
+    gap: 25px;
+  }
+
+
+  .item-name {
+    font-size: 1.4rem; /* تصغير اسم المنتج */
+    letter-spacing: 2px;
+  }
+
+  .item-spec {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+
+  .item-price {
+    font-size: 1.3rem; /* تصغير السعر */
+  }
+
+  /* --- تعديلات ملخص السلة (Summary) --- */
+  .summary-card {
+    padding: 40px 30px; /* تقليل البادينج الداخلي من 60px */
+    top: 100px;
+  }
+
+  .summary-title {
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+    letter-spacing: 4px;
+  }
+
+  .summary-row {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+
+  .total-row {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+  }
+
+  .total-row span:last-child {
+    font-size: 1.8rem;
+  }
+
+  .checkout-cta-btn {
+    padding: 20px; /* تصغير حجم الزرار */
+    font-size: 0.9rem;
+  }
+
+
+  .item-image-box::after {
+    /* نوحد التوقيت والـ Easing تماماً، ونزيد المدة */
+    animation-duration: 6s;
+  }
+  .item-image-box {
+    width: 130px; 
+    height: 240px; 
+    /* تعديل البادينج ليناسب الحجم الأصغر ويسمح للصورة بالبروز */
+    padding: 10px 10px 25px 10px; 
+  }
+
+  .item-image-box img {
+    /* --- التعديل الجوهري للمقاس المتوسط --- */
+    
+    /* جعلنا الارتفاع 170px من أصل 240px 
+       هذا يحافظ على نسبة الـ 70% تقريباً من مساحة الحاوية للصورة */
+    max-height: 170px; 
+    
+    max-width: 100%;
+    object-fit: contain;
+    /* -------------------------------------- */
+    
+    animation-duration: 6s; /* السرعة الأبطأ التي طلبتها */
+  }
+
+  /* --- ضبط أنميشن الظل (الحجم الجديد) --- */
+  @keyframes luxuryShadow {
+    0%, 100% {
+      transform: translateX(-50%) scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateX(-50%) scale(0.7);
+      opacity: 0.3;
+    }
+  }
+}
+
+
+/* Media Query for Standard Laptops (1230px and below) */
+@media (max-width: 1330px) {
+  
+  .cart-page-wrapper {
+    max-width: 95%; /* زيادة استغلال مساحة الشاشة */
+    padding: 40px 15px;
+    margin-top: 110px;
+  }
+
+  /* تعديل الـ Grid ليصبح أكثر مرونة */
+  .cart-content-grid {
+    grid-template-columns: 1fr 340px; /* تقليص الملخص لـ 340px للحفاظ على مساحة المنتجات */
+    gap: 30px; /* تقليل الفجوة لتجنب الازدحام */
+  }
+
+  /* --- كارت المنتج (المرحلة الثانية من التصغير) --- */
+  .cart-item-card {
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .item-image-box {
+    width: 120px; /* تصغير الصورة لتناسب العرض الجديد */
+    height: 180px;
+    padding-bottom: 20px;
+  }
+
+  .item-name {
+    font-size: 1.25rem; /* تصغير العنوان ليتناسب مع المساحة */
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+  }
+
+  .item-spec {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+
+  .item-price {
+    font-size: 1.2rem;
+  }
+
+  /* --- ملخص السلة (Summary) --- */
+  .summary-card {
+    padding: 30px 20px; /* تصغير المسافات الداخلية */
+    top: 90px;
+  }
+
+  .summary-title {
+    font-size: 1.4rem;
+    margin-bottom: 25px;
+    letter-spacing: 3px;
+  }
+
+  .summary-row {
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+  }
+
+  .total-row {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+  }
+
+  .total-row span:last-child {
+    font-size: 1.5rem; /* المجموع النهائي مازال واضحاً ولكن أصغر */
+  }
+
+  .checkout-cta-btn {
+    padding: 18px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+  }
+
+  /* الحفاظ على الأنميشن البطيء */
+
+/* --- الأنميشن الموحد للصورة --- */
+@keyframes luxuryFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-21px); /* حركة عميقة وواضحة */
+  }
+}
+.item-image-box {
+    width: 120px; 
+    height: 180px;
+    /* تقليل البادينج لأقصى درجة للسماح للصورة بالظهور بوضوح */
+    padding: 5px 5px 15px 5px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .item-image-box img {
+    /* --- التعديل الجوهري لمقاس اللابتوب الصغير --- */
+    
+    /* جعلنا الارتفاع 135px من أصل 180px 
+       هذا يترك 45px فقط موزعة بين الأعلى والأسفل */
+    max-height: 135px; 
+    
+    max-width: 100%;
+    object-fit: contain;
+    /* ------------------------------------------- */
+    
+    /* السرعة الأبطأ لإضفاء طابع الفخامة الهدوء */
+    animation: luxuryFloat 4s ease-in-out infinite;
+  }
+
+  .item-image-box::after {
+    /* ضمان تزامن الظل مع الصورة في نفس التوقيت البطيء */
+    animation: luxuryShadow 4s ease-in-out infinite;
+    bottom: 15px; /* تقريب الظل من الصورة نظراً لصغر الحاوية */
+  }
+
+  /* --- أنميشن الطفو (نسخة هادئة جداً للمقاس الصغير) --- */
+  @keyframes luxuryFloat {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      /* حركة بسيطة (-12px) كافية جداً نظراً لأن الارتفاع الكلي 180px فقط */
+      transform: translateY(-12px); 
+    }
+  }
+
+  /* --- أنميشن الظل (متوافق مع الطفو البسيط) --- */
+  @keyframes luxuryShadow {
+    0%, 100% {
+      transform: translateX(-50%) scale(0.9);
+      opacity: 0.5;
+    }
+    50% {
+      /* تقليل تصغير الظل لأن الصورة لا تبتعد كثيراً */
+      transform: translateX(-50%) scale(0.75);
+      opacity: 0.2;
+    }
+  }
+
+}
+
+
+/* Media Query for Tablets (1025px and below) */
+@media (max-width: 1025px) {
+  
+.cart-page-wrapper {
+    /* نستخدم width 100% مع box-sizing لضمان التساوي */
+    width: 100vw; 
+    min-width: 100vw; 
+    padding: 40px 20px; /* الهوامش الجانبية متساوية تماماً (20px يمين ويسار) */
+    margin-top: 105px; /* إلغاء الـ auto وتصفير الهوامش الجانبية الخارجية */
+    box-sizing: border-box;
+    margin-bottom: 40px;
+  }
+
+  .cart-content-grid {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 40px;
+    align-items: stretch; 
+    width: 100%;
+    margin: 0; /* تصفير أي مارجن قديم */
+    padding: 0; /* تصفير أي بادينج قديم */
+    box-sizing: border-box;
+     
+  }
+
+  .summary-card {
+    position: relative;
+    top: 0;
+    width: 100%; 
+    max-width: 100%; 
+    /* تأكد أن البادينج الداخلي متساوي */
+    padding: 40px 25px; 
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box; /* السطر المنقذ للتوسط */
+    border: 1px solid rgba(0, 0, 0, 0.03);
+  }
+
+  .cart-item-card {
+    width: 100%; 
+    display: flex; /* لضمان توزيع العناصر داخله بشكل سليم */
+    box-sizing: border-box;
+    padding: 20px;
+    gap: 25px;
+    margin-right: 0; /* تصفير أي إزاحة موروثة */
+    margin-left: 0;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+  }
+
+  .item-image-box {
+    width: 140px; /* تكبير بسيط لأن العرض أصبح متاحاً */
+    height: 220px;
+  }
+
+  .item-image-box img {
+    max-height: 160px;
+  }
+
+  /* تحسين العناوين لتكون أوضح في اللمس */
+  .item-name {
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+  }
+
+  .item-price {
+    font-size: 1.4rem;
+  }
+
+  .summary-title {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    text-align: center; /* توسيط العنوان للفخامة */
+  }
+
+  /* جعل زر الشراء ضخم وسهل الضغط (Touch-friendly) */
+  .checkout-cta-btn {
+    padding: 22px;
+    font-size: 1rem;
+  }
+
+  /* الحفاظ على الأنميشن الهادئ (6 ثوانٍ مناسبة لهذا الحجم) */
+  .item-image-box img,
+  .item-image-box::after {
+    animation-duration: 6s;
+  }
+  /* تأكد أن الكارت يملك position: relative لكي ينضبط الزر بداخله */
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Media Query for Mobile Devices (600px and below) */
+@media (max-width: 600px) {
+
+  .cart-page-wrapper {
+    /* تغيير من 100vw لـ 100% لتجنب مشاكل الـ Scrollbar في بعض المتصفحات */
+    width: 100%;
+    padding: 30px 15px;
+  
+    box-sizing: border-box;
+  }
+
+  .cart-content-grid {
+    display: flex;
+    flex-direction: column-reverse; /* ملخص الدفع يظل في الأعلى */
+    gap: 30px;
+    width: 100%;
+  }
+
+  /* --- كارت المنتج: تحويله لعمودي --- */
+  .cart-item-card {
+    flex-direction: column; /* الصورة فوق والكلام تحت */
+    align-items: center;
+    text-align: center; /* توسيط النصوص للموبايل */
+    padding: 25px 15px;
+    gap: 15px;
+  }
+
+  .item-image-box {
+    width: 100%; /* استغلال كامل العرض */
+    height: 180px; /* تقليل الارتفاع ليناسب الموبايل */
+    margin-bottom: 10px;
+  }
+
+  .item-image-box img {
+    max-height: 140px;
+  }
+
+  /* --- تفاصيل المنتج --- */
+  .item-details {
+    width: 100%;
+    align-items: center;
+  }
+
+  .item-header {
+    flex-direction: column; /* اسم المنتج وزر الحذف فوق بعض */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .item-name {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .remove-btn {
+    position: absolute; /* وضع زر الحذف في الزاوية */
+    top: 15px;
+    right: 15px;
+  }
+
+  .item-spec {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+
+  .item-footer {
+    justify-content: center; /* توسيط السعر */
+    width: 100%;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding-top: 15px;
+  }
+
+  .item-price {
+    font-size: 1.3rem;
+  }
+
+  /* --- ملخص الطلب في الموبايل --- */
+  .summary-card {
+    padding: 30px 20px;
+  }
+
+  .summary-title {
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+  }
+
+  .summary-row {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .total-row {
+    font-size: 1.3rem;
+    flex-direction: column; /* المجموع والكلمة فوق بعض */
+    gap: 10px;
+    align-items: center;
+  }
+
+  .total-row span:last-child {
+    font-size: 1.7rem;
+    margin-left: 0;
+  }
+
+  .checkout-cta-btn {
+    padding: 20px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+  .cart-item-card {
+    position: relative; /* ضروري جداً لعمل الـ absolute */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px 20px; /* زيادة البادينج العلوي قليلاً */
+    display: flex;
+    flex-direction: column; /* ترتيب رأسي للتابلت والموبايل */
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* --- تثبيت زر الإغلاق (X) في أعلى اليمين --- */
+  .remove-btn {
+    position: absolute;
+    top: 15px;      /* مسافة من الأعلى */
+    right: 15px;    /* مسافة من اليمين */
+    z-index: 10;    /* لضمان ظهوره فوق أي عنصر آخر */
+    background: rgba(0, 0, 0, 0.05); /* خلفية خفيفة لتمييزه */
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .remove-btn:hover {
+    background: var(--accent-gold);
+    color: white;
+    transform: rotate(90deg);
+  }
+}
+/* Media Query for Small Mobile Devices (400px and below) */
+@media (max-width: 450px) {
+
+  .cart-page-wrapper {
+    padding: 20px 10px; /* تقليل الهوامش الجانبية لأقصى حد */
+    margin-top: 70px;
+  }
+
+  .cart-content-grid {
+    gap: 20px; /* تقليل الفجوة بين الملخص والمنتجات */
+  }
+
+  /* --- ملخص السلة (Compact) --- */
+  .summary-card {
+    padding: 25px 15px;
+  }
+
+  .summary-title {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+  }
+
+  .summary-row {
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+  }
+
+  .total-row {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  .total-row span:last-child {
+    font-size: 1.5rem;
+  }
+
+  .checkout-cta-btn {
+    padding: 16px; /* زر أصغر ولكن يسهل الضغط عليه */
+    font-size: 0.8rem;
+  }
+
+  /* --- كارت المنتج (Slim Version) --- */
+  .cart-item-card {
+    padding: 15px 10px;
+    gap: 10px;
+  }
+
+  .item-image-box {
+    height: 150px; /* تقليل منطقة الصورة */
+  }
+
+  .item-image-box img {
+    max-height: 120px; /* تصغير حجم المنتج بصرياً */
+  }
+
+  .item-name {
+    font-size: 1.1rem; /* تصغير العنوان */
+    letter-spacing: 1px;
+  }
+
+  .item-spec {
+    font-size: 0.75rem;
+    margin-bottom: 5px;
+  }
+
+  .item-footer {
+    padding-top: 10px;
+  }
+
+  .item-price {
+    font-size: 1.2rem;
+  }
+
+  /* تصغير زر الحذف ليتناسب مع الكارت الصغير */
+  .remove-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cart-empty-state15 {
+  text-align: center;
+  padding: 200px 20px; /* زيادة الارتفاع ليعطي شعوراً بالفراغ الفني */
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.empty-title15 {
+  font-family: var(--font-primary);
+  font-size: 3.5rem; /* عنوان ضخم وفخم */
+  color: var(--text-main);
+  letter-spacing: 15px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.empty-subtitle15 {
+  font-size: 1.1rem;
+  color: var(--text-dimmed);
+  letter-spacing: 3px;
+  max-width: 500px;
+  margin: 0 auto 50px;
+  line-height: 1.8;
+}
+
+.continue-shopping-btn15 {
+  display: inline-block;
+  padding: 22px 60px;
+  background: var(--text-main);
+  color: white;
+  text-decoration: none;
+  letter-spacing: 4px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.4s ease;
+  border: 1px solid var(--text-main);
+}
+
+.continue-shopping-btn15:hover {
+  background: transparent;
+  color: var(--text-main);
+  border-color: var(--accent-gold);
+  transform: translateY(-5px);
+}
+/* Media Query for Tablets (850px and below) - Upscaled by 20% */
+@media screen and (max-width: 850px) {
+  
+  .cart-empty-state15 {
+    /* زيادة البادينج من 120px إلى 145px تقريباً */
+    padding: 145px 20px;
+    max-width: 95%;
+  }
+
+  .empty-title15 {
+    /* زيادة الخط من 2.2rem إلى 2.65rem */
+    font-size: 2.65rem;
+    letter-spacing: 10px; /* زيادة التباعد لتعزيز الفخامة */
+    margin-bottom: 25px;
+  }
+
+  .empty-subtitle15 {
+    /* زيادة الخط من 0.95rem إلى 1.15rem */
+    font-size: 1.15rem;
+    letter-spacing: 2.5px;
+    max-width: 480px;
+    margin-bottom: 50px;
+    line-height: 1.7;
+  }
+
+  .continue-shopping-btn15 {
+    /* تكبير الزر بنسبة 20% في الحجم والمساحة */
+    padding: 22px 55px;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    font-weight: 700;
+  }
+}
+/* Media Query for Mobile (540px and below) - Upscaled by 20% */
+@media screen and (max-width: 540px) {
+  
+  .cart-empty-state15 {
+    /* زيادة الارتفاع ليعطي مساحة تنفس أكبر */
+    padding: 120px 20px;
+    max-width: 100%;
+    margin-top: 10px;
+  }
+
+  .empty-title15 {
+    /* زيادة الخط من 1.6rem إلى 1.95rem تقريباً */
+    font-size: 1.95rem;
+    letter-spacing: 7px; /* زيادة بسيطة في التباعد ليتناسب مع الحجم الجديد */
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .empty-subtitle15 {
+    /* زيادة الخط من 0.85rem إلى 1.05rem */
+    font-size: 1.05rem;
+    letter-spacing: 1.8px;
+    max-width: 320px; /* زيادة العرض قليلاً لاستيعاب الحجم الجديد */
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+
+  .continue-shopping-btn15 {
+    /* تكبير الزر بنسبة 20% لسهولة النقر القصوى */
+    padding: 20px 40px;
+    font-size: 0.9rem;
+    letter-spacing: 2.5px;
+    width: 90%; /* شغل مساحة أكبر من عرض الشاشة */
+    max-width: 340px;
+  }
+}
+/* Media Query for Small Mobile (450px and below) - Scaled Down by 10% */
+@media screen and (max-width: 450px) {
+  
+  .cart-empty-state15 {
+    /* تقليل البادينج من 120px إلى 108px تقريباً */
+    padding: 78px 15px;
+  }
+
+  .empty-title15 {
+    /* تصغير الخط من 1.95rem إلى 1.75rem */
+    font-size: 1.75rem;
+    letter-spacing: 5px; /* تقليل المسافات الجانبية لمنع انكسار الكلمات */
+    margin-bottom: 18px;
+    line-height: 1.25;
+  }
+
+  .empty-subtitle15 {
+    /* تصغير الخط من 1.05rem إلى 0.95rem */
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+    max-width: 270px; /* تضييق المساحة ليتمركز النص بشكل أفضل */
+    margin: 0 auto 35px;
+    line-height: 1.5;
+  }
+
+  .continue-shopping-btn15 {
+    /* تصغير الزر بنسبة 10% ليتناسب مع عرض الشاشة الضيق */
+    padding: 18px 35px;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    width: 85%;
+    max-width: 280px;
+  }
+}

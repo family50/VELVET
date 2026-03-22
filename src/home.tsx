@@ -1,9 +1,10 @@
 import './home.css'
 import { FEATURED_PRODUCTS } from './collectionss';
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react'; // التغيير هنا: استيراد useLayoutEffect
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from './fotter'; 
+import { Link } from 'react-router-dom';
 
 function Home() {
     const gridRef = useRef<HTMLDivElement>(null);
@@ -12,133 +13,177 @@ function Home() {
     const featuredRef = useRef<HTMLDivElement>(null);
     const lifestyleRef = useRef<HTMLDivElement>(null);
 
-   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const currentGrid = gridRef.current;
-    let pauseHandler: () => void;
-    let playHandler: () => void;
+    // التغيير الرئيسي: استخدام useLayoutEffect بدل useEffect
+    useLayoutEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        const currentGrid = gridRef.current;
+        
+        // متغيرات للتحكم في الـ Loop
+        let pauseHandler: () => void;
+        let playHandler: () => void;
+        
 
-    // 1. الإخفاء الأولي (لا يزال ضرورياً لضمان عدم ظهور العناصر قبل بدء GSAP)
-    const allElements = [
-        ".hero-tagline", ".hero-giant-title span", ".hero-statement",
-        philosophyRef.current, ".product-card", 
-        ".lifestyle-giant-text", ".lifestyle-image-wrapper", ".lifestyle-info-overlay"
-    ];
-    gsap.set(allElements, { autoAlpha: 0 });
+        // 1. الإخفاء الأولي الفوري (بيحصل قبل ما المتصفح يرسم الشاشة)
+   const allElements = [
+    ".bg-velvet-video", 
+    ".velvet-overlay", 
+    ".bottom-white-shroud22", 
+    ".hero-tagline", 
+    ".hero-giant-title span", 
+    ".hero-statement",
+    philosophyRef.current, 
+    ".product-card", 
+    ".lifestyle-giant-text", 
+    ".lifestyle-image-wrapper", 
+    ".lifestyle-info-overlay"
+];
+        // التغيير هنا: استخدام autoAlpha: 0 لضمان الإخفاء التام قبل العرض
+        gsap.set(allElements, { autoAlpha: 0 });
 
-    // 2. Hero Section - استخدام fromTo
-    const heroTl = gsap.timeline({ delay: 0.5 });
-    heroTl.fromTo(".hero-tagline", 
-        { autoAlpha: 0, y: 30 }, 
-        { autoAlpha: 1, y: 0, duration: 1.5, ease: "power3.out" }
-    )
-    .fromTo(".hero-giant-title span", 
-        { autoAlpha: 0, y: 80 }, 
-        { autoAlpha: 1, y: 0, stagger: 0.15, duration: 1, ease: "power3.out" }, 
-        "-=0.7"
-    )
-    .fromTo(".hero-statement", 
-        { autoAlpha: 0, y: 20 }, 
-        { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out" }, 
-        "-=0.8"
-    );
+        // 2. Hero Section - استخدام Timeline لبدء الأنميشن
+        // قللنا الـ delay لـ 0.2 ثانية عشان يتناغم مع الـ Fade بتاع الـ Loading
+        const heroTl = gsap.timeline({ delay: 0.2 });
+     heroTl
+  // أولاً: إظهار الخلفية (الفيديو والـ Overlay)
+  .to([".bg-velvet-video", ".velvet-overlay", ".bottom-white-shroud22"], {
+    autoAlpha: 1,
+    duration: 1,
+    ease: "power2.inOut"
+  })
+  // ثانياً: دخول الـ Tagline (بيبدأ قبل ما الخلفية تخلص بـ 0.5 ثانية)
+  .fromTo(".hero-tagline", 
+    { autoAlpha: 0, y: 30 }, 
+    { autoAlpha: 1, y: 0, duration: 1.5, ease: "power3.out" },
+    "-=0.5" 
+  )
+  // ثالثاً: دخول العنوان العملاق (TIMELESS VELVET)
+  .fromTo(".hero-giant-title span", 
+    { autoAlpha: 0, y: 80 }, 
+    { autoAlpha: 1, y: 0, stagger: 0.15, duration: 1, ease: "power3.out" }, 
+    "-=0.7"
+  )
+  // رابعاً: دخول الجملة الأخيرة
+  .fromTo(".hero-statement", 
+    { autoAlpha: 0, y: 20 }, 
+    { autoAlpha: 1, y: 0, duration: 1, ease: "power3.out" }, 
+    "-=0.8"
+  );
 
-    // 3. Philosophy Section
-    if (philosophyRef.current) {
-        gsap.fromTo(philosophyRef.current, 
-            { autoAlpha: 0, y: 50 },
-            {
+        // 3. Philosophy Section
+        if (philosophyRef.current) {
+            gsap.fromTo(philosophyRef.current, 
+                { autoAlpha: 0, y: 50 },
+                {
+                    scrollTrigger: {
+                        trigger: philosophyRef.current,
+                        start: "top 50%", 
+                        toggleActions: "play none none reverse",
+                    },
+                    autoAlpha: 1,
+                    y: 0,
+                    duration: 1.2,
+                    ease: "power3.out"
+                }
+            );
+        }
+
+        // 4. Featured Section (Product Cards)
+        if (featuredRef.current) {
+            gsap.fromTo(".product-card", 
+                { autoAlpha: 0, y: 100 },
+                {
+                    scrollTrigger: {
+                        trigger: featuredRef.current,
+                        start: "top 50%",
+                    },
+                    autoAlpha: 1,
+                    y: 0,
+                    stagger: 0.1,
+                    duration: 1,
+                    ease: "power2.out"
+                }
+            );
+        }
+
+        // 5. Lifestyle Section
+        if (lifestyleRef.current) {
+            const lifestyleTl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: philosophyRef.current,
-                    start: "top 50%", 
-                    toggleActions: "play none none reverse",
-                },
-                autoAlpha: 1,
-                y: 0,
-                duration: 1.2,
-                ease: "power3.out"
-            }
-        );
-    }
-
-    // 4. Featured Section (Product Cards)
-    if (featuredRef.current) {
-        gsap.fromTo(".product-card", 
-            { autoAlpha: 0, y: 100 },
-            {
-                scrollTrigger: {
-                    trigger: featuredRef.current,
+                    trigger: lifestyleRef.current,
                     start: "top 50%",
-                },
-                autoAlpha: 1,
-                y: 0,
-                stagger: 0.1,
-                duration: 1,
-                ease: "power2.out"
-            }
-        );
-    }
-
-    // 5. Lifestyle Section
-    if (lifestyleRef.current) {
-        const lifestyleTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: lifestyleRef.current,
-                start: "top 50%",
-            }
-        });
-
-        lifestyleTl.fromTo(".lifestyle-giant-text", 
-            { autoAlpha: 0, y: 50 }, 
-            { autoAlpha: 1, y: 0, duration: 1.2 }
-        )
-        .fromTo(".lifestyle-image-wrapper", 
-            { autoAlpha: 0, y: 150 }, 
-            { autoAlpha: 1, y: 0, duration: 1.2, ease: "power4.out" }, 
-            "-=0.8"
-        )
-        .fromTo(".lifestyle-info-overlay", 
-            { autoAlpha: 0, y: 30 }, 
-            { autoAlpha: 1, y: 0, duration: 0.8 }, 
-            "-=0.4"
-        );
-    }
-
-    // 6. Horizontal Loop (نفس المنطق السابق مع استخدام currentGrid)
-    let loop: gsap.core.Tween;
-    const timer = setTimeout(() => {
-        if (currentGrid) {
-            const cards = gsap.utils.toArray<HTMLElement>(".product-card");
-            const cardWidth = cards[0]?.offsetWidth + 30 || 300;
-            const totalWidth = cardWidth * FEATURED_PRODUCTS.length;
-
-            loop = gsap.to(currentGrid, {
-                x: `-=${totalWidth}`,
-                duration: 25,
-                ease: "none",
-                repeat: -1,
-                modifiers: {
-                    x: gsap.utils.unitize((val) => parseFloat(val) % totalWidth)
                 }
             });
 
-            pauseHandler = () => loop.pause();
-            playHandler = () => loop.play();
-
-            currentGrid.addEventListener("mouseenter", pauseHandler);
-            currentGrid.addEventListener("mouseleave", playHandler);
+            lifestyleTl.fromTo(".lifestyle-giant-text", 
+                { autoAlpha: 0, y: 50 }, 
+                { autoAlpha: 1, y: 0, duration: 1.2 }
+            )
+            .fromTo(".lifestyle-image-wrapper", 
+                { autoAlpha: 0, y: 150 }, 
+                { autoAlpha: 1, y: 0, duration: 1.2, ease: "power4.out" }, 
+                "-=0.8"
+            )
+            .fromTo(".lifestyle-info-overlay", 
+                { autoAlpha: 0, y: 30 }, 
+                { autoAlpha: 1, y: 0, duration: 0.8 }, 
+                "-=0.4"
+            );
         }
-    }, 1000);
 
-    return () => {
-        clearTimeout(timer);
-        ScrollTrigger.getAll().forEach(t => t.kill());
-        if (currentGrid && pauseHandler && playHandler) {
-            currentGrid.removeEventListener("mouseenter", pauseHandler);
-            currentGrid.removeEventListener("mouseleave", playHandler);
-        }
-    };
-}, []);
+      // 6. Horizontal Loop مع معالجة تغيير حجم الشاشة (Resize)
+let loop: gsap.core.Tween;
+
+const setupLoop = () => {
+    if (currentGrid) {
+        // 1. مسح أي أنميشن قديم عشان ميعملوش تداخل
+        if (loop) loop.kill(); 
+
+        const cards = gsap.utils.toArray<HTMLElement>(".product-card");
+        if (cards.length === 0) return;
+
+        // 2. إعادة حساب العرض بناءً على الحجم الجديد
+        const cardWidth = cards[0]?.offsetWidth + 30 || 300;
+        const totalWidth = cardWidth * FEATURED_PRODUCTS.length;
+
+        loop = gsap.to(currentGrid, {
+            x: `-=${totalWidth}`,
+            duration: 25,
+            ease: "none",
+            repeat: -1,
+            modifiers: {
+                x: gsap.utils.unitize((val) => parseFloat(val) % totalWidth)
+            }
+        });
+    }
+};
+
+// تشغيل الـ Loop لأول مرة بعد ثانية (لضمان تحميل الصور)
+const timer = setTimeout(() => {
+    setupLoop();
+    
+    // إضافة مستمع لتغيير الحجم
+    window.addEventListener("resize", setupLoop);
+
+    if (currentGrid) {
+        pauseHandler = () => loop && loop.pause();
+        playHandler = () => loop && loop.play();
+        currentGrid.addEventListener("mouseenter", pauseHandler);
+        currentGrid.addEventListener("mouseleave", playHandler);
+    }
+}, 1000);
+
+        // تنظيف الـ Effect
+// تنظيف الـ Effect
+return () => {
+    clearTimeout(timer);
+    window.removeEventListener("resize", setupLoop); // مهم جداً!
+    ScrollTrigger.getAll().forEach(t => t.kill());
+    if (currentGrid && pauseHandler && playHandler) {
+        currentGrid.removeEventListener("mouseenter", pauseHandler);
+        currentGrid.removeEventListener("mouseleave", playHandler);
+    }
+};
+    }, []);
     return (
         <div className="home-container" style={{ overflowX: 'hidden' }}>
             {/* 1. Hero Section */}
@@ -148,7 +193,7 @@ function Home() {
                         <source src="02177366724171500000000000000000000ffffc0a8981c5095fd.mp4" type="video/mp4" />
                     </video>
                     <div className="velvet-overlay"></div>
-                   < div className="bottom-white-shroud22"></div>
+                    < div className="bottom-white-shroud22"></div>
                 </div>
                 <div className="hero-creative-layout">
                     <div className="text-reveal-container">
@@ -160,6 +205,7 @@ function Home() {
                         </h1>
                         <p className="hero-statement">WHERE BRITISH TRADITION MEETS THE AVANT-GARDE.</p>
                     </div>
+                    
                 </div>
             </section>
 
@@ -208,7 +254,11 @@ function Home() {
                                 <p className="product-description">{product.description}</p>
                                 <div className="info-bottom">
                                     <span className="price">{product.price}</span>
-                                    <button className="add-to-cart-btn"><i className="fa-solid fa-plus"></i></button>
+                                 <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
+    <button className="add-to-cart-btn">
+        <i className="fa-solid fa-plus" style={{ fontSize: '0.8rem' }}></i>
+    </button>
+</Link>
                                 </div>
                             </div>
                         </div>

@@ -13,8 +13,14 @@
   --font-primary: 'Cinzel', serif;            
   --font-secondary: 'Montserrat', sans-serif; 
 }
+a {
+  text-decoration: none !important;
+  color: inherit; /* لضمان عدم تغير لون الأيقونة للأزرق التقليدي */
+}
+
 
 * {
+  
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -65,4 +71,20 @@ html, body {
 * {
     scrollbar-width: thin;
     scrollbar-color: #101E42 #F0F2F5;
+}
+
+
+
+/* تنسيق التحديد للمتصفحات الحديثة */
+::selection {
+  background-color: var(--accent-gold);
+  color: #FFFFFF; /* أو استخدم var(--bg-velvet) لو حابب النص يكون فاتح مائل للرمادي */
+  text-shadow: none;
+}
+
+/* لدعم متصفح فيرفوكس */
+::-moz-selection {
+  background-color: var(--accent-gold);
+  color: #FFFFFF;
+  text-shadow: none;
 }

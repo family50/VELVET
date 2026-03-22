@@ -19,19 +19,19 @@ function Footer() {
              <div className="footer-social-links">
     <span className="social-label">CONNECT WITH US</span>
     <div className="social-icons">
-        <a href="https://x.com" target="_blank" rel="noreferrer" className="social-icon">
+        <a href="https://x.com/FamilyGroup8320" target="_blank" rel="noreferrer" className="social-icon">
             <i className="fa-brands fa-x-twitter"></i>
         </a>
-        <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="social-icon">
+        <a href="https://www.linkedin.com/in/family-group-69a419395" target="_blank" rel="noreferrer" className="social-icon">
             <i className="fa-brands fa-linkedin-in"></i>
         </a>
-        <a href="https://github.com" target="_blank" rel="noreferrer" className="social-icon">
+        <a href="https://github.com/family50" target="_blank" rel="noreferrer" className="social-icon">
             <i className="fa-brands fa-github"></i>
         </a>
-        <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="social-icon">
+        <a href="https://www.tiktok.com/@familygroup974" target="_blank" rel="noreferrer" className="social-icon">
             <i className="fa-brands fa-tiktok"></i>
         </a>
-        <a href="mailto:contact@familygroup.com" className="social-icon">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=familygroup832005@gmail.com" className="social-icon">
             <i className="fa-solid fa-envelope"></i>
         </a>
     </div>

@@ -235,8 +235,10 @@ return () => {
                         <h2 className="section-main-title">Selected Items</h2>
                     </div>
                     <div className="view-all-btn">
+                        <Link to="/collections" >
                         <a>Explore All</a>
                         <i className="fa-solid fa-arrow-right-long"></i>
+                        </Link>
                     </div>
                 </div>
                 <div className="products-grid" ref={gridRef}>

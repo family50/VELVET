@@ -18,55 +18,38 @@ const AppContent: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // استخدام ReturnType<typeof setTimeout> هو الحل الأمثل في TypeScript
-    // ليتوافق مع المتصفح و Node.js بدون مشاكل الـ Namespace
-    let timerId: ReturnType<typeof setTimeout> | undefined;
+    let timerId: ReturnType<typeof setTimeout>;
 
-    const hasLoadedInSession = sessionStorage.getItem('regalia_initial_load');
-    const startTime: number = Date.now();
-
+    // 1. وظيفة إنهاء التحميل
     const handleLoad = () => {
-      const elapsedTime: number = Date.now() - startTime;
-      const minimumDisplayTime: number = 2000;
-
-      sessionStorage.setItem('regalia_initial_load', 'true');
-
-      if (elapsedTime < minimumDisplayTime && !hasLoadedInSession) {
-        timerId = setTimeout(() => {
-          setIsLoading(false);
-        }, minimumDisplayTime - elapsedTime);
-      } else {
-        setIsLoading((prev) => (prev ? false : prev));
-      }
+      // نترك اللودر يعمل لمدة 2.5 ثانية على الأقل ليتمكن مستخدم Velvet 
+      // من رؤية أنميشن بار التحميل والتاج بالكامل
+      timerId = setTimeout(() => {
+        setIsLoading(false);
+      }, 2500); 
     };
 
+    // 2. التحقق من حالة المستند
     if (document.readyState === 'complete') {
-      if (hasLoadedInSession) {
-        // الـ 0ms هنا سحرية لأنها تخرج الـ setState من الـ Render Cycle الحالي
-        timerId = setTimeout(() => setIsLoading(false), 0);
-      } else {
-        timerId = setTimeout(handleLoad, 2000);
-      }
+      handleLoad();
     } else {
       window.addEventListener('load', handleLoad);
     }
 
+    // 3. التنظيف (Cleanup)
     return () => {
       window.removeEventListener('load', handleLoad);
       if (timerId) clearTimeout(timerId);
     };
   }, []);
 
-  const isSingleProductPage: boolean = location.pathname.startsWith('/product/');
-  const isPaymentPage: boolean = location.pathname === '/payment';
-  const hideHeader: boolean = isSingleProductPage || isPaymentPage;
+  // تحديد الصفحات التي يختفي فيها الهيدر
+  const isSingleProductPage = location.pathname.startsWith('/product/');
+  const isPaymentPage = location.pathname === '/payment';
+  const hideHeader = isSingleProductPage || isPaymentPage;
 
   if (isLoading) {
-    return (
-      <div className="loading-overlay">
-        <Loading />
-      </div>
-    );
+    return <Loading />; // لا داعي لـ div إضافي إذا كان اللودر يغطي الشاشة بالفعل
   }
 
   return (
@@ -74,7 +57,6 @@ const AppContent: React.FC = () => {
       <ScrollToTop />
       <Mouse />
       {!hideHeader && <Header />}
-      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/That's us" element={<Thats />} />

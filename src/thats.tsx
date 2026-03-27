@@ -138,9 +138,15 @@ function Thats() {
 
         }, component); // حصر السياق داخل الكونتينر الرئيسي
 
-        return () => ctx.revert(); // تنظيف شامل لكل الـ ScrollTriggers والأنميشنز
-    }, []);
+   // الحل السحري للقفزات: إعادة الحساب بعد التحميل
+    const refreshAll = () => ScrollTrigger.refresh();
+    window.addEventListener('load', refreshAll);
 
+    return () => {
+        window.removeEventListener('load', refreshAll);
+        ctx.revert();
+    };
+}, []);
 
 
 

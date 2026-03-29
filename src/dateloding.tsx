@@ -16,19 +16,14 @@ const AssetPreloader: React.FC<PreloaderProps> = ({
     const preload = async () => {
       const uniqueAssets = Array.from(new Set(assets)).filter(url => !!url);
       
-      if (uniqueAssets.length === 0) {
-        onComplete && onComplete();
-        return;
-      }
-
       const promises = uniqueAssets.map((url) => {
         return new Promise((resolve) => {
           if (url.endsWith('.mp4') || url.endsWith('.webm')) {
-            const video = document.createElement('video');
-            video.src = url;
-            video.preload = 'auto';
-            video.oncanplaythrough = () => resolve(true);
-            video.onerror = () => resolve(true);
+            // استخدام Fetch لضمان تحميل الفيديو بالكامل في الكاش/الرامات
+            fetch(url)
+              .then(response => response.blob())
+              .then(() => resolve(true))
+              .catch(() => resolve(true)); // حتى لو فشل كمل عشان الموقع ميعلقش
           } else {
             const img = new Image();
             img.src = url;
@@ -39,6 +34,8 @@ const AssetPreloader: React.FC<PreloaderProps> = ({
       });
 
       const minTimePromise = new Promise((res) => setTimeout(res, minWaitTime));
+      
+      // لن يتم التنفيذ إلا بعد انتهاء تحميل كل الملفات (بما فيها الفيديوهات) + مرور 3 ثواني
       await Promise.all([...promises, minTimePromise]);
 
       if (onComplete) {

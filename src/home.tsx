@@ -189,9 +189,18 @@ return () => {
             {/* 1. Hero Section */}
             <section className="hero-section velvet-drapes" ref={heroRef}>
                 <div className="hero-bg-velvet">
-                    <video autoPlay muted loop playsInline className="bg-velvet-video">
-                        <source src="02177366724171500000000000000000000ffffc0a8981c5095fd.mp4" type="video/mp4" />
-                    </video>
+                    <video 
+  autoPlay 
+  muted 
+  loop 
+  playsInline 
+  preload="auto" // ضيف دي عشان نأكد للمتصفح إنه يستخدم الكاش
+  className="bg-velvet-video"
+  src="02177366724171500000000000000000000ffffc0a8981c5095fd.mp4" 
+>
+  {/* لو حابب تسيب الـ source كاحتياطي مفيش مشكلة بس الـ src الأساسي فوق هو الأضمن للـ Cache */}
+  <source src="02177366724171500000000000000000000ffffc0a8981c5095fd.mp4" type="video/mp4" />
+</video>
                     <div className="velvet-overlay"></div>
                     < div className="bottom-white-shroud22"></div>
                 </div>

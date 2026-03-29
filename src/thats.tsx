@@ -119,7 +119,7 @@ function Thats() {
                 scrollTrigger: {
                     trigger: ".royal-gate",
                     start: "top senter",
-                    end: "+=600%",
+                    end: "+=400%",
                     pin: true,
                     scrub: 1,
                     onEnter: () => videoRef.current?.play(),

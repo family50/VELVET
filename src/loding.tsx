@@ -1,48 +1,42 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Crown } from 'lucide-react';
-
-const Loading = () => {
+interface LoadingProps {
+  onFinish?: () => void; // إضافة البروب ده عشان نبلغ الـ Provider
+}
+const Loading: React.FC<LoadingProps> = ({ onFinish }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({
+        // التعديل هنا: لما الأنميشن يخلص، بلغ الـ Provider يقفل صفحة اللودينج
+        onComplete: () => {
+          gsap.to(wrapperRef.current, {
+            opacity: 0,
+            duration: 0.5,
+            onComplete: () => onFinish?.() 
+          });
+        }
+      });
 
-      // 1. ظهور فوري
       gsap.set(".vlv-loader-content", { opacity: 1, y: 0 });
 
-      // 2. أنميشن بار التحميل
       tl.to(progressBarRef.current, { 
         width: "100%", 
         duration: 2.5, 
         ease: "power2.inOut",
       });
 
-      // 3. نبض التاج الملكي
-      gsap.to(".vlv-loader-main-crown", {
-        scale: 1.1,
-        filter: "drop-shadow(0 0 12px rgba(175, 137, 54, 0.8))",
-        repeat: -1,
-        yoyo: true,
-        duration: 1.5,
-        ease: "power1.inOut"
-      });
-
-      // 4. أنميشن النقط
-      gsap.to(".vlv-loader-dot", {
-        opacity: 0,
-        repeat: -1,
-        stagger: 0.2,
-        duration: 0.8,
-        ease: "power1.inOut"
-      });
+      // باقي الأنميشن المستمر (التاج والنقط)
+      gsap.to(".vlv-loader-main-crown", { scale: 1.1, repeat: -1, yoyo: true, duration: 1.5 });
+      gsap.to(".vlv-loader-dot", { opacity: 0, repeat: -1, stagger: 0.2, duration: 0.8 });
 
     }, wrapperRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [onFinish]);
 
   return (
     <div className="vlv-loader-wrapper" ref={wrapperRef}>

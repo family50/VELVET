@@ -50,14 +50,18 @@ const AppContent: React.FC = () => {
 
       {/* 3. محتوى الموقع الرئيسي */}
       {/* استخدمنا display: none بدلاً من opacity للحفاظ على خصائص الـ CSS الخاصة بك */}
-      <div 
-        className="vlv-main-site-container"
-        style={{ 
-          display: isLoading ? 'none' : 'block',
-          // الـ Transition هنا سيكون فعالاً عند ظهور الـ div لأول مرة
-          animation: !isLoading ? 'siteFadeIn 1s ease-out forwards' : 'none'
-        }}
-      >
+  
+<div 
+  className="vlv-main-site-container"
+  style={{ 
+    // بدل display: isLoading ? 'none' : 'block'
+    visibility: isLoading ? 'hidden' : 'visible',
+    opacity: isLoading ? 0 : 1,
+    height: isLoading ? '100vh' : 'auto', // عشان السكرول ميبقاش طويل وقت اللودينج
+    overflow: isLoading ? 'hidden' : 'visible',
+    transition: 'opacity 1s ease-in-out'
+  }}
+>
         <ScrollToTop />
         <Mouse />
         

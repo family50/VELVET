@@ -1,10 +1,12 @@
 import './home.css'
 import { FEATURED_PRODUCTS } from './collectionss';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react'; // التغيير هنا: استيراد useLayoutEffect
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from './fotter'; 
 import { Link } from 'react-router-dom';
+// 1. استورد useLoading من البروفايدر بتاعك
+import { useLoading } from './LoadingProvider';
 
 function Home() {
     const gridRef = useRef<HTMLDivElement>(null);
@@ -12,15 +14,21 @@ function Home() {
     const philosophyRef = useRef<HTMLDivElement>(null);
     const featuredRef = useRef<HTMLDivElement>(null);
     const lifestyleRef = useRef<HTMLDivElement>(null);
+    const { isLoading } = useLoading();
 
+    // التغيير الرئيسي: استخدام useLayoutEffect لضمان تنفيذ الأنميشن قبل رسم المتصفح للشاشة
+// التغيير الرئيسي: استخدام useLayoutEffect مع إضافة isLoading كمراقب (Dependency)
     useLayoutEffect(() => {
+        // منع تنفيذ الأنميشن طالما الموقع في حالة تحميل
+        if (isLoading) return;
+
         gsap.registerPlugin(ScrollTrigger);
         const currentGrid = gridRef.current;
         
         let pauseHandler: () => void;
         let playHandler: () => void;
 
-        // 1. الإخفاء الأولي وتجهيز الحالة البصرية (Pre-animation state)
+        // 1. الإخفاء الأولي الفوري (Initial State) لجميع العناصر
         const allElements = [
             ".bg-velvet-video", 
             ".velvet-overlay", 
@@ -35,31 +43,38 @@ function Home() {
             ".lifestyle-info-overlay"
         ];
         
-        // ضبط الحالة الابتدائية: مخفي ومنزاح للأسفل قليلاً
-        gsap.set(allElements, { autoAlpha: 0, y: 30 });
+        // ضبط الحالة المبدئية: شفافية 0 وإزاحة بسيطة للأسفل للنصوص
+        gsap.set(allElements, { autoAlpha: 0 });
+        gsap.set([".hero-tagline", ".hero-giant-title span", ".hero-statement"], { y: 30 });
 
-        // 2. Hero Section Timeline (يظهر فور تحميل الصفحة)
-        const heroTl = gsap.timeline({ delay: 0.2 });
+        // 2. Hero Section - أنميشن الدخول (يبدأ بعد اختفاء اللودر مباشرة)
+        const heroTl = gsap.timeline({ 
+            delay: 0.5 // تأخير بسيط ليتناغم مع Fade-in الصفحة الرئيسية في App.tsx
+        });
+
         heroTl
+            // إظهار الخلفية والفيديو
             .to([".bg-velvet-video", ".velvet-overlay", ".bottom-white-shroud22"], {
                 autoAlpha: 1,
-                y: 0,
-                duration: 1,
+                duration: 1.2,
                 ease: "power2.inOut"
             })
+            // دخول التاج لاين
             .to(".hero-tagline", { 
                 autoAlpha: 1, 
                 y: 0, 
-                duration: 1.5, 
+                duration: 1, 
                 ease: "power3.out" 
-            }, "-=0.5")
+            }, "-=0.4")
+            // دخول العنوان الرئيسي (TIMELESS VELVET...) بـ Stagger احترافي
             .to(".hero-giant-title span", { 
                 autoAlpha: 1, 
                 y: 0, 
                 stagger: 0.15, 
-                duration: 1, 
-                ease: "power3.out" 
-            }, "-=0.7")
+                duration: 1.2, 
+                ease: "power4.out" 
+            }, "-=0.6")
+            // دخول الجملة الوصفية الأخيرة
             .to(".hero-statement", { 
                 autoAlpha: 1, 
                 y: 0, 
@@ -67,53 +82,70 @@ function Home() {
                 ease: "power3.out" 
             }, "-=0.8");
 
-        // 3. Philosophy Section - استخدام .to لأننا عملنا set في البداية
+        // 3. Philosophy Section - ScrollTrigger
         if (philosophyRef.current) {
-            gsap.to(philosophyRef.current, {
-                scrollTrigger: {
-                    trigger: philosophyRef.current,
-                    start: "top 85%", 
-                    toggleActions: "play none none reverse",
-                },
-                autoAlpha: 1,
-                y: 0,
-                duration: 1.2,
-                ease: "power3.out"
-            });
+            gsap.fromTo(philosophyRef.current, 
+                { autoAlpha: 0, y: 50 },
+                {
+                    scrollTrigger: {
+                        trigger: philosophyRef.current,
+                        start: "top 80%", // يبدأ بدري شوية عشان اليوزر يلحق يشوفه
+                        toggleActions: "play none none reverse",
+                    },
+                    autoAlpha: 1,
+                    y: 0,
+                    duration: 1.2,
+                    ease: "power3.out"
+                }
+            );
         }
 
-        // 4. Featured Section (Product Cards)
+        // 4. Featured Section - Stagger Cards
         if (featuredRef.current) {
-            gsap.to(".product-card", {
-                scrollTrigger: {
-                    trigger: featuredRef.current,
-                    start: "top 85%",
-                },
-                autoAlpha: 1,
-                y: 0,
-                stagger: 0.1,
-                duration: 1,
-                ease: "power2.out"
-            });
+            gsap.fromTo(".product-card", 
+                { autoAlpha: 0, y: 100 },
+                {
+                    scrollTrigger: {
+                        trigger: featuredRef.current,
+                        start: "top 60%",
+                    },
+                    autoAlpha: 1,
+                    y: 0,
+                    stagger: 0.1,
+                    duration: 1,
+                    ease: "power2.out"
+                }
+            );
         }
 
-        // 5. Lifestyle Section
+        // 5. Lifestyle Section - Timeline
         if (lifestyleRef.current) {
             const lifestyleTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: lifestyleRef.current,
-                    start: "top 80%",
+                    start: "top 50%",
                 }
             });
 
-            lifestyleTl
-                .to(".lifestyle-giant-text", { autoAlpha: 1, y: 0, duration: 1.2 })
-                .to(".lifestyle-image-wrapper", { autoAlpha: 1, y: 0, duration: 1.2, ease: "power4.out" }, "-=0.8")
-                .to(".lifestyle-info-overlay", { autoAlpha: 1, y: 0, duration: 0.8 }, "-=0.4");
+            lifestyleTl.fromTo(".lifestyle-giant-text", 
+                { autoAlpha: 0, y: 50 }, 
+                { autoAlpha: 1, y: 0, duration: 1.2 }
+            )
+            .fromTo(".lifestyle-image-wrapper", 
+                { autoAlpha: 0, y: 150 }, 
+                { autoAlpha: 1, y: 0, duration: 1.2, ease: "power4.out" }, 
+                "-=0.8"
+            )
+            .fromTo(".lifestyle-info-overlay", 
+                { autoAlpha: 0, y: 30 }, 
+                { autoAlpha: 1, y: 0, duration: 0.8 }, 
+                "-=0.4"
+            );
         }
 
-        // 6. Horizontal Loop
+        // 6. Horizontal Loop Logic
         let loop: gsap.core.Tween;
+
         const setupLoop = () => {
             if (currentGrid) {
                 if (loop) loop.kill(); 
@@ -145,7 +177,7 @@ function Home() {
                 currentGrid.addEventListener("mouseenter", pauseHandler);
                 currentGrid.addEventListener("mouseleave", playHandler);
             }
-        }, 1000);
+        }, 1500); // زيادة الوقت قليلاً لضمان استقرار الـ DOM
 
         return () => {
             clearTimeout(timer);
@@ -156,7 +188,7 @@ function Home() {
                 currentGrid.removeEventListener("mouseleave", playHandler);
             }
         };
-    }, []);
+    }, [isLoading]); // الاعتماد على isLoading أساسي هنا
 
     return (
         <div className="home-container" style={{ overflowX: 'hidden' }}>
@@ -168,7 +200,7 @@ function Home() {
                         muted 
                         loop 
                         playsInline 
-                        preload="auto"
+                        preload="auto" 
                         className="bg-velvet-video"
                         src="02177366724171500000000000000000000ffffc0a8981c5095fd.mp4" 
                     >
@@ -216,8 +248,8 @@ function Home() {
                         <h2 className="section-main-title">Selected Items</h2>
                     </div>
                     <div className="view-all-btn">
-                        <Link to="/collections">
-                            <span>Explore All</span>
+                        <Link to="/collections" >
+                            <a>Explore All</a>
                             <i className="fa-solid fa-arrow-right-long"></i>
                         </Link>
                     </div>

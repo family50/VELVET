@@ -118,7 +118,7 @@ function Thats() {
             const gateTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".royal-gate",
-                    start: "top top",
+                    start: "top senter",
                     end: "+=600%",
                     pin: true,
                     scrub: 1,

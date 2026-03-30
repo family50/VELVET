@@ -128,7 +128,7 @@ function Thats() {
                     pin: true,
                     scrub: 1,
                     onEnter: () => videoRef.current?.play(),
-                  onEnterBack: () => videoRef.current?.play(),
+              
                 }
 
             });

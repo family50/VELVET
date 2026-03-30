@@ -34,8 +34,8 @@
   pointer-events: none;
   background-color: #C5A059;
   border-radius: 50%;
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
   will-change: transform;
   box-shadow: 0 0 12px rgba(197, 160, 89, 0.7);
 }
@@ -80,8 +80,8 @@ html, body, a, button {
   pointer-events: none;
   background-color: #C5A059;
   border-radius: 50%;
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   will-change: transform;
   box-shadow: 0 0 10px rgba(197, 160, 89, 0.8);
 }
@@ -116,8 +116,8 @@ html, body, a, button {
   pointer-events: none;
   background-color: #C5A059;
   border-radius: 50%;
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   will-change: transform;
   box-shadow: 0 0 10px rgba(197, 160, 89, 0.8);
 }

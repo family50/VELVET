@@ -4,12 +4,9 @@
 :root {
   --bg-velvet: #F0F2F5;     
   --text-main: #101E42;     
-  
   /* اللون الجديد: كحلي باهت ملكي */
   --text-dimmed: #344769;   
-  
   --accent-gold: #AF8936;   
-
   --font-primary: 'Cinzel', serif;            
   --font-secondary: 'Montserrat', sans-serif; 
 }

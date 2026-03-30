@@ -109,7 +109,7 @@ function Thats() {
                 ease: "back.out(1.7)",
                 scrollTrigger: {
                     trigger: pillarsSectionRef.current,
-                    start: "top 60%",
+                    start: "top 40%",
                     toggleActions: "play none none reverse"
                 }
             });
@@ -119,9 +119,15 @@ function Thats() {
                 scrollTrigger: {
                     trigger: ".royal-gate",
                     start: "top senter",
-                    end: "+=400%",
+                  end: "bottom+=600% bottom",
                     pin: true,
                     scrub: 1,
+                    markers: {
+            startColor: "red",    // لون خط البداية
+            endColor: "red",      // لون خط النهاية
+            fontSize: "18px",     // حجم الخط عشان تشوفه بوضوح
+            indent: 20            // إزاحة الخط عن حافة الشاشة
+        },
                     onEnter: () => videoRef.current?.play(),
                     onLeaveBack: () => videoRef.current?.pause(),
                 }

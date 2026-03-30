@@ -114,12 +114,15 @@ function Thats() {
                 }
             });
 
+            
+
             // --- أنميشن السيكشن الخامس (Royal Gate) ---
             const gateTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".royal-gate",
-                    start: "top center+=100",
-                  end: "bottom+=600 bottom",
+                    start: "top senter",
+                 end: () => `top+=${window.innerHeight * 6} bottom`, 
+        endTrigger: ".footer",
                   markers: {
             startColor: "red",
             endColor: "red",

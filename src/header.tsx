@@ -117,11 +117,10 @@ const isSpecialPage =
                 <span>Home</span>
             </NavLink>
             
-         
-<a href="/That's us" className="mobile-nav-item">
-    <i className="fa-solid fa-feather-pointed nav-icon-effect"></i>
-    <span>That's us</span>
-</a>
+            <NavLink to="/That's us" className="mobile-nav-item">
+                <i className="fa-solid fa-feather-pointed nav-icon-effect"></i>
+                <span>That's us</span>
+            </NavLink>
             
             <NavLink to="/collections" className="mobile-nav-item">
                 <i className="fa-solid fa-store nav-icon-effect"></i>
@@ -141,7 +140,7 @@ const isSpecialPage =
             <div className="header-content">
                 <nav className="desktop-nav nav-left">
                     <NavLink to="/" className="nav-item">Home</NavLink>
-                   <a href="/That's us" className="nav-item">That's us</a>
+                    <NavLink to="/That's us" className="nav-item">That's us</NavLink>
                 </nav>
 
                 <div className="logo-wrapper">

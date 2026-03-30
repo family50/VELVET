@@ -119,7 +119,7 @@ function Thats() {
                 scrollTrigger: {
                     trigger: ".royal-gate",
                     start: "top senter",
-                  end: "bottom+=600% bottom",
+                 end: () => `+=${window.innerHeight * 6}`,
                   
                   pinSpacing: false,
                   markers: {

@@ -6,7 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from './fotter'; 
 import { Link } from 'react-router-dom';
 // 1. استورد useLoading من البروفايدر بتاعك
-import { useLoading } from './LoadingProvider';
+import { useGlobalLoading } from './LoadingContext'; // تأكد من الاسم هنا // ✅ ده المكان الصح بعد ما فصلناهم
+import LuxeMedia from './LuxeMedia';
 
 function Home() {
     const gridRef = useRef<HTMLDivElement>(null);
@@ -14,13 +15,13 @@ function Home() {
     const philosophyRef = useRef<HTMLDivElement>(null);
     const featuredRef = useRef<HTMLDivElement>(null);
     const lifestyleRef = useRef<HTMLDivElement>(null);
-    const { isLoading } = useLoading();
+const { isReady } = useGlobalLoading();
 
     // التغيير الرئيسي: استخدام useLayoutEffect لضمان تنفيذ الأنميشن قبل رسم المتصفح للشاشة
 // التغيير الرئيسي: استخدام useLayoutEffect مع إضافة isLoading كمراقب (Dependency)
     useLayoutEffect(() => {
         // منع تنفيذ الأنميشن طالما الموقع في حالة تحميل
-        if (isLoading) return;
+        if (!isReady) return;
 
         gsap.registerPlugin(ScrollTrigger);
         const currentGrid = gridRef.current;
@@ -188,39 +189,41 @@ function Home() {
                 currentGrid.removeEventListener("mouseleave", playHandler);
             }
         };
-    }, [isLoading]); // الاعتماد على isLoading أساسي هنا
+    }, [isReady]); // الاعتماد على isLoading أساسي هنا
 
     return (
         <div className="home-container" style={{ overflowX: 'hidden' }}>
-            {/* 1. Hero Section */}
-            <section className="hero-section velvet-drapes" ref={heroRef}>
-                <div className="hero-bg-velvet">
-                    <video 
-                        autoPlay 
-                        muted 
-                        loop 
-                        playsInline 
-                        preload="auto" 
-                        className="bg-velvet-video"
-                        src="02177366724171500000000000000000000ffffc0a8981c5095fd.mp4" 
-                    >
-                        <source src="02177366724171500000000000000000000ffffc0a8981c5095fd.mp4" type="video/mp4" />
-                    </video>
-                    <div className="velvet-overlay"></div>
-                    <div className="bottom-white-shroud22"></div>
-                </div>
-                <div className="hero-creative-layout">
-                    <div className="text-reveal-container">
-                        <span className="hero-tagline">THE NEW STANDARD OF REGALIA</span>
-                        <h1 className="hero-giant-title">
-                            <span className="line-one">TIMELESS</span>
-                            <span className="line-two">VELVET</span>
-                            <span className="line-three">EST. 1047</span>
-                        </h1>
-                        <p className="hero-statement">WHERE BRITISH TRADITION MEETS THE AVANT-GARDE.</p>
-                    </div>
-                </div>
-            </section>
+          {/* 1. Hero Section */}
+<section className="hero-section velvet-drapes" ref={heroRef}>
+    <div className="hero-bg-velvet">
+        {/* استبدال الـ video بـ LuxeMedia لتحقيق أداء الرامات والسكيلتون */}
+        <LuxeMedia 
+            type="video"
+            src="/02177366724171500000000000000000000ffffc0a8981c5095fd.mp4" 
+            autoPlay 
+            muted 
+            loop 
+            playsInline 
+            preload="auto" 
+            className="bg-velvet-video"
+        />
+        
+        <div className="velvet-overlay"></div>
+        <div className="bottom-white-shroud22"></div>
+    </div>
+
+    <div className="hero-creative-layout">
+        <div className="text-reveal-container">
+            <span className="hero-tagline">THE NEW STANDARD OF REGALIA</span>
+            <h1 className="hero-giant-title">
+                <span className="line-one">TIMELESS</span>
+                <span className="line-two">VELVET</span>
+                <span className="line-three">EST. 1047</span>
+            </h1>
+            <p className="hero-statement">WHERE BRITISH TRADITION MEETS THE AVANT-GARDE.</p>
+        </div>
+    </div>
+</section>
 
             {/* 2. Philosophy Section */}
             <section className="philosophy-section" ref={philosophyRef}>
@@ -259,7 +262,7 @@ function Home() {
                         <div key={`${product.id}-${index}`} className="product-card">
                             <div className="card-img-holder">
                                 <div className="product-platform"></div>
-                                <img src={product.image} alt={product.name} className="product-image" />
+                                <LuxeMedia src={product.image} alt={product.name} className="product-image" />
                             </div>
                             <div className="card-info">
                                 <div className="info-top">
@@ -286,7 +289,7 @@ function Home() {
                 <h2 className="lifestyle-giant-text">VELVET</h2>
                 <div className="lifestyle-floating-container">
                     <div className="lifestyle-image-wrapper">
-                        <img src="/SILK-ARCHIVE-SHIRT.png" className="floating-shirt" alt="Royal Blue Shirt" />
+                        <LuxeMedia src="/SILK-ARCHIVE-SHIRT.png" className="floating-shirt" alt="Royal Blue Shirt" />
                         <div className="shirt-ground-shadow"></div>
                     </div>
                     <div className="lifestyle-info-overlay">

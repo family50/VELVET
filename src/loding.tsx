@@ -8,16 +8,16 @@ const Loading: React.FC<LoadingProps> = ({ onFinish }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
-        // التعديل هنا: لما الأنميشن يخلص، بلغ الـ Provider يقفل صفحة اللودينج
         onComplete: () => {
-          gsap.to(wrapperRef.current, {
-            opacity: 0,
-            duration: 0.5,
-            onComplete: () => onFinish?.() 
-          });
+           // هنا بنعمل fade out للودر نفسه قبل ما نبلغ الأب
+           gsap.to(wrapperRef.current, {
+             opacity: 0,
+             duration: 0.8,
+             onComplete: () => onFinish?.() // دي اللي بتمسح اللودر من الـ DOM
+           });
         }
       });
 

@@ -3,7 +3,7 @@ import './thats.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Footer from './fotter'; 
-
+import LuxeMedia from './LuxeMedia';
 function Thats() {
     const component = useRef<HTMLDivElement>(null); // Ref شامل للكونتينر
     const horizontalSectionRef = useRef<HTMLDivElement>(null);
@@ -162,41 +162,44 @@ function Thats() {
             
             {/* 1. The Manifesto Section */}
      {/* 1. The Manifesto Section */}
-            <section className="manifesto-section">
-                <div className="manifesto-video-overlay">
-                    <video 
-  autoPlay 
-  muted 
-  loop 
-  playsInline 
-  preload="auto" // تأكد إن دي موجودة
-  className="manifesto-bg-video"
->
-  <source src="/02177378036414400000000000000000000ffffc0a8981c4abb5d.mp4" type="video/mp4" />
-</video>
-                    <div className="light-wash-overlay"></div>
-                    <div className="bottom-white-shroud"></div>
-                    <div className="fine-grain"></div>
-                </div>
-                
-                <div className="manifesto-content" ref={manifestoTextRef}>
-                    <div className="main-text-wrapper">
-                        <h2 className="manifesto-pre-title">The Art of Precision</h2>
-                        <h1 className="manifesto-title">
-                            A Legacy Woven in <br/> 
-                            <span className="italic-text">Silk & Shadow</span>
-                        </h1>
-                        <div className="horizontal-divider"></div>
-                        <p className="manifesto-philosophy">
-                            Where the whispers of heritage meet the cutting edge <br/>
-                            of mechanical soul. Crafted for the eternal few.
-                        </p>
-                    </div>
-                    <footer className="content-footer">
-                        <p className="manifesto-subtitle">THE VELVET ARCHIVE — EST. 1047</p>
-                    </footer>
-                </div>
-            </section>
+    <section className="manifesto-section">
+    <div className="manifesto-video-overlay">
+        {/* استخدام LuxeMedia بدلاً من video و source */}
+        <LuxeMedia 
+            type="video"
+            src="/02177378036414400000000000000000000ffffc0a8981c4abb5d.mp4"
+            autoPlay 
+            muted 
+            loop 
+            playsInline 
+            preload="auto" 
+            className="manifesto-bg-video"
+        />
+        
+        {/* الـ Overlays الجمالية تظل كما هي فوق الـ LuxeMedia */}
+        <div className="light-wash-overlay"></div>
+        <div className="bottom-white-shroud"></div>
+        <div className="fine-grain"></div>
+    </div>
+    
+    <div className="manifesto-content" ref={manifestoTextRef}>
+        <div className="main-text-wrapper">
+            <h2 className="manifesto-pre-title">The Art of Precision</h2>
+            <h1 className="manifesto-title">
+                A Legacy Woven in <br/> 
+                <span className="italic-text">Silk & Shadow</span>
+            </h1>
+            <div className="horizontal-divider"></div>
+            <p className="manifesto-philosophy">
+                Where the whispers of heritage meet the cutting edge <br/>
+                of mechanical soul. Crafted for the eternal few.
+            </p>
+        </div>
+        <footer className="content-footer">
+            <p className="manifesto-subtitle">THE VELVET ARCHIVE — EST. 1047</p>
+        </footer>
+    </div>
+</section>
 
 
 
@@ -208,7 +211,7 @@ function Thats() {
                         <div className="heritage-image-wrapper" style={{ transform: 'translateX(-150px)' }}>
                             <div className="image-border-gold"></div>
                             <div className="heritage-image-box">
-                                <img src="./Heritage-Portrait.png" alt="Heritage Portrait" className="heritage-img" />
+                                <LuxeMedia src="./Heritage-Portrait.png" alt="Heritage Portrait" className="heritage-img" />
                                 <div className="image-overlay-glow"></div>
                             </div>
                             <span className="image-caption">© VELVET ARCHIVE 1047</span>
@@ -257,7 +260,7 @@ function Thats() {
 <div className="craft-slide">
     <div className="slide-content-3d">
         <div className="image-container-3d">
-            <img src="./Macro-Fabric.png" alt="Velvet Craft Monolith" className="floating-img" />
+            <LuxeMedia src="./Macro-Fabric.png" alt="Velvet Craft Monolith" className="floating-img" />
             <div className="floating-shadow"></div>
         </div>
         <div className="slide-info-3d">
@@ -272,7 +275,7 @@ function Thats() {
 <div className="craft-slide">
     <div className="slide-content-3d">
         <div className="image-container-3d">
-            <img src="./Precision-Stitching.png" alt="Tailoring Endurance" className="floating-img" />
+            <LuxeMedia src="./Precision-Stitching.png" alt="Tailoring Endurance" className="floating-img" />
             <div className="floating-shadow"></div>
         </div>
         <div className="slide-info-3d">
@@ -287,7 +290,7 @@ function Thats() {
 <div className="craft-slide">
     <div className="slide-content-3d">
         <div className="image-container-3d">
-            <img src="./Gold-Thread.png" alt="Exploded Velvet Suit" className="floating-img" />
+            <LuxeMedia src="./Gold-Thread.png" alt="Exploded Velvet Suit" className="floating-img" />
             <div className="floating-shadow"></div>
         </div>
         <div className="slide-info-3d">
@@ -336,7 +339,7 @@ function Thats() {
                 
                 {/* حاوية الصورة - يجب أن تكون PNG بدون خلفية */}
                 <div className="model-image-container">
-                    <img src="./Ancestral-Innovation-Model.png" alt="Ancestral Innovation Model" className="model-img" />
+                    <LuxeMedia src="./Ancestral-Innovation-Model.png" alt="Ancestral Innovation Model" className="model-img" />
                     <div className="image-shadow-gold"></div> {/* ظل ذهبي خلف المودل */}
                 </div>
 
@@ -352,7 +355,7 @@ function Thats() {
                 </span>
                 
                 <div className="model-image-container">
-                    <img src="./model-rarity.png" alt="Radical Rarity Model" className="model-img" />
+                    <LuxeMedia src="./model-rarity.png" alt="Radical Rarity Model" className="model-img" />
                     <div className="image-shadow-gold"></div>
                 </div>
 
@@ -367,7 +370,7 @@ function Thats() {
                 </span>
                 
                 <div className="model-image-container">
-                    <img src="./model-sustainability.png" alt="Sustainable Soul Model" className="model-img" />
+                    <LuxeMedia src="./model-sustainability.png" alt="Sustainable Soul Model" className="model-img" />
                     <div className="image-shadow-gold"></div>
                 </div>
 
@@ -378,16 +381,24 @@ function Thats() {
     </div>
 </section>
 
-            {/* 5. The Curators Section */}
+         {/* 5. The Curators Section */}
 <section className="archive-cta-section royal-gate">
-                <div className="floating-video-container">
-                    <video ref={videoRef} className="floating-element-video" muted loop playsInline preload="auto">
-                        <source src="./02177383855846600000000000000000000ffffc0a8981c55fafa.mp4" type="video/mp4" />
-                    </video>
-                    <div className="video-ground-shadow"></div>
-                </div>
-                <div className="gate-container">
-        
+    <div className="floating-video-container">
+        {/* استبدال الـ video بـ LuxeMedia مع الحفاظ على الـ ref والخصائص */}
+        <LuxeMedia 
+            type="video"
+            ref={videoRef} 
+            src="/02177383855846600000000000000000000ffffc0a8981c55fafa.mp4" 
+            muted 
+            loop 
+            playsInline 
+            preload="auto" 
+            className="floating-element-video"
+        />
+        <div className="video-ground-shadow"></div>
+    </div>
+
+    <div className="gate-container">
         {/* الجانب الأيسر: العنوان الأيقوني */}
         <div className="gate-left">
             <h2 className="cta-title">
@@ -416,7 +427,6 @@ function Thats() {
                 </button>
             </div>
         </div>
-
     </div>
 
     {/* عنصر فني خلفي إضافي لعمق التصميم */}

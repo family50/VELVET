@@ -3,7 +3,7 @@ import { useLayoutEffect, useRef } from 'react'; // تغيير useEffect إلى 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
-
+import LuxeMedia from './LuxeMedia';
 function Collections() {
     const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -78,7 +78,7 @@ function Collections() {
                 {/* قسم الرجال */}
                 <Link to="/pieces/men" className="collection-card landscape" style={{ textDecoration: 'none' }}>
                     <div className="card-image-wrapper">
-                        <img src="./Men-Collection.png" alt="Men's Collection" className="col-img" />
+                        <LuxeMedia src="./Men-Collection.png" alt="Men's Collection" className="col-img" />
                         <div className="card-overlay"></div>
                     </div>
                     <div className="card-content">
@@ -94,7 +94,7 @@ function Collections() {
                 {/* قسم النساء */}
                 <Link to="/pieces/women" className="collection-card portrait" style={{ textDecoration: 'none' }}>
                     <div className="card-image-wrapper">
-                        <img src="./Women-Collection.png" alt="Women's Collection" className="col-img" />
+                        <LuxeMedia src="./Women-Collection.png" alt="Women's Collection" className="col-img" />
                         <div className="card-overlay"></div>
                     </div>
                     <div className="card-content">
@@ -106,7 +106,7 @@ function Collections() {
                 {/* قسم الإصدارات المحدودة */}
                 <Link to="/pieces/archive" className="collection-card portrait small" style={{ textDecoration: 'none' }}>
                     <div className="card-image-wrapper">
-                        <img src="./Limited-Edition-Collection.png" alt="Limited Edition Collection" className="col-img" />
+                        <LuxeMedia src="./Limited-Edition-Collection.png" alt="Limited Edition Collection" className="col-img" />
                         <div className="card-overlay"></div>
                     </div>
                     <div className="card-content">

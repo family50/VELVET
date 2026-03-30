@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap'; // تأكد من استيراد GSAP هنا
 import './cart.css';
 
+import LuxeMedia from './LuxeMedia';
 interface CartItem {
   id: number;
   uniqueId: string;
@@ -90,7 +91,7 @@ const Cart: React.FC = () => {
                 ref={(el) => { itemsRef.current[index] = el; }}
               >
                 <div className="item-image-box">
-                  <img src={item.image} alt={item.name} />
+                  <LuxeMedia src={item.image} alt={item.name} />
                 </div>
                 
                 <div className="item-details">

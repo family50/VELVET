@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faCheckCircle, faCreditCard, faLock, faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import './payment.css';
 
+import LuxeMedia from './LuxeMedia';
 interface CartItem {
     id: number;
     uniqueId: string;
@@ -89,7 +90,7 @@ if (cartItems.length === 0 && !isPaid) {
                 
                 {/* خلفية الكارت الشفافة كعلامة مائية */}
                 <div className="ethereal-card-silhouette">
-                    <img src="/created.png" alt="Regalia Card Silhouette" className="silhouette-img" />
+                    <LuxeMedia src="/created.png" alt="Regalia Card Silhouette" className="silhouette-img" />
                 </div>
                 
                 {/* المحتوى النصي */}
@@ -158,7 +159,7 @@ if (cartItems.length === 0 && !isPaid) {
                 {/* الجانب الأيمن: صورة الكارت + بيانات الفيزا + زر الدفع */}
                 <div className="payment-card-side">
                     <div className="card-visual-container">
-                        <img src="/created.png" alt="Regalia Gold Card" className="gold-card-img" />
+                        <LuxeMedia src="/created.png" alt="Regalia Gold Card" className="gold-card-img" />
                     </div>
 
                     {/* بيانات الفيزا تحت الكارت مباشرة */}

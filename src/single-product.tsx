@@ -9,7 +9,7 @@ import {
   FEATURED_PRODUCTS 
 } from './collectionss'; 
 import './single-product.css';
-
+import LuxeMedia from './LuxeMedia';
 // تعريف الـ Interface الخاص بمنتج السلة لتجنب خطأ الـ any
 interface CartItem {
   id: number;
@@ -166,7 +166,7 @@ useLayoutEffect(() => {
         {/* الجانب الأيسر: عرض المنتج */}
         <div className="sp-visual-side">
           <div className="floating-container">
-            <img 
+            <LuxeMedia 
               ref={imageRef}
               src={product.image} 
               alt={product.name} 

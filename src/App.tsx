@@ -1,8 +1,10 @@
+import React, { useState, useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import React from 'react';
+
+// الاستايلات الأساسية
 import './index.css';
 
-// استيراد المكونات الأساسية
+// المكونات (Components)
 import Home from './home'; 
 import Header from './header';
 import Thats from './thats'; 
@@ -13,58 +15,61 @@ import SingleProduct from './single-product';
 import Payment from './payment';
 import ScrollToTop from './scrol';
 import Mouse from './mouse'; 
+import Loading from './loding';
 
-// استيراد أدوات التحميل الاحترافية
-import Loading from './loding'; 
-import AssetPreloader from './dateloding';
-import { LoadingProvider, useLoading } from './LoadingProvider';
+// الأدوات الجديدة (التحميل المسبق والـ Context)
+import { LoadingProvider, useGlobalLoading } from './LoadingContext';
+import AssetPreloader from './AssetPreloader';
 import { PAGE_ASSETS } from './assetsData';
 
 const AppContent: React.FC = () => {
   const location = useLocation();
-  const { isLoading, setIsLoading } = useLoading();
+  const { setIsLoading, isReady } = useGlobalLoading();
+  const [assetsReady, setAssetsReady] = useState<boolean>(false);
 
-  // تجميع كافة الأصول لضمان وجودها في الـ RAM Cache (باستخدام نظام Fetch الجديد)
-  const allAssets = Object.values(PAGE_ASSETS).flat();
+  // 1. تحديد الملفات المطلوب تحميلها مسبقاً (الهوم + الملفات العامة)
+  const homeAssets = useMemo(() => {
+    return [
+      ...(PAGE_ASSETS.HOME || []),
+      ...(PAGE_ASSETS.GLOBAL || [])
+    ];
+  }, []);
 
-  // منطق إخفاء الهيدر في صفحات معينة
+  // 2. التحكم في إخفاء الهيدر في صفحات معينة
   const isSingleProductPage = location.pathname.startsWith('/product/');
   const isPaymentPage = location.pathname === '/payment';
   const hideHeader = isSingleProductPage || isPaymentPage;
 
+  // 3. الشرط النهائي لعرض الموقع:
+  // لازم الأنميشن يخلص (isReady) وكمان الصور تتحمل (assetsReady)
+  const canShowSite = isReady && assetsReady;
+
   return (
     <>
-      {/* 1. البريلودر: يقوم بعملية الـ Fetch في الخلفية لضمان تحميل الفيديو بالكامل */}
+      {/* مشغل التحميل المسبق في الخلفية */}
       <AssetPreloader 
-        assets={allAssets} 
-        minWaitTime={3000} // ضمان بقاء اللودر لمدة 3 ثوانٍ على الأقل للبراندينج
-        onComplete={() => {
-          console.log("Memory Assets: Ready");
-        }} 
+        assets={homeAssets} 
+        onComplete={() => setAssetsReady(true)} 
       />
 
-      {/* 2. شاشة اللودينج: تظهر طالماisLoading = true */}
-      {isLoading && (
+      {/* شاشة اللودينج تظل ظاهرة حتى يتحقق الشرطان */}
+      {!canShowSite && (
         <Loading onFinish={() => setIsLoading(false)} />
       )}
 
-      {/* 3. محتوى الموقع الرئيسي */}
-      {/* استخدمنا display: none بدلاً من opacity للحفاظ على خصائص الـ CSS الخاصة بك */}
-  
-<div 
-  className="vlv-main-site-container"
-  style={{ 
-    // بدل display: isLoading ? 'none' : 'block'
-    visibility: isLoading ? 'hidden' : 'visible',
-    opacity: isLoading ? 0 : 1,
-    height: isLoading ? '100vh' : 'auto', // عشان السكرول ميبقاش طويل وقت اللودينج
-    overflow: isLoading ? 'hidden' : 'visible',
-    transition: 'opacity 1s ease-in-out'
-  }}
->
+      {/* محتوى الموقع - يظهر بـ Fade In بسيط لما يجهز */}
+      <div 
+        className="app-main-content"
+        style={{ 
+          opacity: canShowSite ? 1 : 0,
+          visibility: canShowSite ? 'visible' : 'hidden',
+          transition: 'opacity 1s ease-in-out',
+          height: canShowSite ? 'auto' : '100vh',
+          overflow: canShowSite ? 'visible' : 'hidden'
+        }}
+      >
         <ScrollToTop />
         <Mouse />
-        
         {!hideHeader && <Header />}
         
         <Routes>
@@ -77,9 +82,6 @@ const AppContent: React.FC = () => {
           <Route path="/payment" element={<Payment />} />
         </Routes>
       </div>
-
- 
-
     </>
   );
 };

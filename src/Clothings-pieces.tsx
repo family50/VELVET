@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import './Clothings-pieces.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
+import LuxeMedia from './LuxeMedia';
 import { 
   MEN_COLLECTION, 
   WOMEN_COLLECTION, 
@@ -246,110 +246,153 @@ const toggleFavorite = (e: React.MouseEvent, productId: number) => {
     <div className="pieces-page">
       {currentHero && (
         <>
-          <section className="regalia-hero" ref={heroRef}>
-            <div className="hero-bg-image" style={{ backgroundImage: `url(${currentHero.heroImage})` }}></div>
-            <div className="hero-vignette"></div>
-            <div className="hero-container">
-              <div className="hero-content-wrapper">
-                <div className="hero-badge">
-                   <span className="line"></span>
-                   <span className="badge-text">{currentHero.heroTagline}</span>
-                </div>
-                <h1 className="hero-main-title">
-                  {currentHero.heroTitle.split(' ').map((word: string, i: number) => (
+    <section className="regalia-hero" ref={heroRef}>
+    {/* استبدلنا الـ div اللي واخد backgroundImage بـ LuxeMedia 
+        ده هيخلي الـ Hero يبدأ بـ Skeleton لحد ما الصورة تحمل 
+    */}
+    <LuxeMedia 
+        type="img"
+        src={currentHero.heroImage} 
+        alt="Hero Background" 
+        className="hero-bg-image" // هننقل استايلات الخلفية هنا
+        style={{ 
+            position: 'absolute', 
+            top: 0, 
+            left: 0, 
+            width: '100%', 
+            height: '100%', 
+            zIndex: -1 
+        }}
+    />
+    
+    <div className="hero-vignette"></div>
+    
+    <div className="hero-container">
+        <div className="hero-content-wrapper">
+            <div className="hero-badge">
+                <span className="line"></span>
+                <span className="badge-text">{currentHero.heroTagline}</span>
+            </div>
+            
+            <h1 className="hero-main-title">
+                {currentHero.heroTitle.split(' ').map((word: string, i: number) => (
                     <span key={i} className="title-word">{word} </span>
-                  ))}
-                </h1>
-                <div className="hero-footer-info">
-                  <p className="hero-description">{currentHero.heroSubtitle}</p>
-                  <div className="hero-divider"></div>
-                  <div className="hero-location">EST. 2026 — CAIRO / LONDON</div>
-                </div>
-              </div>
-              <div className="hero-scroll-control">
-                <span className="scroll-text">DISCOVER</span>
-                <div className="scroll-line-container"><div className="scroll-line"></div></div>
-              </div>
-            </div>
-          </section>
-
-
-
-
-
-          <section className="section-products11" ref={productsSectionRef}>
-            <div className="section-header-minimal11"><h2>SELECTED PIECES</h2></div>
-            <div className="products-container11">
-              <div className="products-grid11" ref={productsGridRef}>
-                {displayedProducts.map((product) => (
-                  <Link to={`/product/${product.id}`} key={product.id} className="product-card-link11">
-                    <div className="product-card11">
-                      <div className="image-wrapper-3d11">
-                        <div className="product-shadow-3d11"></div>
-                        <img src={product.image} alt={product.name} className="floating-clothing11" />
-                        <div className="quick-action-overlay11">
-                          <button 
-  className="action-btn11" 
-  onClick={(e) => toggleFavorite(e, product.id)}
->
-  <i className={`${localStorage.getItem(`fav_${product.id}`) === 'true' ? 'fas active-heart' : 'far'} fa-heart`}></i>
-</button>
-                        </div>
-                      </div>
-                      <div className="product-info-minimal11">
-                        <div className="info-top11">
-                          <span className="p-category11">{product.category}</span>
-                          <span className="p-price11">{product.price}</span>
-                        </div>
-                        <h3 className="p-name11">{product.name}</h3>
-                        <div className="p-details11">
-                           <div className="p-color11" style={{ backgroundColor: product.color }}></div>
-                           <p className="p-desc11">{product.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
                 ))}
-              </div>
-
-              {totalPages > 1 && (
-                <div className="pagination-regalia">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                    <button
-                      key={number}
-                      onClick={() => paginate(number)}
-                      className={`page-item ${currentPage === number ? 'active' : ''}`}
-                    >
-                      <span className="page-number">{number < 10 ? `0${number}` : number}</span>
-                      <div className="page-indicator"></div>
-                    </button>
-                  ))}
-                </div>
-              )}
+            </h1>
+            
+            <div className="hero-footer-info">
+                <p className="hero-description">{currentHero.heroSubtitle}</p>
+                <div className="hero-divider"></div>
+                <div className="hero-location">EST. 2026 — CAIRO / LONDON</div>
             </div>
-          </section>
+        </div>
+        
+        <div className="hero-scroll-control">
+            <span className="scroll-text">DISCOVER</span>
+            <div className="scroll-line-container">
+                <div className="scroll-line"></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-          <section className="section-artisan" ref={artisanSectionRef}>
-            <div className="artisan-layout">
-              <div className="artisan-text">
-                <span className="label">THE CRAFT</span>
-                <h2>ARCHITECTURAL TEXTURES</h2>
-                <p>Each fiber is selected to maintain the structural integrity of the silhouette. We use 24k gold threads and Italian heritage silk.</p>
-                <div className="stats-grid">
-                  <div className="stat-item"><span>100%</span><small>Organic Silk</small></div>
-                  <div className="stat-item"><span>Hand</span><small>Finished</small></div>
-                </div>
-              </div>
-              <div className="artisan-visual">
-                <div className="macro-shot-container">
-                  <video className="artisan-video-player" loop muted autoPlay playsInline>
-                    <source src="/02177396161758100000000000000000000ffffc0a8981c3c8805.mp4" type="video/mp4" />
-                  </video>
-                  <div className="video-overlay-cinematic"></div>
-                </div>
+
+
+
+<section className="section-products11" ref={productsSectionRef}>
+  <div className="section-header-minimal11">
+    <h2>SELECTED PIECES</h2>
+  </div>
+  <div className="products-container11">
+    <div className="products-grid11" ref={productsGridRef}>
+      {displayedProducts.map((product) => (
+        <Link to={`/product/${product.id}`} key={product.id} className="product-card-link11">
+          <div className="product-card11">
+            <div className="image-wrapper-3d11">
+              <div className="product-shadow-3d11"></div>
+              
+              {/* استبدال img بـ LuxeMedia لصور المنتجات */}
+              <LuxeMedia 
+                type="img"
+                src={product.image} 
+                alt={product.name} 
+                className="floating-clothing11" 
+                aspectRatio="1/1" // أو خليه 3/4 حسب أبعاد صورك
+              />
+
+              <div className="quick-action-overlay11">
+                <button 
+                  className="action-btn11" 
+                  onClick={(e) => toggleFavorite(e, product.id)}
+                >
+                  <i className={`${localStorage.getItem(`fav_${product.id}`) === 'true' ? 'fas active-heart' : 'far'} fa-heart`}></i>
+                </button>
               </div>
             </div>
-          </section>
+
+            <div className="product-info-minimal11">
+              <div className="info-top11">
+                <span className="p-category11">{product.category}</span>
+                <span className="p-price11">{product.price}</span>
+              </div>
+              <h3 className="p-name11">{product.name}</h3>
+              <div className="p-details11">
+                <div className="p-color11" style={{ backgroundColor: product.color }}></div>
+                <p className="p-desc11">{product.description}</p>
+              </div>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+
+    {totalPages > 1 && (
+      <div className="pagination-regalia">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+          <button
+            key={number}
+            onClick={() => paginate(number)}
+            className={`page-item ${currentPage === number ? 'active' : ''}`}
+          >
+            <span className="page-number">{number < 10 ? `0${number}` : number}</span>
+            <div className="page-indicator"></div>
+          </button>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+    <section className="section-artisan" ref={artisanSectionRef}>
+    <div className="artisan-layout">
+        <div className="artisan-text">
+            <span className="label">THE CRAFT</span>
+            <h2>ARCHITECTURAL TEXTURES</h2>
+            <p>Each fiber is selected to maintain the structural integrity of the silhouette. We use 24k gold threads and Italian heritage silk.</p>
+            <div className="stats-grid">
+                <div className="stat-item"><span>100%</span><small>Organic Silk</small></div>
+                <div className="stat-item"><span>Hand</span><small>Finished</small></div>
+            </div>
+        </div>
+        
+        <div className="artisan-visual">
+            <div className="macro-shot-container">
+                {/* استخدام LuxeMedia بدلاً من التاج التقليدي */}
+                <LuxeMedia 
+                    type="video"
+                    src="/02177396161758100000000000000000000ffffc0a8981c3c8805.mp4"
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline 
+                    preload="auto" 
+                    className="artisan-video-player"
+                />
+                <div className="video-overlay-cinematic"></div>
+            </div>
+        </div>
+    </div>
+</section>
 
           <section className="section-values" ref={valuesSectionRef}>
             <div className="values-grid">

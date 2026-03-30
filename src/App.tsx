@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation  } from 'react-router-dom';
+import { useLayoutEffect } from 'react';
 import React from 'react';
 import './index.css';
 
@@ -19,49 +20,57 @@ import Loading from './loding';
 import AssetPreloader from './dateloding';
 import { LoadingProvider, useLoading } from './LoadingProvider';
 import { PAGE_ASSETS } from './assetsData';
-
 const AppContent: React.FC = () => {
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
 
-  // تجميع كافة الأصول لضمان وجودها في الـ RAM Cache (باستخدام نظام Fetch الجديد)
+  // --- التعديل السحري هنا ---
+  useLayoutEffect(() => {
+    // لو المسار هو صفحة "That's us"، اطفئ اللودينج فوراً قبل ما المتصفح يرسم أي حاجة
+    if (location.pathname === "/That's us") {
+      setIsLoading(false);
+    }
+  }, [location.pathname, setIsLoading]);
+
+  // تجميع كافة الأصول
   const allAssets = Object.values(PAGE_ASSETS).flat();
 
-  // منطق إخفاء الهيدر في صفحات معينة
+  // منطق إخفاء الهيدر
   const isSingleProductPage = location.pathname.startsWith('/product/');
   const isPaymentPage = location.pathname === '/payment';
   const hideHeader = isSingleProductPage || isPaymentPage;
 
+  // هل نظهر اللودر؟ 
+  // شرط إضافي: لا تظهر اللودر أبداً لو كنا في صفحة That's us
+  const showLoadingScreen = isLoading && location.pathname !== "/That's us";
+
   return (
     <>
-      {/* 1. البريلودر: يقوم بعملية الـ Fetch في الخلفية لضمان تحميل الفيديو بالكامل */}
+      {/* البريلودر يشتغل في الخلفية فقط بدون تعطيل الصفحة لو كنا في That's us */}
       <AssetPreloader 
         assets={allAssets} 
-        minWaitTime={3000} // ضمان بقاء اللودر لمدة 3 ثوانٍ على الأقل للبراندينج
+        minWaitTime={location.pathname === "/That's us" ? 0 : 3000} // إلغاء وقت الانتظار للصفحة دي
         onComplete={() => {
           console.log("Memory Assets: Ready");
         }} 
       />
 
-      {/* 2. شاشة اللودينج: تظهر طالماisLoading = true */}
-      {isLoading && (
+      {/* شاشة اللودينج تظهر فقط لو مش في صفحة That's us */}
+      {showLoadingScreen && (
         <Loading onFinish={() => setIsLoading(false)} />
       )}
 
-      {/* 3. محتوى الموقع الرئيسي */}
-      {/* استخدمنا display: none بدلاً من opacity للحفاظ على خصائص الـ CSS الخاصة بك */}
-  
-<div 
-  className="vlv-main-site-container"
-  style={{ 
-    // بدل display: isLoading ? 'none' : 'block'
-    visibility: isLoading ? 'hidden' : 'visible',
-    opacity: isLoading ? 0 : 1,
-    height: isLoading ? '100vh' : 'auto', // عشان السكرول ميبقاش طويل وقت اللودينج
-    overflow: isLoading ? 'hidden' : 'visible',
-    transition: 'opacity 1s ease-in-out'
-  }}
->
+      <div 
+        className="vlv-main-site-container"
+        style={{ 
+          // لو في صفحة That's us، اجعل كل شيء مرئي فوراً
+          visibility: showLoadingScreen ? 'hidden' : 'visible',
+          opacity: showLoadingScreen ? 0 : 1,
+          height: showLoadingScreen ? '100vh' : 'auto',
+          overflow: showLoadingScreen ? 'hidden' : 'visible',
+          transition: 'opacity 1s ease-in-out'
+        }}
+      >
         <ScrollToTop />
         <Mouse />
         
@@ -77,13 +86,9 @@ const AppContent: React.FC = () => {
           <Route path="/payment" element={<Payment />} />
         </Routes>
       </div>
-
- 
-
     </>
   );
 };
-
 function App() {
   return (
     <Router>

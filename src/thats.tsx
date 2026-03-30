@@ -120,11 +120,7 @@ function Thats() {
                     trigger: ".royal-gate",
                     start: "top senter",
                   end: "bottom+=600% bottom",
-                  markers: {
-            startColor: "red",
-            endColor: "red",
-            fontSize: "18px"
-        },
+        
                     pin: true,
                     scrub: 1,
                     onEnter: () => videoRef.current?.play(),

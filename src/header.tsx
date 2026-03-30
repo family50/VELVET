@@ -117,10 +117,19 @@ const isSpecialPage =
                 <span>Home</span>
             </NavLink>
             
-            <NavLink to="/That's us" className="mobile-nav-item">
-                <i className="fa-solid fa-feather-pointed nav-icon-effect"></i>
-                <span>That's us</span>
-            </NavLink>
+           <NavLink 
+    to="/That's us" 
+    className="nav-item"
+    onClick={(e) => {
+        // لو المستخدم أصلاً في صفحة That's us وداس تاني، اعمل ريفرش
+        if (location.pathname === "/That's us") {
+            e.preventDefault();
+            window.location.reload();
+        }
+    }}
+>
+    That's us
+</NavLink>
             
             <NavLink to="/collections" className="mobile-nav-item">
                 <i className="fa-solid fa-store nav-icon-effect"></i>

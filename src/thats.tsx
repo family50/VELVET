@@ -120,6 +120,8 @@ function Thats() {
                     trigger: ".royal-gate",
                     start: "top senter",
                   end: "bottom+=600% bottom",
+                  
+                  pinSpacing: false,
                   markers: {
             startColor: "red",
             endColor: "red",

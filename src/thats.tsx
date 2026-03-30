@@ -134,8 +134,8 @@ function Thats() {
             });
 
             gateTl.fromTo(".floating-video-container", 
-              { scale: 1, autoAlpha: 1 }, 
-    { scale: 1.1, autoAlpha: 1, ease: "none" }
+                { y: 200, autoAlpha: 0, scale: 0.8 }, 
+                { y: 0, autoAlpha: 1, scale: 1.1, ease: "power2.out" }
             ).fromTo(".gate-container", 
                 { y: 60, autoAlpha: 0 }, 
                 { y: 0, autoAlpha: 1, ease: "power2.out" },

@@ -114,15 +114,12 @@ function Thats() {
                 }
             });
 
-            
-
             // --- أنميشن السيكشن الخامس (Royal Gate) ---
             const gateTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".royal-gate",
                     start: "top senter",
-                 end: () => `top+=${window.innerHeight * 6} bottom`, 
-        endTrigger: ".footer",
+                  end: "bottom+=600% bottom",
                   markers: {
             startColor: "red",
             endColor: "red",
@@ -131,14 +128,14 @@ function Thats() {
                     pin: true,
                     scrub: 1,
                     onEnter: () => videoRef.current?.play(),
-                  onEnterBack: () => videoRef.current?.play(),
+                    onLeaveBack: () => videoRef.current?.pause(),
                 }
 
             });
 
             gateTl.fromTo(".floating-video-container", 
-                { y: 200, autoAlpha: 0, scale: 0.8 }, 
-                { y: 0, autoAlpha: 1, scale: 1.1, ease: "power2.out" }
+              { scale: 1, autoAlpha: 1 }, 
+    { scale: 1.1, autoAlpha: 1, ease: "none" }
             ).fromTo(".gate-container", 
                 { y: 60, autoAlpha: 0 }, 
                 { y: 0, autoAlpha: 1, ease: "power2.out" },

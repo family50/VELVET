@@ -118,7 +118,7 @@ function Thats() {
             const gateTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".royal-gate",
-                    start: "top senter",
+                    start: "top bottom",
                   end: "bottom+=600% bottom",
                   markers: {
             startColor: "red",
@@ -128,7 +128,7 @@ function Thats() {
                     pin: true,
                     scrub: 1,
                     onEnter: () => videoRef.current?.play(),
-              
+                  onEnterBack: () => videoRef.current?.play(),
                 }
 
             });

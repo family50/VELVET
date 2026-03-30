@@ -17,22 +17,22 @@ export const PAGE_ASSETS = {
 
     // 2. أصول صفحة الـ Manifesto (Thats Page)
     THAT_S: [
-        './02177378036414400000000000000000000ffffc0a8981c4abb5d.mp4', 
-        './02177383855846600000000000000000000ffffc0a8981c55fafa.mp4', 
-        './Heritage-Portrait.png',
-        './Macro-Fabric.png',        
-        './Precision-Stitching.png', 
-        './Gold-Thread.png',         
-        './Ancestral-Innovation-Model.png',
-        './model-rarity.png',
-        './model-sustainability.png',
+        '/02177378036414400000000000000000000ffffc0a8981c4abb5d.mp4', 
+        '/02177383855846600000000000000000000ffffc0a8981c55fafa.mp4', 
+        '/Heritage-Portrait.png',
+        '/Macro-Fabric.png',        
+        '/Precision-Stitching.png', 
+        '/Gold-Thread.png',         
+        '/Ancestral-Innovation-Model.png',
+        '/model-rarity.png',
+        '/model-sustainability.png',
     ],
 
     // 3. أصول صفحة المجموعات (Collections Main)
     COLLECTIONS_MAIN: [
-        './Men-Collection.png',
-        './Women-Collection.png',
-        './Limited-Edition-Collection.png',
+        '/Men-Collection.png',
+        '/Women-Collection.png',
+        '/Limited-Edition-Collection.png',
     ],
 
     // 4. أصول صفحات المنتجات (Pieces & Single Product)

@@ -122,12 +122,6 @@ function Thats() {
                   end: "bottom+=600% bottom",
                     pin: true,
                     scrub: 1,
-                    markers: {
-            startColor: "red",    // لون خط البداية
-            endColor: "red",      // لون خط النهاية
-            fontSize: "18px",     // حجم الخط عشان تشوفه بوضوح
-            indent: 20            // إزاحة الخط عن حافة الشاشة
-        },
                     onEnter: () => videoRef.current?.play(),
                     onLeaveBack: () => videoRef.current?.pause(),
                 }
@@ -168,9 +162,16 @@ function Thats() {
      {/* 1. The Manifesto Section */}
             <section className="manifesto-section">
                 <div className="manifesto-video-overlay">
-                    <video autoPlay muted loop playsInline className="manifesto-bg-video">
-                        <source src="./02177378036414400000000000000000000ffffc0a8981c4abb5d.mp4" type="video/mp4" />
-                    </video>
+                    <video 
+  autoPlay 
+  muted 
+  loop 
+  playsInline 
+  preload="auto" // تأكد إن دي موجودة
+  className="manifesto-bg-video"
+>
+  <source src="/02177378036414400000000000000000000ffffc0a8981c4abb5d.mp4" type="video/mp4" />
+</video>
                     <div className="light-wash-overlay"></div>
                     <div className="bottom-white-shroud"></div>
                     <div className="fine-grain"></div>

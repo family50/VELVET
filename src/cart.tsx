@@ -90,9 +90,14 @@ const Cart: React.FC = () => {
                 // --- السطر الأهم: ربط العنصر بالـ Ref ---
                 ref={(el) => { itemsRef.current[index] = el; }}
               >
-                <div className="item-image-box">
-                  <LuxeMedia src={item.image} alt={item.name} />
-                </div>
+               <div className="item-image-box">
+  <LuxeMedia 
+    src={item.image} 
+    alt={item.name} 
+    // نمرر Style مباشر يضمن عدم التشوه
+    style={{ objectFit: 'contain' }} 
+  />
+</div>
                 
                 <div className="item-details">
                   <div className="item-header">

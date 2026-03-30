@@ -776,7 +776,7 @@
     /* تغيير من 100vw لـ 100% لتجنب مشاكل الـ Scrollbar في بعض المتصفحات */
     width: 100%;
     padding: 30px 15px;
-  
+
     box-sizing: border-box;
   }
 
@@ -785,6 +785,7 @@
     flex-direction: column-reverse; /* ملخص الدفع يظل في الأعلى */
     gap: 30px;
     width: 100%;
+    
   }
 
   /* --- كارت المنتج: تحويله لعمودي --- */
@@ -794,6 +795,7 @@
     text-align: center; /* توسيط النصوص للموبايل */
     padding: 25px 15px;
     gap: 15px;
+    
   }
 
   .item-image-box {
@@ -911,7 +913,28 @@
     color: white;
     transform: rotate(90deg);
   }
+  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Media Query for Small Mobile Devices (400px and below) */
 @media (max-width: 450px) {
 
@@ -1081,6 +1104,12 @@
   border-color: var(--accent-gold);
   transform: translateY(-5px);
 }
+
+
+
+
+
+
 /* Media Query for Tablets (850px and below) - Upscaled by 20% */
 @media screen and (max-width: 850px) {
   

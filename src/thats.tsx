@@ -118,8 +118,8 @@ function Thats() {
             const gateTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".royal-gate",
-                    start: "top bottom",
-                  end: "bottom+=600% bottom",
+                    start: "top center+=100",
+                  end: "bottom+=600 bottom",
                   markers: {
             startColor: "red",
             endColor: "red",
